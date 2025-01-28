@@ -1,15 +1,28 @@
 <script setup lang="ts">
-import SearchBarComponent from '@/components/SearchBarComponent/SearchBarComponent.vue'
+import SearchBarComponent from "@/components/SearchBarComponent/SearchBarComponent.vue";
 </script>
 
 <template>
-  <header>
-    <SearchBarComponent />
-  </header>
+  <div class="layoutContainer">
+    <header>
+      <SearchBarComponent />
 
-  <main>
+      <div>
+        <vk-button primary>Mi Botón</vk-button>
+        <vk-icon icon="heart"></vk-icon>
+      </div>
+    </header>
 
-  </main>
+    <main></main>
+  </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.layoutContainer {
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem;
+  font-weight: normal;
+}
+</style>
