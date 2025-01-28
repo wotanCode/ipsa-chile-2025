@@ -1,22 +1,28 @@
 <script setup lang="ts">
-//TODO: Actualizar los props necesarios
+// TODO: Actualizar los props necesarios
 // defineProps<{
 //   msg: string
 // }>()
 </script>
 
 <template>
-  <div class="uk-inline">
+  <form class="uk-inline" style="width: 100%">
     <vk-icon
+      icon="search"
       name="search"
-      class="uk-position-center-left uk-margin-small-left"
+      class="uk-position-center-left uk-margin-small-left uk-icon-medium"
+      style="z-index: 1"
     />
     <input
       placeholder="Search bar"
-      value="Hola"
-      class="uk-input uk-form-width-medium"
+      class="uk-input uk-text-dark"
+      style="padding-left: 35px; width: 100%"
     />
-  </div>
+  </form>
 </template>
 
-<style scoped></style>
+<style scoped>
+.testClass {
+  background-color: red;
+}
+</style>
