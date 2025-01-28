@@ -6,7 +6,7 @@
 </script>
 
 <template>
-  <form class="uk-inline" style="width: 100%">
+  <form class="uk-inline formContainer">
     <vk-icon
       icon="search"
       name="search"
@@ -14,15 +14,29 @@
       style="z-index: 1"
     />
     <input
-      placeholder="Search bar"
-      class="uk-input uk-text-dark"
+      placeholder="Busca un instrumento"
+      class="uk-input uk-text-dark uk-background-secondary"
       style="padding-left: 35px; width: 100%"
     />
   </form>
 </template>
 
 <style scoped>
-.testClass {
-  background-color: red;
+.formContainer {
+  width: 100%;
+}
+
+.uk-input {
+  transition: background-color 0.3s ease, color 0.3s ease,
+    border-color 0.3s ease;
+  border-radius: 4px;
+  border: 1px solid transparent;
+}
+
+.uk-input:focus {
+  background-color: var(--vt-c-black-mute);
+  color: var(--vt-c-white-mute);
+  outline: none;
+  border-color: var(--vt-c-white-mute);
 }
 </style>
