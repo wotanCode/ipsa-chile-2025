@@ -11,11 +11,17 @@ import TabComponent from "@/components/TabComponent/TabComponent.vue";
       <SearchBarComponent />
     </header>
 
-    <main>
+    <main class="mainContainer">
       <div class="primaryContainer">
-        <HeaderComponent />
+        <div class="chartContainer">
+          <HeaderComponent />
 
-        <ChartComponent />
+          <ChartComponent />
+        </div>
+
+        <div class="infoContainer">
+          <p>aqui va la segunda parte</p>
+        </div>
       </div>
 
       <div class="thirdContainer">
@@ -36,8 +42,27 @@ import TabComponent from "@/components/TabComponent/TabComponent.vue";
   font-weight: normal;
   gap: 2rem;
 
-  .primaryContainer {
-    width: 70%;
+  .mainContainer {
+    display: flex;
+    flex-direction: column;
   }
+
+  .primaryContainer {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+
+    .chartContainer {
+      width: 70%;
+    }
+
+    .infoContainer {
+      width: 25%;
+    }
+  }
+}
+
+.thirdContainer {
+  margin-top: 2rem;
 }
 </style>
