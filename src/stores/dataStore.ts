@@ -2,7 +2,6 @@ import { defineStore } from "pinia";
 import { ref } from "vue";
 import type { HistoryI } from "@/interfaces/history";
 
-// Importamos los JSON directamente
 import AGUASA from "@/db/history/history-AGUAS-A.json";
 import ANDINAB from "@/db/history/history-ANDINA-B.json";
 import BCI from "@/db/history/history-BCI.json";
