@@ -12,30 +12,67 @@
     <p>Indice:</p>
     <hr />
 
-    <div class="valuesContainer">
-      <p>Valor actual: arriba 12</p>
-      <p>Var. % Actual -0.12%</p>
-      <p>Var. Puntos Actual: -23,23</p>
-    </div>
+    <ul class="valuesContainer">
+      <li class="valueItem">
+        Valor actual:
+        <span class="presentValue">
+          <!-- ↑ -->
+          ↓ 63.451,4
+        </span>
+      </li>
+      <li class="valueItem">
+        Var. % Actual <span class="uk-text-danger">-0.12%</span>
+      </li>
+      <li class="valueItem">
+        Var. Puntos Actual: <span class="uk-text-danger">-23,23</span>
+      </li>
+    </ul>
 
     <hr />
   </div>
 </template>
 
 <style scoped>
-p {
+p,
+ul {
   margin: 0;
+  padding: 0;
 }
+
+ul {
+  list-style-type: none;
+}
+
 .headerContainer {
   display: flex;
   flex-direction: column;
-}
 
-.valuesContainer {
-  display: flex;
-}
+  .title {
+    color: var(--vt-c-white);
+  }
 
-.title {
-  color: var(--vt-c-white-mute);
+  .valuesContainer {
+    display: flex;
+  }
+
+  .valueItem {
+    padding: 0 1rem 0 1rem;
+  }
+
+  .valueItem:first-child {
+    padding-left: 0;
+  }
+
+  .valueItem:last-child {
+    padding-right: 0;
+  }
+
+  .presentValue {
+    color: var(--vt-c-white-mute);
+  }
+
+  .statusRed {
+    color: rgba(255, 0, 0, 0.798);
+  }
 }
 </style>
