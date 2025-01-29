@@ -1,23 +1,7 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
-import { storeToRefs } from "pinia";
-
-import { useDataStore } from "@/stores/dataStore";
-
 import SearchBarComponent from "@/components/SearchBarComponent/SearchBarComponent.vue";
 import HeaderComponent from "@/components/HeaderComponent/HeaderComponent.vue";
 import ChartComponent from "@/components/ChartComponent/ChartComponent.vue";
-
-const store = useDataStore();
-const { jsonData, isLoading, error } = storeToRefs(store);
-
-const aguasaData = ref(jsonData.value["IPSA"]);
-
-onMounted(() => {
-  store.loadData();
-  // Ejemplo de cómo acceder a los datos de AGUASA
-  aguasaData.value = jsonData.value["IPSA"];
-});
 </script>
 
 <template>
@@ -30,15 +14,7 @@ onMounted(() => {
       <div class="primaryContainer">
         <HeaderComponent />
 
-        <div>
-          <ChartComponent
-            v-if="aguasaData && !isLoading"
-            :chartData="aguasaData"
-          />
-
-          <p v-if="error" class="error">{{ error }}</p>
-          <p v-if="isLoading">Cargando gráfico...</p>
-        </div>
+        <ChartComponent />
       </div>
     </main>
   </div>
