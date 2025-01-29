@@ -46,6 +46,7 @@ ul {
 .headerContainer {
   display: flex;
   flex-direction: column;
+  width: 70%;
 
   .title {
     color: var(--vt-c-white);
@@ -69,10 +70,6 @@ ul {
 
   .presentValue {
     color: var(--vt-c-white-mute);
-  }
-
-  .statusRed {
-    color: rgba(255, 0, 0, 0.798);
   }
 }
 </style>
