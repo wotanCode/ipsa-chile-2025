@@ -10,29 +10,20 @@ const options = ["AGUASA", "ANDINAB", "BCI", "BSANTANDER", "CAP", "IPSA"];
 </script>
 
 <template>
-  <div class="headerContainer">
-    <div class="tabs">
-      <!-- Generar los tabs usando las opciones del store -->
-      <button
-        v-for="(label, key) in options"
-        :key="key"
-        class="tab"
-        :class="{ active: selectedKey === label }"
-        @click="selectTab(label)"
-      >
-        {{ label }}
-      </button>
-    </div>
+  <div class="tabs">
+    <button
+      v-for="(label, key) in options"
+      :key="key"
+      class="tab"
+      :class="{ active: selectedKey === label }"
+      @click="selectTab(label)"
+    >
+      {{ label }}
+    </button>
   </div>
 </template>
 
 <style scoped>
-.headerContainer {
-  padding: 20px;
-  display: flex;
-  justify-content: center;
-}
-
 .tabs {
   display: flex;
   gap: 10px;
@@ -40,12 +31,12 @@ const options = ["AGUASA", "ANDINAB", "BCI", "BSANTANDER", "CAP", "IPSA"];
 
 .tab {
   background: transparent;
-  border: 2px solid #ccc;
+  border-bottom: 2px solid #ccc;
   padding: 10px 20px;
   font-size: 1rem;
   cursor: pointer;
   text-align: center;
-  border-radius: 5px;
+  /* border-radius: 5px; */
   transition: background-color 0.3s, color 0.3s;
 }
 
