@@ -1,4 +1,4 @@
-export interface ResumenI {
+export interface HistoryI {
   success: boolean;
   code: number;
   data: Data;
@@ -6,7 +6,7 @@ export interface ResumenI {
 
 export interface Data {
   info: Info;
-  price: Price;
+  chart: Chart[];
 }
 
 export interface Info {
@@ -16,37 +16,21 @@ export interface Info {
   currencyName: string;
   currencySymbol: string;
   codeInstrument: string;
-  marketName: string;
   hourOpen: string;
   hourClose: string;
-  trading: boolean;
-  exchangeRate: number;
 }
 
-export interface Price {
-  lastPrice: number;
+export interface Chart {
   datetimeLastPrice: string;
+  datetimeLastPriceTs: number;
+  lastPrice: number;
+  highPrice: number;
+  lowPrice: number;
   openPrice: number;
   closePrice: number;
-  datetimeClosePrice: string;
-  performanceAbsolute: number;
-  performanceRelative: number;
-  bid: number;
-  bidVolume: number;
-  bidDatetime: string;
-  ask: number;
-  askVolume: number;
-  askDatetime: string;
+  volume: number;
   volumeMoney: number;
-  accumulatedVolumeMoney: number;
-  volumeInstrument: number;
-  accumulatedVolumeInstrument: number;
+  performanceRelative: number;
+  performanceAbsolute: number;
   tend: string;
-  maxDay: number;
-  minDay: number;
-  min52W: number;
-  max52W: number;
-  pct30D: number;
-  pctRelW52: number;
-  pctRelCY: number;
 }

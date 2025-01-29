@@ -1,4 +1,4 @@
-export interface Root {
+export interface ResumenI {
   success: boolean;
   code: number;
   data: Data;
