@@ -2,6 +2,7 @@
 import SearchBarComponent from "@/components/SearchBarComponent/SearchBarComponent.vue";
 import HeaderComponent from "@/components/HeaderComponent/HeaderComponent.vue";
 import ChartComponent from "@/components/ChartComponent/ChartComponent.vue";
+import TabComponent from "@/components/TabComponent/TabComponent.vue";
 </script>
 
 <template>
@@ -15,6 +16,10 @@ import ChartComponent from "@/components/ChartComponent/ChartComponent.vue";
         <HeaderComponent />
 
         <ChartComponent />
+      </div>
+
+      <div class="thirdContainer">
+        <TabComponent />
       </div>
     </main>
   </div>
