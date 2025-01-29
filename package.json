@@ -15,8 +15,10 @@
   "dependencies": {
     "@vuikit/icons": "^0.8.1",
     "@vuikit/theme": "^0.8.1",
+    "chart.js": "^2.9.4",
     "pinia": "^2.0.16",
     "vue": "^2.7.7",
+    "vue-chartjs": "^3.5.1",
     "vue-router": "^3.5.4",
     "vuikit": "^0.8.10"
   },

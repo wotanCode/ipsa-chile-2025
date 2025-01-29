@@ -1,0 +1,68 @@
+import { defineStore } from "pinia";
+import { ref } from "vue";
+import type { HistoryI } from "@/interfaces/history";
+
+// Importamos los JSON directamente
+import AGUASA from "@/db/history/history-AGUAS-A.json";
+import ANDINAB from "@/db/history/history-ANDINA-B.json";
+import BCI from "@/db/history/history-BCI.json";
+import BSANTANDER from "@/db/history/history-BSANTANDER.json";
+import CAP from "@/db/history/history-CAP.json";
+import IPSA from "@/db/history/history-IPSA.json";
+
+type ChartDataT = {
+  labels: string[];
+  datasets: {
+    label: string;
+    data: number[];
+    borderColor: string;
+    backgroundColor: string;
+  }[];
+};
+
+// Creamos un objeto con los datos importados
+const historyData: Record<string, HistoryI> = {
+  AGUASA,
+  ANDINAB,
+  BCI,
+  BSANTANDER,
+  CAP,
+  IPSA,
+};
+
+export const useDataStore = defineStore("data", () => {
+  const jsonData = ref<Record<string, ChartDataT>>({});
+  const isLoading = ref(false);
+  const error = ref<string | null>(null);
+
+  function loadData() {
+    isLoading.value = true;
+    error.value = null;
+
+    try {
+      const datasets: Record<string, ChartDataT> = {};
+
+      for (const [key, data] of Object.entries(historyData)) {
+        datasets[key] = {
+          labels: data.data.chart.map((item) => item.datetimeLastPrice),
+          datasets: [
+            {
+              label: `${data.data.info.name} - Precios de cierre`,
+              data: data.data.chart.map((item) => item.closePrice),
+              borderColor: "blue",
+              backgroundColor: "rgba(0, 0, 255, 0.2)",
+            },
+          ],
+        };
+      }
+
+      jsonData.value = datasets;
+    } catch (err) {
+      error.value = (err as Error).message;
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  return { jsonData, isLoading, error, loadData };
+});
