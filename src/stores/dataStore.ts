@@ -33,6 +33,7 @@ export const useDataStore = defineStore("data", () => {
   const jsonData = ref<Record<string, ChartDataT>>({});
   const isLoading = ref(false);
   const error = ref<string | null>(null);
+  const selectedKey = ref("IPSA"); // Agregado para controlar la selección por defecto
 
   function loadData() {
     isLoading.value = true;
@@ -63,5 +64,5 @@ export const useDataStore = defineStore("data", () => {
     }
   }
 
-  return { jsonData, isLoading, error, loadData };
+  return { jsonData, isLoading, error, loadData, selectedKey }; // Retornar selectedKey
 });

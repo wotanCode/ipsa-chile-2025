@@ -5,7 +5,7 @@ import { useDataStore } from "@/stores/dataStore";
 import { Line } from "chart.js";
 
 const store = useDataStore();
-const { jsonData, isLoading, error } = storeToRefs(store);
+const { jsonData, isLoading, error, selectedKey } = storeToRefs(store); // Accedemos a selectedKey
 
 const chartCanvas = ref(null);
 const chartInstance = ref(null);
@@ -59,7 +59,7 @@ const updateTimeframe = (timeframe) => {
 };
 
 const updateChartData = () => {
-  const fullData = jsonData.value["IPSA"];
+  const fullData = jsonData.value[selectedKey.value]; // Usamos el selectedKey
   if (!fullData) return;
 
   const days = timeframes[selectedTimeframe.value];
@@ -80,7 +80,7 @@ onMounted(async () => {
   store.loadData();
 });
 
-watch(jsonData, () => {
+watch([jsonData, selectedKey], () => {
   updateChartData();
 });
 </script>
