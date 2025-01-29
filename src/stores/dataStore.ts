@@ -49,8 +49,8 @@ export const useDataStore = defineStore("data", () => {
             {
               label: `${data.data.info.name} - Precios de cierre`,
               data: data.data.chart.map((item) => item.closePrice),
-              borderColor: "blue",
-              backgroundColor: "rgba(0, 0, 255, 0.2)",
+              borderColor: "rgba(4, 92, 169, 0)",
+              backgroundColor: "rgba(4, 92, 169, 0.2)",
             },
           ],
         };

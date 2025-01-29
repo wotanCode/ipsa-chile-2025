@@ -1,7 +1,29 @@
 <template>
   <div>
-    <p>{{ chartData ? "Grafico" : "Sin datos" }}</p>
     <canvas ref="chartCanvas"></canvas>
+
+    <div class="uk-button-group uk-margin-top">
+      <button
+        class="uk-button uk-button-small uk-button-default uk-text-bold btnTime"
+      >
+        1M
+      </button>
+      <button
+        class="uk-button uk-button-small uk-button-default uk-text-bold btnTime"
+      >
+        3M
+      </button>
+      <button
+        class="uk-button uk-button-small uk-button-default uk-text-bold btnTime"
+      >
+        6M
+      </button>
+      <button
+        class="uk-button uk-button-small uk-button-default uk-text-bold btnTime"
+      >
+        1A
+      </button>
+    </div>
   </div>
 </template>
 
@@ -24,13 +46,13 @@ export default {
         const ctx = this.$refs.chartCanvas.getContext("2d");
         new Line(ctx, {
           type: "line",
-          data: this.chartData, // Asume que chartData es el objeto adecuado para Chart.js
+          data: this.chartData,
           options: {
             responsive: true,
             plugins: {
               title: {
                 display: true,
-                text: "Gráfico de ejemplo",
+                text: "Gráfico",
               },
               tooltip: {
                 enabled: true,
@@ -51,3 +73,11 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.btnTime {
+  color: #f1f1f1;
+  border-radius: 8px;
+  font-size: 0.85rem;
+}
+</style>

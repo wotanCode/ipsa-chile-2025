@@ -46,7 +46,6 @@ ul {
 .headerContainer {
   display: flex;
   flex-direction: column;
-  width: 70%;
 
   .title {
     color: var(--vt-c-white);
