@@ -1,9 +1,11 @@
-import { describe, it, expect, beforeEach } from "vitest";
+import { describe, it, expect, beforeEach, vi } from "vitest";
 import { mount } from "@vue/test-utils";
 import TabComponent from "./TabComponent.vue";
 import { createPinia, setActivePinia } from "pinia";
 import { useChartStore } from "@/stores/chartStore";
 import { nextTick } from "vue";
+
+vi.mock("@/stores/resumeStore");
 
 describe("TabComponent", () => {
   beforeEach(() => {
@@ -45,11 +47,10 @@ describe("TabComponent", () => {
 
     const tabs = wrapper.findAll(".tab");
 
-    expect(tabs.length).toBe(3)
+    expect(tabs.length).toBe(3);
 
     // Verifica si el segundo tab está disponible
     if (tabs[1]) {
-
       await tabs[1].trigger("click");
       expect(store.selectedKey).toBe("Tab2");
     }
