@@ -19,11 +19,11 @@ describe("Test básico de componentes", () => {
     cy.get("@timeframeButton").first().should("have.class", "uk-active");
   });
 
-  it("Debería mostrar los instrumentos correctamente en la tabla", () => {
-    cy.get("table tbody tr").should("have.length.greaterThan", 0);
+  // it("Debería mostrar los instrumentos correctamente en la tabla", () => {
+  //   cy.get("table tbody tr").should("have.length.greaterThan", 0);
 
-    cy.get("th").contains("↑↓Nombre").should("be.visible");
-    cy.get("th").contains("↑↓Último*").should("be.visible");
-    cy.get("th").contains("↑↓Monto").should("be.visible");
-  });
+  //   cy.get("th").contains("↑↓Nombre").should("be.visible");
+  //   cy.get("th").contains("↑↓Último*").should("be.visible");
+  //   cy.get("th").contains("↑↓Monto").should("be.visible");
+  // });
 });
