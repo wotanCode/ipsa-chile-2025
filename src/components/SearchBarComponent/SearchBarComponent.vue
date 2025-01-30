@@ -6,9 +6,7 @@ const store = useChartStore();
 const searchQuery = ref("");
 
 const onSubmit = (event: Event) => {
-  event.preventDefault(); // Evita la recarga de la página
-  console.log("pasate por aqui", event);
-  console.log("pasate por aqui", searchQuery.value);
+  event.preventDefault();
 
   const key = searchQuery.value.toUpperCase();
 
@@ -21,8 +19,11 @@ const onSubmit = (event: Event) => {
 
   if (option) {
     store.selectTab(key);
+    searchQuery.value = "";
   } else {
+    alert(`No se encontró la opción con key: ${key}`);
     console.warn(`No se encontró la opción con key: ${key}`);
+    searchQuery.value = "";
   }
 };
 </script>
