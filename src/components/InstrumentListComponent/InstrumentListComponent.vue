@@ -30,11 +30,11 @@ onMounted(() => {
     <table v-if="!isLoading && !error">
       <thead>
         <tr>
-          <th>Nombre</th>
+          <th><strong>Nombre</strong></th>
           <th>Último*</th>
           <th>Monto</th>
           <th>Var Día</th>
-          <th>Var 30d</th>
+          <th>Var 30d**</th>
           <th>Año Actual</th>
           <th>12 Meses</th>
         </tr>
@@ -44,7 +44,9 @@ onMounted(() => {
           v-for="instrument in instrumentsData?.data.constituents"
           :key="instrument.codeInstrument"
         >
-          <td>{{ instrument.name }}</td>
+          <td>
+            <strong>{{ instrument.name }}</strong>
+          </td>
           <td>{{ instrument.lastPrice }}</td>
           <td>{{ instrument.volumeMoney }}</td>
           <td :class="getClass(instrument.pctDay)">
@@ -69,13 +71,10 @@ onMounted(() => {
 table {
   width: 100%;
   border-collapse: collapse;
+  font-size: 10px;
 }
 th,
 td {
-  border: 1px solid #ddd;
-  padding: 8px;
-}
-th {
-  background-color: #f4f4f4;
+  padding: 4px;
 }
 </style>
