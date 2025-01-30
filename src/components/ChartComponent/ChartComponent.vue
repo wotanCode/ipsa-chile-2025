@@ -5,12 +5,13 @@ import { useChartStore } from "@/stores/chartStore";
 import { Line } from "chart.js";
 
 const store = useChartStore();
-const { jsonData, isLoading, error, selectedKey } = storeToRefs(store);
+const { jsonData, isLoading, error, selectedKey, selectedTimeframe } =
+  storeToRefs(store);
+const { setTimeframe } = store;
 
 const chartCanvas = ref(null);
 const chartInstance = ref(null);
 const selectedData = ref(null);
-const selectedTimeframe = ref("1M");
 
 const timeframes = {
   "1M": 30,
@@ -53,11 +54,6 @@ const renderChart = () => {
   });
 };
 
-const updateTimeframe = (timeframe) => {
-  selectedTimeframe.value = timeframe;
-  updateChartData();
-};
-
 const updateChartData = () => {
   const fullData = jsonData.value[selectedKey.value];
   if (!fullData) return;
@@ -80,7 +76,7 @@ onMounted(async () => {
   store.loadData();
 });
 
-watch([jsonData, selectedKey], () => {
+watch([jsonData, selectedKey, selectedTimeframe], () => {
   updateChartData();
 });
 </script>
@@ -97,7 +93,7 @@ watch([jsonData, selectedKey], () => {
         :key="key"
         class="uk-button uk-button-small uk-button-default uk-text-bold btnTime"
         :class="{ 'uk-active': selectedTimeframe === key }"
-        @click="updateTimeframe(key)"
+        @click="setTimeframe(key)"
       >
         {{ key }}
       </button>
