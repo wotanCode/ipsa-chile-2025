@@ -3,23 +3,21 @@ import { storeToRefs } from "pinia";
 import { useDataStore } from "@/stores/dataStore";
 
 const store = useDataStore();
-const { selectedKey } = storeToRefs(store);
+const { selectedKey, tabOptions } = storeToRefs(store);
 const { selectTab } = store;
-
-const options = ["AGUASA", "ANDINAB", "BCI", "BSANTANDER", "CAP", "IPSA"];
 </script>
 
 <template>
   <div class="tabContainer">
     <div class="tabs">
       <button
-        v-for="(label, key) in options"
-        :key="key"
+        v-for="option in tabOptions"
+        :key="option.key"
         class="tab"
-        :class="{ active: selectedKey === label }"
-        @click="selectTab(label)"
+        :class="{ active: selectedKey === option.key }"
+        @click="selectTab(option.key)"
       >
-        {{ label }}
+        {{ option.key }}
       </button>
     </div>
   </div>

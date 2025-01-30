@@ -33,7 +33,15 @@ export const useDataStore = defineStore("data", () => {
   const isLoading = ref(false);
   const error = ref<string | null>(null);
 
-  const selectedKey = ref("IPSA"); // Valor por defecto
+  const selectedKey = ref("IPSA");
+
+  const tabOptions = ref(
+    Object.entries(historyData).map(([key, data]) => ({
+      key,
+      name: data.data.info.name,
+      country: data.data.info.countryName,
+    }))
+  );
 
   function loadData() {
     isLoading.value = true;
@@ -68,5 +76,13 @@ export const useDataStore = defineStore("data", () => {
     selectedKey.value = key;
   }
 
-  return { jsonData, isLoading, error, selectedKey, loadData, selectTab };
+  return {
+    jsonData,
+    isLoading,
+    error,
+    selectedKey,
+    tabOptions,
+    loadData,
+    selectTab,
+  };
 });
