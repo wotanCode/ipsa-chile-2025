@@ -17,7 +17,7 @@ export const useInstrumentStore = defineStore("instrumentStore", () => {
       const isLocal = window.location.hostname === "localhost";
       const baseUrl = isLocal
         ? "/db/constituyentes"
-        : "ipsa-chile-2025/db/constituyentes";
+        : "/ipsa-chile-2025/db/constituyentes";
 
       const response = await fetch(`${baseUrl}/constituensList.json`);
 

@@ -45,7 +45,8 @@ export const useChartStore = defineStore("data", () => {
 
         // Verificar si estamos en local o en producción
         const isLocal = window.location.hostname === "localhost";
-        const baseUrl = isLocal ? "/db/history" : `ipsa-chile-2025/db/history`;
+        console.log("isLocal", isLocal);
+        const baseUrl = isLocal ? "/db/history" : `/ipsa-chile-2025/db/history`;
 
         const response = await fetch(`${baseUrl}/history-${mappedKey}.json`);
 
@@ -78,8 +79,6 @@ export const useChartStore = defineStore("data", () => {
               country: data.data.info.countryName,
             });
           }
-
-          console.log("tabOptions", tabOptions.value);
         } catch (err) {
           console.error(`Error parsing JSON for ${mappedKey}:`, err);
           error.value = `Error al cargar el archivo ${mappedKey}`;
