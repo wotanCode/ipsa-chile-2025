@@ -75,45 +75,24 @@ onMounted(() => {
             <tr>
               <th @click="sortData('name')">
                 <strong>↑↓Nombre</strong>
-                <!-- <span v-if="sortConfig.field === 'name'">
-                  {{ sortConfig.direction === "asc" ? "↑" : "↓" }}
-                </span> -->
               </th>
               <th @click="sortData('lastPrice')">
                 <strong>↑↓Último*</strong>
-                <!-- <span v-if="sortConfig.field === 'lastPrice'">
-                  {{ sortConfig.direction === "asc" ? "↑" : "↓" }}
-                </span> -->
               </th>
               <th @click="sortData('volumeMoney')">
                 <strong>↑↓Monto</strong>
-                <!-- <span v-if="sortConfig.field === 'volumeMoney'">
-                  {{ sortConfig.direction === "asc" ? "↑" : "↓" }}
-                </span> -->
               </th>
               <th @click="sortData('pctDay')">
                 <strong>↑↓Var Día</strong>
-                <!-- <span v-if="sortConfig.field === 'pctDay'">
-                  {{ sortConfig.direction === "asc" ? "↑" : "↓" }}
-                </span> -->
               </th>
               <th @click="sortData('pct30D')">
                 <strong>↑↓Var 30d**</strong>
-                <!-- <span v-if="sortConfig.field === 'pct30D'">
-                  {{ sortConfig.direction === "asc" ? "↑" : "↓" }}
-                </span> -->
               </th>
               <th @click="sortData('pctCY')">
                 <strong>↑↓Año Actual</strong>
-                <!-- <span v-if="sortConfig.field === 'pctCY'">
-                  {{ sortConfig.direction === "asc" ? "↑" : "↓" }}
-                </span> -->
               </th>
               <th @click="sortData('pct1Y')">
                 <strong>↑↓12 Meses</strong>
-                <!-- <span v-if="sortConfig.field === 'pct1Y'">
-                  {{ sortConfig.direction === "asc" ? "↑" : "↓" }}
-                </span> -->
               </th>
             </tr>
           </thead>
@@ -148,45 +127,24 @@ onMounted(() => {
             <tr>
               <th @click="sortData('name')">
                 <strong>↑↓Nombre</strong>
-                <!-- <span v-if="sortConfig.field === 'name'">
-                  {{ sortConfig.direction === "asc" ? "↑" : "↓" }}
-                </span> -->
               </th>
               <th @click="sortData('lastPrice')">
                 <strong>↑↓Último*</strong>
-                <!-- <span v-if="sortConfig.field === 'lastPrice'">
-                  {{ sortConfig.direction === "asc" ? "↑" : "↓" }}
-                </span> -->
               </th>
               <th @click="sortData('volumeMoney')">
                 <strong>↑↓Monto</strong>
-                <!-- <span v-if="sortConfig.field === 'volumeMoney'">
-                  {{ sortConfig.direction === "asc" ? "↑" : "↓" }}
-                </span> -->
               </th>
               <th @click="sortData('pctDay')">
                 <strong>↑↓Var Día</strong>
-                <!-- <span v-if="sortConfig.field === 'pctDay'">
-                  {{ sortConfig.direction === "asc" ? "↑" : "↓" }}
-                </span> -->
               </th>
               <th @click="sortData('pct30D')">
                 <strong>↑↓Var 30d**</strong>
-                <!-- <span v-if="sortConfig.field === 'pct30D'">
-                  {{ sortConfig.direction === "asc" ? "↑" : "↓" }}
-                </span> -->
               </th>
               <th @click="sortData('pctCY')">
                 <strong>↑↓Año Actual</strong>
-                <!-- <span v-if="sortConfig.field === 'pctCY'">
-                  {{ sortConfig.direction === "asc" ? "↑" : "↓" }}
-                </span> -->
               </th>
               <th @click="sortData('pct1Y')">
                 <strong>↑↓12 Meses</strong>
-                <!-- <span v-if="sortConfig.field === 'pct1Y'">
-                  {{ sortConfig.direction === "asc" ? "↑" : "↓" }}
-                </span> -->
               </th>
             </tr>
           </thead>
