@@ -50,7 +50,9 @@ onMounted(() => {
           </thead>
           <tbody>
             <tr
-              v-for="instrument in splitData(instrumentsData.data.constituents)[0]"
+              v-for="instrument in splitData(
+                instrumentsData.data.constituents
+              )[0]"
               :key="instrument.codeInstrument"
             >
               <td>
@@ -89,7 +91,9 @@ onMounted(() => {
           </thead>
           <tbody>
             <tr
-              v-for="instrument in splitData(instrumentsData.data.constituents)[1]"
+              v-for="instrument in splitData(
+                instrumentsData.data.constituents
+              )[1]"
               :key="instrument.codeInstrument"
             >
               <td>
