@@ -29,6 +29,7 @@ export const useResumeStore = defineStore("resume", () => {
     try {
       // Verificar si estamos en local o en producción
       const isLocal = window.location.hostname === "localhost";
+
       const baseUrl = isLocal ? "/db/resumen" : "/db/resumen";
 
       const response = await fetch(`${baseUrl}/${mappedInstrument}.json`);

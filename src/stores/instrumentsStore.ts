@@ -15,6 +15,7 @@ export const useInstrumentStore = defineStore("instrumentStore", () => {
     try {
       // Verificar si estamos en local o en producción
       const isLocal = window.location.hostname === "localhost";
+
       const baseUrl = isLocal ? "/db/constituyentes" : "/db/constituyentes";
 
       const response = await fetch(`${baseUrl}/constituensList.json`);

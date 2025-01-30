@@ -45,6 +45,7 @@ export const useChartStore = defineStore("data", () => {
 
         // Verificar si estamos en local o en producción
         const isLocal = window.location.hostname === "localhost";
+
         const baseUrl = isLocal ? "/db/history" : `/db/history`;
 
         const response = await fetch(`${baseUrl}/history-${mappedKey}.json`);
