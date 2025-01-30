@@ -60,6 +60,12 @@ npm run build
 npm run test:e2e # o `npm run test:e2e:ci` para pruebas en modo headless
 ```
 
+En caso de problemas de ejecución, alternativamente, ejecutar:
+```sh
+npm run test:e2e
+npx cypress open
+```
+
 ## 🔍 Linter y chequeo de tipos
 
 ### ✨ Ejecutar ESLint para revisar errores en el código
