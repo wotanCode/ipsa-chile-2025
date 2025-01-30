@@ -73,25 +73,25 @@ onMounted(() => {
         <table v-if="instrumentsData && instrumentsData.data">
           <thead>
             <tr>
-              <th @click="sortData('name')">
+              <th @click="sortData('name')" class="clickable-header">
                 <strong>↑↓Nombre</strong>
               </th>
-              <th @click="sortData('lastPrice')">
+              <th @click="sortData('lastPrice')" class="clickable-header">
                 <strong>↑↓Último*</strong>
               </th>
-              <th @click="sortData('volumeMoney')">
+              <th @click="sortData('volumeMoney')" class="clickable-header">
                 <strong>↑↓Monto</strong>
               </th>
-              <th @click="sortData('pctDay')">
+              <th @click="sortData('pctDay')" class="clickable-header">
                 <strong>↑↓Var Día</strong>
               </th>
-              <th @click="sortData('pct30D')">
+              <th @click="sortData('pct30D')" class="clickable-header">
                 <strong>↑↓Var 30d**</strong>
               </th>
-              <th @click="sortData('pctCY')">
+              <th @click="sortData('pctCY')" class="clickable-header">
                 <strong>↑↓Año Actual</strong>
               </th>
-              <th @click="sortData('pct1Y')">
+              <th @click="sortData('pct1Y')" class="clickable-header">
                 <strong>↑↓12 Meses</strong>
               </th>
             </tr>
@@ -125,25 +125,25 @@ onMounted(() => {
         <table v-if="instrumentsData && instrumentsData.data">
           <thead>
             <tr>
-              <th @click="sortData('name')">
+              <th @click="sortData('name')" class="clickable-header">
                 <strong>↑↓Nombre</strong>
               </th>
-              <th @click="sortData('lastPrice')">
+              <th @click="sortData('lastPrice')" class="clickable-header">
                 <strong>↑↓Último*</strong>
               </th>
-              <th @click="sortData('volumeMoney')">
+              <th @click="sortData('volumeMoney')" class="clickable-header">
                 <strong>↑↓Monto</strong>
               </th>
-              <th @click="sortData('pctDay')">
+              <th @click="sortData('pctDay')" class="clickable-header">
                 <strong>↑↓Var Día</strong>
               </th>
-              <th @click="sortData('pct30D')">
+              <th @click="sortData('pct30D')" class="clickable-header">
                 <strong>↑↓Var 30d**</strong>
               </th>
-              <th @click="sortData('pctCY')">
+              <th @click="sortData('pctCY')" class="clickable-header">
                 <strong>↑↓Año Actual</strong>
               </th>
-              <th @click="sortData('pct1Y')">
+              <th @click="sortData('pct1Y')" class="clickable-header">
                 <strong>↑↓12 Meses</strong>
               </th>
             </tr>
@@ -184,6 +184,7 @@ table {
   border-collapse: collapse;
   font-size: 10px;
 }
+
 th,
 td {
   padding: 4px;
@@ -196,5 +197,15 @@ td {
 
 .half-table table {
   width: 48%;
+}
+
+.clickable-header {
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.clickable-header:hover {
+  background-color: #f0f0f0;
+  color: #007bff;
 }
 </style>
