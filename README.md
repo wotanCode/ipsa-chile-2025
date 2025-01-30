@@ -86,7 +86,35 @@ Luego, la aplicación estará disponible en:
 https://wotanCode.github.io/ipsa-chile-2025/
 ```
 
+## 🛠️ Stack Tecnológico
+- [![Vue][vue-badge]][vue-url] Un framework progresivo para construir interfaces de usuario dinámicas.
+- [![Vite][vite-badge]][vite-url] Un entorno de desarrollo rápido y ligero.
+- [![Typescript][typescript-badge]][typescript-url] JavaScript con tipado estático para mayor seguridad y claridad.
+- [![Cypress][cypress-badge]][cypress-url] Un framework de pruebas End-to-End.
+- [![Vitest][vitest-badge]][vitest-url] Un framework de pruebas unitarias rápido y ligero.
+
 ## 📄 Configuración adicional
 
 Para más información sobre la configuración de Vite, visita la [documentación oficial](https://vitejs.dev/config/).
 
+<hr />
+Hecho con ❤️ amor.
+Casi todos los derechos reservados...
+
+📄 Licencia
+Este proyecto está bajo la Licencia MIT.
+
+[vue-url]: https://vuejs.org/
+[vue-badge]: https://img.shields.io/badge/Vue-4FC08D?style=for-the-badge&logo=vue.js&logoColor=white
+
+[vite-url]: https://vitejs.dev/
+[vite-badge]: https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white
+
+[typescript-url]: https://www.typescriptlang.org/
+[typescript-badge]: https://img.shields.io/badge/Typescript-3178C6?style=for-the-badge&logo=typescript&logoColor=white
+
+[cypress-url]: https://www.cypress.io/
+[cypress-badge]: https://img.shields.io/badge/Cypress-17202C?style=for-the-badge&logo=cypress&logoColor=white
+
+[vitest-url]: https://vitest.dev/
+[vitest-badge]: https://img.shields.io/badge/Vitest-6E9F18?style=for-the-badge&logo=vitest&logoColor=white
