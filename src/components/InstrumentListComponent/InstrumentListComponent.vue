@@ -1,7 +1,10 @@
 <script setup>
 import { onMounted, ref } from "vue";
-import { useInstrumentStore } from "@/stores/instrumentsStore";
 import { storeToRefs } from "pinia";
+
+import { useInstrumentStore } from "@/stores/instrumentsStore";
+
+import InstrumentItemComponent from "@/components/InstrumentItemComponent/InstrumentItemComponent.vue";
 
 const store = useInstrumentStore();
 const { instrumentsData, isLoading, error } = storeToRefs(store);
@@ -97,28 +100,14 @@ onMounted(() => {
             </tr>
           </thead>
           <tbody>
-            <tr
+            <InstrumentItemComponent
               v-for="instrument in splitData()[0]"
               :key="instrument.codeInstrument"
-            >
-              <td>
-                <strong>{{ instrument.name }}</strong>
-              </td>
-              <td>{{ instrument.lastPrice }}</td>
-              <td>{{ instrument.volumeMoney }}</td>
-              <td :class="getClass(instrument.pctDay)">
-                {{ formatValue(instrument.pctDay) }}%
-              </td>
-              <td :class="getClass(instrument.pct30D)">
-                {{ formatValue(instrument.pct30D) }}%
-              </td>
-              <td :class="getClass(instrument.pctCY)">
-                {{ formatValue(instrument.pctCY) }}%
-              </td>
-              <td :class="getClass(instrument.pct1Y)">
-                {{ formatValue(instrument.pct1Y) }}%
-              </td>
-            </tr>
+              :instrument="instrument"
+              :sortData="sortData"
+              :getClass="getClass"
+              :formatValue="formatValue"
+            />
           </tbody>
         </table>
 
@@ -149,28 +138,14 @@ onMounted(() => {
             </tr>
           </thead>
           <tbody>
-            <tr
+            <InstrumentItemComponent
               v-for="instrument in splitData()[1]"
               :key="instrument.codeInstrument"
-            >
-              <td>
-                <strong>{{ instrument.name }}</strong>
-              </td>
-              <td>{{ instrument.lastPrice }}</td>
-              <td>{{ instrument.volumeMoney }}</td>
-              <td :class="getClass(instrument.pctDay)">
-                {{ formatValue(instrument.pctDay) }}%
-              </td>
-              <td :class="getClass(instrument.pct30D)">
-                {{ formatValue(instrument.pct30D) }}%
-              </td>
-              <td :class="getClass(instrument.pctCY)">
-                {{ formatValue(instrument.pctCY) }}%
-              </td>
-              <td :class="getClass(instrument.pct1Y)">
-                {{ formatValue(instrument.pct1Y) }}%
-              </td>
-            </tr>
+              :instrument="instrument"
+              :sortData="sortData"
+              :getClass="getClass"
+              :formatValue="formatValue"
+            />
           </tbody>
         </table>
       </div>
