@@ -53,7 +53,7 @@ const { marketInfo, priceInfo } = storeToRefs(resumeStore);
     <hr />
 
     <div class="resume-section">
-      <h3>DESEMPEÑO</h3>
+      <h3>VARIACIÓN</h3>
       <ul>
         <li class="merchant-info">
           <p>1 mes:</p>
