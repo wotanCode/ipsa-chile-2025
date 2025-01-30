@@ -28,7 +28,7 @@ const historyData: Record<string, HistoryI> = {
   IPSA,
 };
 
-export const useDataStore = defineStore("data", () => {
+export const useChartStore = defineStore("data", () => {
   const jsonData = ref<Record<string, ChartDataT>>({});
   const isLoading = ref(false);
   const error = ref<string | null>(null);

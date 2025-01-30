@@ -1,10 +1,10 @@
 <script setup>
 import { ref, onMounted, watch } from "vue";
 import { storeToRefs } from "pinia";
-import { useDataStore } from "@/stores/dataStore";
+import { useChartStore } from "@/stores/chartStore";
 import { Line } from "chart.js";
 
-const store = useDataStore();
+const store = useChartStore();
 const { jsonData, isLoading, error, selectedKey } = storeToRefs(store);
 
 const chartCanvas = ref(null);

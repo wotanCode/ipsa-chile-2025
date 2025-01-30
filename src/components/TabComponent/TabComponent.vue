@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
-import { useDataStore } from "@/stores/dataStore";
+import { useChartStore } from "@/stores/chartStore";
 
-const store = useDataStore();
+const store = useChartStore();
 const { selectedKey, tabOptions } = storeToRefs(store);
 const { selectTab } = store;
 </script>

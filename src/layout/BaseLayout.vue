@@ -3,6 +3,7 @@ import SearchBarComponent from "@/components/SearchBarComponent/SearchBarCompone
 import HeaderComponent from "@/components/HeaderComponent/HeaderComponent.vue";
 import ChartComponent from "@/components/ChartComponent/ChartComponent.vue";
 import TabComponent from "@/components/TabComponent/TabComponent.vue";
+import SummaryComponent from "@/components/SummaryComponent/SummaryComponent.vue";
 </script>
 
 <template>
@@ -20,7 +21,7 @@ import TabComponent from "@/components/TabComponent/TabComponent.vue";
         </div>
 
         <div class="infoContainer">
-          <p>aqui va la segunda parte</p>
+          <SummaryComponent />
         </div>
       </div>
 

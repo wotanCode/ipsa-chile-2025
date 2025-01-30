@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
-import { useDataStore } from "@/stores/dataStore";
+import { useChartStore } from "@/stores/chartStore";
 import { computed } from "vue";
 
-const store = useDataStore();
+const store = useChartStore();
 const { selectedKey, jsonData, tabOptions } = storeToRefs(store);
 
 const currentData = computed(() => {
