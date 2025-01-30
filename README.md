@@ -80,7 +80,7 @@ npm run lint
 npm run type-check
 ```
 
-## 🚀 Despliegue en GitHub Pages
+<!-- ## 🚀 Despliegue en GitHub Pages
 
 El proyecto se puede desplegar en GitHub Pages ejecutando:
 
@@ -92,7 +92,7 @@ Luego, la aplicación estará disponible en:
 
 ```
 https://wotanCode.github.io/ipsa-chile-2025/
-```
+``` -->
 
 ## 🛠️ Stack Tecnológico
 - [![Vue][vue-badge]][vue-url] Un framework progresivo para construir interfaces de usuario dinámicas.

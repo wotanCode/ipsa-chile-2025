@@ -1,6 +1,13 @@
 import { defineStore } from "pinia";
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import type { HistoryI } from "@/interfaces/history";
+
+import AGUASA from "@/db/history/history-AGUAS-A.json";
+import ANDINAB from "@/db/history/history-ANDINA-B.json";
+import BCI from "@/db/history/history-BCI.json";
+import BSANTANDER from "@/db/history/history-BSANTANDER.json";
+import CAP from "@/db/history/history-CAP.json";
+import IPSA from "@/db/history/history-IPSA.json";
 
 type ChartDataT = {
   labels: string[];
@@ -12,6 +19,15 @@ type ChartDataT = {
   }[];
 };
 
+const historyData: Record<string, HistoryI> = {
+  AGUASA,
+  ANDINAB,
+  BCI,
+  BSANTANDER,
+  CAP,
+  IPSA,
+};
+
 export const useChartStore = defineStore("data", () => {
   const jsonData = ref<Record<string, ChartDataT>>({});
   const isLoading = ref(false);
@@ -20,72 +36,34 @@ export const useChartStore = defineStore("data", () => {
   const selectedKey = ref("IPSA");
   const selectedTimeframe = ref("1M");
 
-  const tabOptions = ref<{ key: string; name: string; country: string }[]>([]);
+  const tabOptions = ref<{ key: string; name: string; country: string }[]>(
+    Object.entries(historyData).map(([key, data]) => ({
+      key,
+      name: data.data.info.name,
+      country: data.data.info.countryName,
+    }))
+  );
 
-  const instrumentMapping: Record<string, string> = {
-    AGUASA: "AGUAS-A",
-    ANDINAB: "ANDINA-B",
-    BCI: "BCI",
-    BSANTANDER: "BSANTANDER",
-    CAP: "CAP",
-    IPSA: "IPSA",
-  };
-
-  const loadData = async () => {
+  function loadData() {
     isLoading.value = true;
     error.value = null;
 
     try {
       const datasets: Record<string, ChartDataT> = {};
 
-      const keys = ["AGUASA", "ANDINAB", "BCI", "BSANTANDER", "CAP", "IPSA"];
-
-      const loadJson = async (key: string) => {
-        const mappedKey = instrumentMapping[key] || key;
-
-        // Verificar si estamos en local o en producción
-        const isLocal = window.location.hostname === "localhost";
-
-        const baseUrl = isLocal ? "/db/history" : `/db/history`;
-
-        const response = await fetch(`${baseUrl}/history-${mappedKey}.json`);
-
-        if (!response.ok) {
-          console.error(`Failed to load ${mappedKey}`);
-          return;
-        }
-
-        try {
-          const data: HistoryI = await response.json();
-
-          datasets[key] = {
-            labels: data.data.chart.map((item) => item.datetimeLastPrice),
-            datasets: [
-              {
-                label: `${data.data.info.name} - Precios de cierre`,
-                data: data.data.chart.map((item) => item.closePrice),
-                borderColor: "rgba(4, 92, 169, 0)",
-                backgroundColor: "rgba(0, 136, 255, 0.5)",
-              },
-            ],
-          };
-
-          // Evitar agregar datos duplicados a tabOptions
-          const isTabExist = tabOptions.value.some((tab) => tab.key === key);
-          if (!isTabExist) {
-            tabOptions.value.push({
-              key,
-              name: data.data.info.name,
-              country: data.data.info.countryName,
-            });
-          }
-        } catch (err) {
-          console.error(`Error parsing JSON for ${mappedKey}:`, err);
-          error.value = `Error al cargar el archivo ${mappedKey}`;
-        }
-      };
-
-      await Promise.all(keys.map((key) => loadJson(key)));
+      for (const [key, data] of Object.entries(historyData)) {
+        datasets[key] = {
+          labels: data.data.chart.map((item) => item.datetimeLastPrice),
+          datasets: [
+            {
+              label: `${data.data.info.name} - Precios de cierre`,
+              data: data.data.chart.map((item) => item.closePrice),
+              borderColor: "rgba(4, 92, 169, 0)",
+              backgroundColor: "rgba(0, 136, 255, 0.5)",
+            },
+          ],
+        };
+      }
 
       jsonData.value = datasets;
     } catch (err) {
@@ -93,19 +71,15 @@ export const useChartStore = defineStore("data", () => {
     } finally {
       isLoading.value = false;
     }
-  };
+  }
 
-  const selectTab = (key: string) => {
+  function selectTab(key: string) {
     selectedKey.value = key;
-  };
+  }
 
-  const setTimeframe = (timeframe: string) => {
+  function setTimeframe(timeframe: string) {
     selectedTimeframe.value = timeframe;
-  };
-
-  onMounted(() => {
-    loadData();
-  });
+  }
 
   return {
     jsonData,

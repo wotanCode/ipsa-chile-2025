@@ -27,14 +27,8 @@ export const useResumeStore = defineStore("resume", () => {
     }
 
     try {
-      // Verificar si estamos en local o en producción
-      const isLocal = window.location.hostname === "localhost";
-
-      const baseUrl = isLocal ? "/db/resumen" : "/db/resumen";
-
-      const response = await fetch(`${baseUrl}/${mappedInstrument}.json`);
+      const response = await fetch(`/src/db/resumen/${mappedInstrument}.json`);
       if (!response.ok) throw new Error("Error al cargar el resumen");
-
       resumenData.value = (await response.json()) as ResumenI;
     } catch (error) {
       console.error(error);
