@@ -34,10 +34,42 @@ import InstrumentListComponent from "@/components/InstrumentListComponent/Instru
         <InstrumentListComponent />
       </div>
     </main>
+
+    <footer class="footer">
+      <p>
+        * Último precio, monto transado y variación diaria con desfase de 15
+        minutos. Haz clic en cada instrumento para ver la información
+        actualizada en el gráfico.
+      </p>
+      <p>
+        ** Variaciones a 30D. Año actual y 12 meses calculadas con el precio de
+        cierre al último día hábil.
+      </p>
+
+      <p>
+        Hecho con ❤️ por Pedro Yanez, revisa mi
+        <a
+          href="https://www.linkedin.com/in/pedro-yanez/"
+          target="_blank"
+          rel="noreferrer"
+          >LinkedIn</a
+        >
+        y mi
+        <a href="https://github.com/wotanCode" target="_blank" rel="noreferrer"
+          >GitHub</a
+        >
+        aquí
+      </p>
+    </footer>
   </div>
 </template>
 
 <style scoped>
+p {
+  margin: 0;
+  padding: 0;
+}
+
 .layoutContainer {
   display: flex;
   flex-direction: column;
@@ -70,5 +102,9 @@ import InstrumentListComponent from "@/components/InstrumentListComponent/Instru
 
 .thirdContainer {
   margin-top: 2rem;
+}
+
+.footer {
+  font-size: 10px;
 }
 </style>
