@@ -19,13 +19,6 @@ describe("Test básico de componentes", () => {
     cy.get("@timeframeButton").first().should("have.class", "uk-active");
   });
 
-  // it("Debería mostrar los valores correctamente en el encabezado", () => {
-  //   cy.get(".presentValue").should("exist");
-
-  //   cy.get("span.uk-text-success").should("exist");
-  //   cy.get("span.uk-text-danger").should("exist");
-  // });
-
   it("Debería mostrar los instrumentos correctamente en la tabla", () => {
     cy.get("table tbody tr").should("have.length.greaterThan", 0);
 
