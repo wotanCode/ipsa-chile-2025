@@ -6,6 +6,14 @@ import { storeToRefs } from "pinia";
 const store = useInstrumentStore();
 const { instrumentsData, isLoading, error } = storeToRefs(store);
 
+const getClass = (value) => {
+  return value < 0 ? "uk-text-danger" : "uk-text-success";
+};
+
+const formatValue = (value) => {
+  return value ? value.toFixed(2) : "0.00";
+};
+
 onMounted(() => {
   store.loadInstruments();
 });
@@ -13,7 +21,13 @@ onMounted(() => {
 
 <template>
   <div>
-    <table>
+    <div v-if="isLoading">Cargando los datos, por favor espera...</div>
+
+    <div v-if="error" class="uk-text-danger">
+      Hubo un error al cargar los datos. Intenta nuevamente.
+    </div>
+
+    <table v-if="!isLoading && !error">
       <thead>
         <tr>
           <th>Nombre</th>
@@ -33,10 +47,18 @@ onMounted(() => {
           <td>{{ instrument.name }}</td>
           <td>{{ instrument.lastPrice }}</td>
           <td>{{ instrument.volumeMoney }}</td>
-          <td>{{ instrument.pctDay }}%</td>
-          <td>{{ instrument.pct30D }}%</td>
-          <td>{{ instrument.pctCY }}%</td>
-          <td>{{ instrument.pct1Y }}%</td>
+          <td :class="getClass(instrument.pctDay)">
+            {{ formatValue(instrument.pctDay) }}%
+          </td>
+          <td :class="getClass(instrument.pct30D)">
+            {{ formatValue(instrument.pct30D) }}%
+          </td>
+          <td :class="getClass(instrument.pctCY)">
+            {{ formatValue(instrument.pctCY) }}%
+          </td>
+          <td :class="getClass(instrument.pct1Y)">
+            {{ formatValue(instrument.pct1Y) }}%
+          </td>
         </tr>
       </tbody>
     </table>
