@@ -8,54 +8,100 @@ const { marketInfo, priceInfo } = storeToRefs(resumeStore);
 
 <template>
   <div class="summary-container">
-    <!-- Sección 1: Cotización -->
+    <h3>DETALLES</h3>
+    <hr />
+
     <div class="summary-section">
-      <h3>Cotización</h3>
+      <h4>COTIZACIÓN</h4>
       <p>{{ priceInfo?.datetimeLastPrice || "-" }}</p>
     </div>
 
-    <!-- Sección 2: Información del mercado -->
-    <div class="summary-section">
-      <h3>Mercado</h3>
-      <p>
-        <strong>{{ marketInfo?.marketName || "-" }}</strong>
-      </p>
+    <hr />
+
+    <div class="resume-section">
+      <div class="merchant-info">
+        <h4>MERCADO</h4>
+        <p>
+          <strong>{{ marketInfo?.marketName || "-" }}</strong>
+        </p>
+      </div>
+
       <ul>
-        <li>Cierre anterior: {{ priceInfo?.closePrice || "-" }}</li>
-        <li>Máximo diario: {{ priceInfo?.maxDay || "-" }}</li>
-        <li>Mínimo diario: {{ priceInfo?.minDay || "-" }}</li>
-        <li>Máximo 52 semanas: {{ priceInfo?.max52W || "-" }}</li>
-        <li>Mínimo 52 semanas: {{ priceInfo?.min52W || "-" }}</li>
+        <li class="merchant-info">
+          <p>Cierre anterior:</p>
+          <p>{{ priceInfo?.closePrice || "-" }}</p>
+        </li>
+        <li class="merchant-info">
+          <p>Máximo diario:</p>
+          <p>{{ priceInfo?.maxDay || "-" }}</p>
+        </li>
+        <li class="merchant-info">
+          <p>Mínimo diario:</p>
+          <p>{{ priceInfo?.minDay || "-" }}</p>
+        </li>
+        <li class="merchant-info">
+          <p>Máximo 52 semanas:</p>
+          <p>{{ priceInfo?.max52W || "-" }}</p>
+        </li>
+        <li class="merchant-info">
+          <p>Mínimo 52 semanas:</p>
+          <p>{{ priceInfo?.min52W || "-" }}</p>
+        </li>
       </ul>
     </div>
 
-    <!-- Sección 3: Desempeño -->
-    <div class="summary-section">
-      <h3>Desempeño</h3>
+    <hr />
+
+    <div class="resume-section">
+      <h3>DESEMPEÑO</h3>
       <ul>
-        <li
-          :class="{
-            'uk-text-success': priceInfo?.pct30D > 0,
-            'uk-text-danger': priceInfo?.pct30D < 0,
-          }"
-        >
-          1 mes: {{ (priceInfo?.pct30D * 100).toFixed(2) }}%
+        <li class="merchant-info">
+          <p>1 mes:</p>
+          <p
+            :class="{
+              'uk-text-success': priceInfo?.pct30D && priceInfo.pct30D > 0,
+              'uk-text-danger': priceInfo?.pct30D && priceInfo.pct30D < 0,
+            }"
+          >
+            {{
+              priceInfo?.pct30D !== undefined
+                ? (priceInfo.pct30D * 100).toFixed(2)
+                : "-"
+            }}%
+          </p>
         </li>
-        <li
-          :class="{
-            'uk-text-success': priceInfo?.pctRelW52 > 0,
-            'uk-text-danger': priceInfo?.pctRelW52 < 0,
-          }"
-        >
-          1 año: {{ (priceInfo?.pctRelW52 * 100).toFixed(2) }}%
+
+        <li class="merchant-info">
+          <p>1 año:</p>
+          <p
+            :class="{
+              'uk-text-success': priceInfo?.pctRelCY && priceInfo.pctRelCY > 0,
+              'uk-text-danger': priceInfo?.pctRelCY && priceInfo.pctRelCY < 0,
+            }"
+          >
+            {{
+              priceInfo?.pctRelW52 !== undefined
+                ? (priceInfo.pctRelW52 * 100).toFixed(2)
+                : "-"
+            }}%
+          </p>
         </li>
-        <li
-          :class="{
-            'uk-text-success': priceInfo?.pctRelCY > 0,
-            'uk-text-danger': priceInfo?.pctRelCY < 0,
-          }"
-        >
-          Año a la fecha: {{ (priceInfo?.pctRelCY * 100).toFixed(2) }}%
+
+        <li class="merchant-info">
+          <p>Año a la fecha:</p>
+
+          <p
+            :class="{
+              'uk-text-success': priceInfo?.pctRelCY && priceInfo.pctRelCY > 0,
+              'uk-text-danger': priceInfo?.pctRelCY && priceInfo.pctRelCY < 0,
+            }"
+          >
+            {{
+              priceInfo?.pctRelCY !== undefined
+                ? (priceInfo.pctRelCY * 100).toFixed(2)
+                : "-"
+            }}%
+          </p>
         </li>
       </ul>
     </div>
@@ -63,25 +109,14 @@ const { marketInfo, priceInfo } = storeToRefs(resumeStore);
 </template>
 
 <style scoped>
-.summary-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  background: #1e1e1e;
-  padding: 1.5rem;
-  border-radius: 8px;
+h3,
+h4 {
+  font-size: 1rem;
+  font-weight: bold;
   color: #f1f1f1;
-}
-
-.summary-section {
-  background: #2a2a2a;
-  padding: 1rem;
-  border-radius: 6px;
-}
-
-h3 {
-  margin-bottom: 0.5rem;
-  color: #fff;
+  padding: 0;
+  margin: 0;
+  font-size: 12px;
 }
 
 ul {
@@ -89,7 +124,27 @@ ul {
   padding: 0;
 }
 
+p,
 li {
-  padding: 0.25rem 0;
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+}
+
+hr {
+  margin: 10px 0;
+}
+
+.summary-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  color: #f1f1f1;
+}
+
+.summary-section,
+.merchant-info {
+  display: flex;
+  justify-content: space-between;
 }
 </style>
