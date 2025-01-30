@@ -6,7 +6,6 @@ import { storeToRefs } from "pinia";
 const store = useInstrumentStore();
 const { instrumentsData, isLoading, error } = storeToRefs(store);
 
-// Función para dividir los datos en dos partes iguales
 const splitData = (data) => {
   const mid = Math.ceil(data.length / 2);
   return [data.slice(0, mid), data.slice(mid)];
@@ -35,7 +34,6 @@ onMounted(() => {
 
     <div v-if="!isLoading && !error">
       <div class="half-table">
-        <!-- Primera mitad de la tabla -->
         <table v-if="instrumentsData">
           <thead>
             <tr>
@@ -76,7 +74,6 @@ onMounted(() => {
           </tbody>
         </table>
 
-        <!-- Segunda mitad de la tabla -->
         <table v-if="instrumentsData">
           <thead>
             <tr>
