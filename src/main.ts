@@ -9,9 +9,6 @@ import "./assets/main.css";
 
 Vue.use(PiniaVuePlugin);
 
-// TODO: Borrar esto despues
-// Vue.config.productionTip = false;
-
 new Vue({
   router,
   pinia: createPinia(),

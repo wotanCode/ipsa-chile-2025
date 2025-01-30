@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import type { ConstituensListI } from "@/interfaces/constituensList";
-import dataJson from "@/db/constituyentes/constituensList.json"; // Ajusta la ruta según sea necesario
+import dataJson from "@/db/constituyentes/constituensList.json";
 
 export const useInstrumentStore = defineStore("instrumentStore", () => {
   const instrumentsData = ref<ConstituensListI | null>(null);
