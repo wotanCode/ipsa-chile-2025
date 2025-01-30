@@ -1,18 +1,24 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import type { ConstituensListI } from "@/interfaces/constituensList";
-import dataJson from "@/db/constituyentes/constituensList.json";
 
 export const useInstrumentStore = defineStore("instrumentStore", () => {
   const instrumentsData = ref<ConstituensListI | null>(null);
   const isLoading = ref(false);
   const error = ref<string | null>(null);
 
-  function loadInstruments() {
+  // Cargar datos de los constituyentes desde la carpeta public
+  async function loadInstruments() {
     isLoading.value = true;
     error.value = null;
+
     try {
-      instrumentsData.value = dataJson;
+      const response = await fetch("/db/constituyentes/constituensList.json");
+      if (!response.ok) {
+        throw new Error("Error al cargar los datos de los instrumentos.");
+      }
+
+      instrumentsData.value = await response.json();
     } catch (err) {
       error.value = (err as Error).message;
     } finally {

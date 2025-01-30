@@ -27,7 +27,8 @@ export const useResumeStore = defineStore("resume", () => {
     }
 
     try {
-      const response = await fetch(`/src/db/resumen/${mappedInstrument}.json`);
+      // Usar la ruta relativa a la carpeta public
+      const response = await fetch(`/db/resumen/${mappedInstrument}.json`);
       if (!response.ok) throw new Error("Error al cargar el resumen");
       resumenData.value = (await response.json()) as ResumenI;
     } catch (error) {
