@@ -6,6 +6,12 @@ import { storeToRefs } from "pinia";
 const store = useInstrumentStore();
 const { instrumentsData, isLoading, error } = storeToRefs(store);
 
+// Función para dividir los datos en dos partes iguales
+const splitData = (data) => {
+  const mid = Math.ceil(data.length / 2);
+  return [data.slice(0, mid), data.slice(mid)];
+};
+
 const getClass = (value) => {
   return value < 0 ? "uk-text-danger" : "uk-text-success";
 };
@@ -27,43 +33,87 @@ onMounted(() => {
       Hubo un error al cargar los datos. Intenta nuevamente.
     </div>
 
-    <table v-if="!isLoading && !error">
-      <thead>
-        <tr>
-          <th><strong>Nombre</strong></th>
-          <th>Último*</th>
-          <th>Monto</th>
-          <th>Var Día</th>
-          <th>Var 30d**</th>
-          <th>Año Actual</th>
-          <th>12 Meses</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          v-for="instrument in instrumentsData?.data.constituents"
-          :key="instrument.codeInstrument"
-        >
-          <td>
-            <strong>{{ instrument.name }}</strong>
-          </td>
-          <td>{{ instrument.lastPrice }}</td>
-          <td>{{ instrument.volumeMoney }}</td>
-          <td :class="getClass(instrument.pctDay)">
-            {{ formatValue(instrument.pctDay) }}%
-          </td>
-          <td :class="getClass(instrument.pct30D)">
-            {{ formatValue(instrument.pct30D) }}%
-          </td>
-          <td :class="getClass(instrument.pctCY)">
-            {{ formatValue(instrument.pctCY) }}%
-          </td>
-          <td :class="getClass(instrument.pct1Y)">
-            {{ formatValue(instrument.pct1Y) }}%
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div v-if="!isLoading && !error">
+      <div class="half-table">
+        <!-- Primera mitad de la tabla -->
+        <table v-if="instrumentsData">
+          <thead>
+            <tr>
+              <th><strong>Nombre</strong></th>
+              <th>Último*</th>
+              <th>Monto</th>
+              <th>Var Día</th>
+              <th>Var 30d**</th>
+              <th>Año Actual</th>
+              <th>12 Meses</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="instrument in splitData(instrumentsData.data.constituents)[0]"
+              :key="instrument.codeInstrument"
+            >
+              <td>
+                <strong>{{ instrument.name }}</strong>
+              </td>
+              <td>{{ instrument.lastPrice }}</td>
+              <td>{{ instrument.volumeMoney }}</td>
+              <td :class="getClass(instrument.pctDay)">
+                {{ formatValue(instrument.pctDay) }}%
+              </td>
+              <td :class="getClass(instrument.pct30D)">
+                {{ formatValue(instrument.pct30D) }}%
+              </td>
+              <td :class="getClass(instrument.pctCY)">
+                {{ formatValue(instrument.pctCY) }}%
+              </td>
+              <td :class="getClass(instrument.pct1Y)">
+                {{ formatValue(instrument.pct1Y) }}%
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Segunda mitad de la tabla -->
+        <table v-if="instrumentsData">
+          <thead>
+            <tr>
+              <th><strong>Nombre</strong></th>
+              <th>Último*</th>
+              <th>Monto</th>
+              <th>Var Día</th>
+              <th>Var 30d**</th>
+              <th>Año Actual</th>
+              <th>12 Meses</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="instrument in splitData(instrumentsData.data.constituents)[1]"
+              :key="instrument.codeInstrument"
+            >
+              <td>
+                <strong>{{ instrument.name }}</strong>
+              </td>
+              <td>{{ instrument.lastPrice }}</td>
+              <td>{{ instrument.volumeMoney }}</td>
+              <td :class="getClass(instrument.pctDay)">
+                {{ formatValue(instrument.pctDay) }}%
+              </td>
+              <td :class="getClass(instrument.pct30D)">
+                {{ formatValue(instrument.pct30D) }}%
+              </td>
+              <td :class="getClass(instrument.pctCY)">
+                {{ formatValue(instrument.pctCY) }}%
+              </td>
+              <td :class="getClass(instrument.pct1Y)">
+                {{ formatValue(instrument.pct1Y) }}%
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -76,5 +126,14 @@ table {
 th,
 td {
   padding: 4px;
+}
+
+.half-table {
+  display: flex;
+  justify-content: space-between;
+}
+
+.half-table table {
+  width: 48%;
 }
 </style>
