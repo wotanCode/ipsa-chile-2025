@@ -54,6 +54,10 @@ const currentData = computed(() => {
     currentValue: lastPrice.toLocaleString("es-CL"),
     percentageChange: `${percentageChange.toFixed(2)}%`,
     pointsChange: pointsChange.toLocaleString("es-CL"),
+    pointsChangeNegative: pointsChange < 0,
+    percentageChangeNegative: percentageChange < 0,
+    pointsChangePositive: pointsChange > 0,
+    percentageChangePositive: percentageChange > 0,
   };
 });
 </script>
@@ -75,11 +79,25 @@ const currentData = computed(() => {
       </li>
       <li class="valueItem">
         Var. % Actual
-        <span class="uk-text-danger">{{ currentData.percentageChange }}</span>
+        <span
+          :class="{
+            'uk-text-danger': currentData.percentageChangeNegative,
+            'uk-text-success': currentData.percentageChangePositive,
+          }"
+        >
+          {{ currentData.percentageChange }}
+        </span>
       </li>
       <li class="valueItem">
         Var. Puntos Actual:
-        <span class="uk-text-danger">{{ currentData.pointsChange }}</span>
+        <span
+          :class="{
+            'uk-text-danger': currentData.pointsChangeNegative,
+            'uk-text-success': currentData.pointsChangePositive,
+          }"
+        >
+          {{ currentData.pointsChange }}
+        </span>
       </li>
     </ul>
 
