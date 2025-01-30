@@ -1,12 +1,34 @@
 <script setup lang="ts">
-// TODO: Actualizar los props necesarios
-// defineProps<{
-//   msg: string
-// }>()
+import { ref } from "vue";
+import { useChartStore } from "@/stores/chartStore";
+
+const store = useChartStore();
+const searchQuery = ref("");
+
+const onSubmit = (event: Event) => {
+  event.preventDefault(); // Evita la recarga de la página
+  console.log("pasate por aqui", event);
+  console.log("pasate por aqui", searchQuery.value);
+
+  const key = searchQuery.value.toUpperCase();
+
+  if (!store.tabOptions) {
+    console.error("tabOptions no está definido", store.tabOptions);
+    return;
+  }
+
+  const option = store.tabOptions.find((option) => option.key === key);
+
+  if (option) {
+    store.selectTab(key);
+  } else {
+    console.warn(`No se encontró la opción con key: ${key}`);
+  }
+};
 </script>
 
 <template>
-  <form class="uk-inline formContainer">
+  <form class="uk-inline formContainer" @submit="onSubmit">
     <vk-icon
       icon="search"
       name="search"
@@ -14,6 +36,7 @@
       style="z-index: 1"
     />
     <input
+      v-model="searchQuery"
       placeholder="Busca un instrumento"
       class="uk-input uk-text-dark uk-background-secondary"
       style="padding-left: 35px; width: 100%"
