@@ -1,59 +1,92 @@
-# ipsa-chile-2025
+# IPSA 2025
 
-This template should help get you started developing with Vue 3 in Vite.
+Este proyecto utiliza Vue 2 y Vite para el desarrollo de una aplicación web moderna. Ha sido probado en **Windows 11**.
 
-## Recommended IDE Setup
+## 🚀 Instalación y Configuración
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+Asegúrate de tener instalado [Node.js](https://nodejs.org/) (versión recomendada **LTS**).
 
-## Type Support for `.vue` Imports in TS
+1. **Clonar el repositorio**
+   ```sh
+   git clone https://github.com/wotanCode/ipsa-chile-2025.git
+   cd ipsa-chile-2025
+   ```
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+2. **Instalar dependencias**
+   ```sh
+   npm install
+   ```
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+## 🛠 Uso y Desarrollo
 
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
+### 🔥 Ejecutar en modo desarrollo
 
 ```sh
 npm run dev
 ```
 
-### Type-Check, Compile and Minify for Production
+Esto iniciará un servidor local con recarga en caliente en [http://localhost:5173](http://localhost:5173).
+
+### 🔨 Compilar para producción
 
 ```sh
 npm run build
 ```
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+Esto generó archivos optimizados en la carpeta `dist`.
+
+### 👀 Previsualizar la versión de producción
+
+```sh
+npm run preview
+```
+
+Este comando sirve para ver la versión compilada antes de desplegarla.
+
+## 🧪 Pruebas
+
+### ✅ Ejecutar pruebas unitarias con Vitest
 
 ```sh
 npm run test:unit
 ```
 
-### Run End-to-End Tests with [Cypress](https://www.cypress.io/)
+### 🔎 Ejecutar pruebas End-to-End con Cypress
 
 ```sh
 npm run build
-npm run test:e2e # or `npm run test:e2e:ci` for headless testing
+npm run test:e2e # o `npm run test:e2e:ci` para pruebas en modo headless
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+## 🔍 Linter y chequeo de tipos
+
+### ✨ Ejecutar ESLint para revisar errores en el código
 
 ```sh
 npm run lint
 ```
+
+### 🔍 Chequeo de tipos con TypeScript
+
+```sh
+npm run type-check
+```
+
+## 🚀 Despliegue en GitHub Pages
+
+El proyecto se puede desplegar en GitHub Pages ejecutando:
+
+```sh
+npm run deploy
+```
+
+Luego, la aplicación estará disponible en:
+
+```
+https://wotanCode.github.io/ipsa-chile-2025/
+```
+
+## 📄 Configuración adicional
+
+Para más información sobre la configuración de Vite, visita la [documentación oficial](https://vitejs.dev/config/).
+
