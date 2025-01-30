@@ -42,7 +42,14 @@ export const useChartStore = defineStore("data", () => {
 
       const loadJson = async (key: string) => {
         const mappedKey = instrumentMapping[key] || key;
-        const response = await fetch(`/db/history/history-${mappedKey}.json`);
+
+        // Verificar si estamos en local o en producción
+        const isLocal =
+          window.location.hostname === "localhost" ||
+          window.location.hostname === "127.0.0.1";
+        const baseUrl = isLocal ? "/db/history" : `ipsa-chile-2025/db/history`;
+
+        const response = await fetch(`${baseUrl}/history-${mappedKey}.json`);
 
         if (!response.ok) {
           console.error(`Failed to load ${mappedKey}`);

@@ -13,7 +13,16 @@ export const useInstrumentStore = defineStore("instrumentStore", () => {
     error.value = null;
 
     try {
-      const response = await fetch("/db/constituyentes/constituensList.json");
+      // Verificar si estamos en local o en producción
+      const isLocal =
+        window.location.hostname === "localhost" ||
+        window.location.hostname === "127.0.0.1";
+      const baseUrl = isLocal
+        ? "/db/constituyentes"
+        : "ipsa-chile-2025/db/constituyentes";
+
+      const response = await fetch(`${baseUrl}/constituensList.json`);
+
       if (!response.ok) {
         throw new Error("Error al cargar los datos de los instrumentos.");
       }

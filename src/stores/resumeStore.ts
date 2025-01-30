@@ -27,9 +27,15 @@ export const useResumeStore = defineStore("resume", () => {
     }
 
     try {
-      // Usar la ruta relativa a la carpeta public
-      const response = await fetch(`/db/resumen/${mappedInstrument}.json`);
+      // Verificar si estamos en local o en producción
+      const isLocal =
+        window.location.hostname === "localhost" ||
+        window.location.hostname === "127.0.0.1";
+      const baseUrl = isLocal ? "/db/resumen" : "ipsa-chile-2025/db/resumen";
+
+      const response = await fetch(`${baseUrl}/${mappedInstrument}.json`);
       if (!response.ok) throw new Error("Error al cargar el resumen");
+
       resumenData.value = (await response.json()) as ResumenI;
     } catch (error) {
       console.error(error);
