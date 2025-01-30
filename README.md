@@ -53,6 +53,8 @@ npm run test:unit
 
 ### 🔎 Ejecutar pruebas End-to-End con Cypress
 
+Se recomienda no usar la consola de VSCode.
+
 ```sh
 npm run build
 npm run test:e2e # o `npm run test:e2e:ci` para pruebas en modo headless
