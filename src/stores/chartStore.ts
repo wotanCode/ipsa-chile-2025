@@ -44,9 +44,7 @@ export const useChartStore = defineStore("data", () => {
         const mappedKey = instrumentMapping[key] || key;
 
         // Verificar si estamos en local o en producción
-        const isLocal =
-          window.location.hostname === "localhost" ||
-          window.location.hostname === "127.0.0.1";
+        const isLocal = window.location.hostname === "localhost";
         const baseUrl = isLocal ? "/db/history" : `ipsa-chile-2025/db/history`;
 
         const response = await fetch(`${baseUrl}/history-${mappedKey}.json`);

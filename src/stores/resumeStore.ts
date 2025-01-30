@@ -28,9 +28,7 @@ export const useResumeStore = defineStore("resume", () => {
 
     try {
       // Verificar si estamos en local o en producción
-      const isLocal =
-        window.location.hostname === "localhost" ||
-        window.location.hostname === "127.0.0.1";
+      const isLocal = window.location.hostname === "localhost";
       const baseUrl = isLocal ? "/db/resumen" : "ipsa-chile-2025/db/resumen";
 
       const response = await fetch(`${baseUrl}/${mappedInstrument}.json`);

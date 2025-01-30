@@ -14,9 +14,7 @@ export const useInstrumentStore = defineStore("instrumentStore", () => {
 
     try {
       // Verificar si estamos en local o en producción
-      const isLocal =
-        window.location.hostname === "localhost" ||
-        window.location.hostname === "127.0.0.1";
+      const isLocal = window.location.hostname === "localhost";
       const baseUrl = isLocal
         ? "/db/constituyentes"
         : "ipsa-chile-2025/db/constituyentes";
