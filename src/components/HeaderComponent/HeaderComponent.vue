@@ -1,15 +1,31 @@
 <script setup lang="ts">
-//TODO: Actualizar los props necesarios
-// defineProps<{
-//   msg: string
-// }>()
+import { storeToRefs } from "pinia";
+import { useDataStore } from "@/stores/dataStore";
+import { computed } from "vue";
+
+const store = useDataStore();
+const { selectedKey, jsonData, tabOptions } = storeToRefs(store);
+
+const currentData = computed(() => {
+  const tab = tabOptions.value.find((t) => t.key === selectedKey.value);
+  const data = jsonData.value[selectedKey.value];
+
+  return {
+    name: tab?.name || "N/A",
+    country: tab?.country || "N/A",
+    currentValue:
+      data?.datasets[0]?.data.at(-1)?.toLocaleString("es-CL") || "N/A",
+    percentageChange: "-0.12%", // Placeholder, reemplazar con dato real si está disponible
+    pointsChange: "-23,23", // Placeholder, igual que arriba
+  };
+});
 </script>
 
 <template>
   <div class="headerContainer">
-    <h2 class="title">IPSA, Chile</h2>
+    <h2 class="title">{{ currentData.name }}, {{ currentData.country }}</h2>
 
-    <p>Indice:</p>
+    <p>Índice:</p>
     <hr />
 
     <ul class="valuesContainer">
@@ -17,14 +33,16 @@
         Valor actual:
         <span class="presentValue">
           <!-- ↑ -->
-          ↓ 63.451,4
+          ↓ {{ currentData.currentValue }}
         </span>
       </li>
       <li class="valueItem">
-        Var. % Actual <span class="uk-text-danger">-0.12%</span>
+        Var. % Actual
+        <span class="uk-text-danger">{{ currentData.percentageChange }}</span>
       </li>
       <li class="valueItem">
-        Var. Puntos Actual: <span class="uk-text-danger">-23,23</span>
+        Var. Puntos Actual:
+        <span class="uk-text-danger">{{ currentData.pointsChange }}</span>
       </li>
     </ul>
 
