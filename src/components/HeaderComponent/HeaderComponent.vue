@@ -4,19 +4,56 @@ import { useChartStore } from "@/stores/chartStore";
 import { computed } from "vue";
 
 const store = useChartStore();
-const { selectedKey, jsonData, tabOptions } = storeToRefs(store);
+const { selectedKey, jsonData, tabOptions, selectedTimeframe } =
+  storeToRefs(store);
+
+const timeframeMapping: Record<string, number> = {
+  "1M": 30,
+  "3M": 90,
+  "6M": 180,
+  "12M": 365,
+};
 
 const currentData = computed(() => {
   const tab = tabOptions.value.find((t) => t.key === selectedKey.value);
   const data = jsonData.value[selectedKey.value];
 
+  if (!data || !data.datasets[0]?.data.length) {
+    return {
+      name: tab?.name || "N/A",
+      country: tab?.country || "N/A",
+      currentValue: "N/A",
+      percentageChange: "N/A",
+      pointsChange: "N/A",
+    };
+  }
+
+  const prices = data.datasets[0]?.data;
+  const lastPrice = prices.at(-1);
+
+  const daysAgo = timeframeMapping[selectedTimeframe.value] || 30;
+  const pastIndex = Math.max(prices.length - 1 - daysAgo, 0);
+  const pastPrice = prices[pastIndex];
+
+  if (typeof lastPrice !== "number" || typeof pastPrice !== "number") {
+    return {
+      name: tab?.name || "N/A",
+      country: tab?.country || "N/A",
+      currentValue: "N/A",
+      percentageChange: "N/A",
+      pointsChange: "N/A",
+    };
+  }
+
+  const pointsChange = lastPrice - pastPrice;
+  const percentageChange = (pointsChange / pastPrice) * 100;
+
   return {
     name: tab?.name || "N/A",
     country: tab?.country || "N/A",
-    currentValue:
-      data?.datasets[0]?.data.at(-1)?.toLocaleString("es-CL") || "N/A",
-    percentageChange: "-0.12%", // Placeholder, reemplazar con dato real si está disponible
-    pointsChange: "-23,23", // Placeholder, igual que arriba
+    currentValue: lastPrice.toLocaleString("es-CL"),
+    percentageChange: `${percentageChange.toFixed(2)}%`,
+    pointsChange: pointsChange.toLocaleString("es-CL"),
   };
 });
 </script>

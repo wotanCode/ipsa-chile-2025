@@ -3,8 +3,8 @@ import { storeToRefs } from "pinia";
 import { useChartStore } from "@/stores/chartStore";
 
 const store = useChartStore();
-const { selectedKey, tabOptions } = storeToRefs(store);
-const { selectTab } = store;
+const { selectedKey, tabOptions, selectedTimeframe } = storeToRefs(store);
+const { selectTab, setTimeframe } = store;
 </script>
 
 <template>
@@ -20,12 +20,27 @@ const { selectTab } = store;
         {{ option.key }}
       </button>
     </div>
+
+    <div class="timeframe-selector">
+      <label for="timeframe">Periodo:</label>
+      <select
+        id="timeframe"
+        v-model="selectedTimeframe"
+        @change="setTimeframe(selectedTimeframe)"
+      >
+        <option value="1M">1 Mes</option>
+        <option value="3M">3 Meses</option>
+        <option value="6M">6 Meses</option>
+        <option value="12M">1 Año</option>
+      </select>
+    </div>
   </div>
 </template>
 
 <style scoped>
 .tabContainer {
   border-bottom: 2px solid #ccc;
+  padding-bottom: 10px;
 }
 .tabs {
   display: flex;
@@ -55,5 +70,20 @@ const { selectTab } = store;
 .tab.active {
   border-bottom: 2px solid #007aff;
   color: #fff;
+}
+
+.timeframe-selector {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.timeframe-selector select {
+  padding: 5px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
 }
 </style>

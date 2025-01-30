@@ -34,6 +34,7 @@ export const useChartStore = defineStore("data", () => {
   const error = ref<string | null>(null);
 
   const selectedKey = ref("IPSA");
+  const selectedTimeframe = ref("1M");
 
   const tabOptions = ref(
     Object.entries(historyData).map(([key, data]) => ({
@@ -76,13 +77,19 @@ export const useChartStore = defineStore("data", () => {
     selectedKey.value = key;
   }
 
+  function setTimeframe(timeframe: string) {
+    selectedTimeframe.value = timeframe;
+  }
+
   return {
     jsonData,
     isLoading,
     error,
     selectedKey,
+    selectedTimeframe,
     tabOptions,
     loadData,
     selectTab,
+    setTimeframe,
   };
 });
