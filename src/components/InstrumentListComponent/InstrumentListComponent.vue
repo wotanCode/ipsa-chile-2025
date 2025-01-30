@@ -37,13 +37,13 @@ onMounted(() => {
         <table v-if="instrumentsData">
           <thead>
             <tr>
-              <th><strong>Nombre</strong></th>
-              <th><strong>Último*</strong></th>
-              <th><strong>Monto</strong></th>
-              <th><strong>Var Día</strong></th>
-              <th><strong>Var 30d**</strong></th>
-              <th><strong>Año Actual</strong></th>
-              <th><strong>12 Meses</strong></th>
+              <th><strong>↑↓Nombre</strong></th>
+              <th><strong>↑↓Último*</strong></th>
+              <th><strong>↑↓Monto</strong></th>
+              <th><strong>↑↓Var Día</strong></th>
+              <th><strong>↑↓Var 30d**</strong></th>
+              <th><strong>↑↓Año Actual</strong></th>
+              <th><strong>↑↓12 Meses</strong></th>
             </tr>
           </thead>
           <tbody>
@@ -77,13 +77,13 @@ onMounted(() => {
         <table v-if="instrumentsData">
           <thead>
             <tr>
-              <th><strong>Nombre</strong></th>
-              <th>Último*</th>
-              <th>Monto</th>
-              <th>Var Día</th>
-              <th>Var 30d**</th>
-              <th>Año Actual</th>
-              <th>12 Meses</th>
+              <th><strong>↑↓Nombre</strong></th>
+              <th><strong>↑↓Último*</strong></th>
+              <th><strong>↑↓Monto</strong></th>
+              <th><strong>↑↓Var Día</strong></th>
+              <th><strong>↑↓Var 30d**</strong></th>
+              <th><strong>↑↓Año Actual</strong></th>
+              <th><strong>↑↓12 Meses</strong></th>
             </tr>
           </thead>
           <tbody>
