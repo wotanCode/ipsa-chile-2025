@@ -4,6 +4,7 @@ import HeaderComponent from "@/components/HeaderComponent/HeaderComponent.vue";
 import ChartComponent from "@/components/ChartComponent/ChartComponent.vue";
 import TabComponent from "@/components/TabComponent/TabComponent.vue";
 import SummaryComponent from "@/components/SummaryComponent/SummaryComponent.vue";
+import InstrumentListComponent from "@/components/InstrumentListComponent/InstrumentListComponent.vue";
 </script>
 
 <template>
@@ -27,6 +28,10 @@ import SummaryComponent from "@/components/SummaryComponent/SummaryComponent.vue
 
       <div class="thirdContainer">
         <TabComponent />
+      </div>
+
+      <div>
+        <InstrumentListComponent />
       </div>
     </main>
   </div>
