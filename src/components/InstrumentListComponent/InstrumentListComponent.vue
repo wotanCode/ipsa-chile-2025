@@ -17,7 +17,7 @@ onMounted(() => {
       <thead>
         <tr>
           <th>Nombre</th>
-          <th>Último</th>
+          <th>Último*</th>
           <th>Monto</th>
           <th>Var Día</th>
           <th>Var 30d</th>
