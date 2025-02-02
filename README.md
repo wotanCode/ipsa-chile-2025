@@ -1,6 +1,8 @@
 # IPSA 2025
 
-Este proyecto utiliza Vue 2 y Vite para el desarrollo de una aplicación web moderna. Ha sido probado en **Windows 11**.
+Este proyecto es una prueba técnica desarrollada en un plazo de dos días, que muestra la evolución del mercado de diversas empresas utilizando un JSON ficticio. Debido al tiempo limitado, aún presenta varias oportunidades de mejora. Utiliza Vue 2 y Vite para el desarrollo de una aplicación web moderna. Ha sido probado en **Windows 11**.
+
+![app-img](appCapture.png)
 
 ## 🚀 Instalación y Configuración
 
@@ -25,7 +27,7 @@ Asegúrate de tener instalado [Node.js](https://nodejs.org/) (versión recomenda
 npm run dev
 ```
 
-Esto iniciará un servidor local con recarga en caliente en [http://localhost:5173](http://localhost:5173).
+Esto iniciará un servidor local con recarga en caliente en [http://localhost:5173/ipsa-chile-2025/](http://localhost:5173/ipsa-chile-2025/).
 
 ### 🔨 Compilar para producción
 
