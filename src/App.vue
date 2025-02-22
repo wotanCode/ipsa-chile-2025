@@ -12,14 +12,14 @@ import alegraLogoWhite from '@/assets/logo-alegra-white.svg'
     >
       <img
         alt="Alegra logo"
-        class="mb-6 dark:hidden"
+        class="mb-6 dark:hidden mx-auto"
         :src="alegraLogoWhite"
         width="125"
         height="125"
       />
       <img
         alt="Alegra logo"
-        class="mb-6 hidden dark:block"
+        class="mb-6 hidden dark:block mx-auto"
         :src="alegraLogoBlack"
         width="125"
         height="125"
