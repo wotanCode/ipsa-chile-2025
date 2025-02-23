@@ -6,7 +6,10 @@ import NavButton from './NavButton.vue'
 
 const router = createRouter({
   history: createMemoryHistory(),
-  routes: [{ path: '/', component: { template: 'Home' } }],
+  routes: [
+    { path: '/', component: { template: 'Home' } },
+    { path: '/other', component: { template: 'Other' } },
+  ],
 })
 
 const DummyIcon = markRaw({
