@@ -54,7 +54,12 @@ const stackTechnologies = [
         <h4 class="font-semibold">{{ t('about.technology_stack') }}</h4>
         <ul class="flex flex-col gap-4">
           <li v-for="tech in stackTechnologies" :key="tech.name" class="flex flex-col">
-            <a :href="tech.link" target="_blank" class="inline-flex items-center max-w-max">
+            <a
+              :href="tech.link"
+              target="_blank"
+              class="inline-flex items-center max-w-max"
+              rel="noopener noreferrer"
+            >
               <img :src="tech.badge" :alt="tech.name" class="inline-block" />
             </a>
 
@@ -66,7 +71,7 @@ const stackTechnologies = [
     <hr class="border-white/50" />
 
     <div class="flex items-center gap-2 mt-4">
-      <a href="https://github.com/wotanCode" target="_blank">
+      <a href="https://github.com/wotanCode" target="_blank" rel="noopener noreferrer">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
