@@ -9,7 +9,7 @@ const { t } = useI18n()
 const menuItems = [
   { id: IDS.navBar.home, text: t('navbar.welcome'), url: '/', icon: HomeIcon },
   { id: IDS.navBar.seller, text: t('navbar.sellers'), url: '/vendedores', icon: UserIcon },
-  { id: IDS.navBar.about, text: t('navbar.about'), url: '/about', icon: InformationCircleIcon },
+  { id: IDS.navBar.about, text: t('navbar.about'), url: '/acerca-de', icon: InformationCircleIcon },
 ]
 </script>
 
