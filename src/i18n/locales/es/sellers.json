@@ -4,6 +4,7 @@
   "createSeller": "Crear Vendedor",
   "cancel": "Cancelar",
   "editSeller": "Editar Vendedor",
+  "saveChanges": "Guardar Cambios",
   "table": {
     "id": "ID",
     "name": "Nombre",
