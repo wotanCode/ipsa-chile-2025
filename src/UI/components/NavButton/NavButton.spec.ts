@@ -2,7 +2,7 @@ import { describe, test, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { createMemoryHistory, createRouter } from 'vue-router'
 import { markRaw } from 'vue'
-import NavButton from '@/UI/components/NavButton/NavButton.vue'
+import NavButton from './NavButton.vue'
 
 const router = createRouter({
   history: createMemoryHistory(),
