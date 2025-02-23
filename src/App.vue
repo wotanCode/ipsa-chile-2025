@@ -28,8 +28,8 @@ import alegraLogoWhite from '@/assets/logo-alegra-white.svg'
       <NavBar />
     </header>
 
-    <main class="p-4 lg:max-h-screen lg:overflow-y-auto flex-1">
+    <div class="p-4 lg:max-h-screen lg:overflow-y-auto flex-1">
       <RouterView />
-    </main>
+    </div>
   </div>
 </template>
