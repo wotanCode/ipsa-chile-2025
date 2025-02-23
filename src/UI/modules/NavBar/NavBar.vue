@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { HomeIcon, UserIcon, InformationCircleIcon } from '@heroicons/vue/24/outline'
 import NavButton from '@/UI/components/NavButton/NavButton.vue'
 import { IDS } from '@/const/ids'
 import { useI18n } from 'vue-i18n'
@@ -6,9 +7,9 @@ import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 
 const menuItems = [
-  { id: IDS.navBar.home, text: t('navbar.welcome'), url: '/' },
-  { id: IDS.navBar.seller, text: t('navbar.sellers'), url: '/vendedores' },
-  { id: IDS.navBar.about, text: t('navbar.about'), url: '/about' },
+  { id: IDS.navBar.home, text: t('navbar.welcome'), url: '/', icon: HomeIcon },
+  { id: IDS.navBar.seller, text: t('navbar.sellers'), url: '/vendedores', icon: UserIcon },
+  { id: IDS.navBar.about, text: t('navbar.about'), url: '/about', icon: InformationCircleIcon },
 ]
 </script>
 
