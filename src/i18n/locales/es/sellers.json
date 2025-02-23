@@ -1,3 +1,16 @@
 {
-  "title": "Menu de vendedores"
+  "title": "Menú de vendedores",
+  "welcome": "Bienvenido al Menú de Vendedores. En esta sección podrás administrar tus vendedores (Crear, Leer, Actualizar y Eliminar). Recuerda que para iniciar la carrera debes tener al menos 2 vendedores.",
+  "createSeller": "Crear Vendedor",
+  "cancel": "Cancelar",
+  "editSeller": "Editar Vendedor",
+  "table": {
+    "id": "ID",
+    "name": "Nombre",
+    "actions": "Acciones"
+  },
+  "noSellers": "No hay vendedores en la lista.",
+  "deleteConfirmTitle": "Confirmar Eliminación",
+  "deleteConfirmMessage": "¿Estás seguro de eliminar este vendedor?",
+  "deleteConfirmButton": "Eliminar"
 }
