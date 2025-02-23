@@ -10,16 +10,16 @@ const props = defineProps<ButtonProps>()
 </script>
 
 <template>
-  <li :id="props.id">
+  <li :id="props.id" class="flex items-center">
     <RouterLink
       :to="url"
-      class="block px-4 py-2 text-black hover:text-blue-500 transition"
+      class="flex items-center w-full px-4 py-2 transition"
       active-class="font-bold text-gray-800"
     >
       <span v-if="icon" class="inline-block mr-2">
         <i :class="icon"></i>
       </span>
-      {{ text }}
+      <p>{{ text }}</p>
     </RouterLink>
   </li>
 </template>
