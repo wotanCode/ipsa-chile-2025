@@ -1,3 +1,27 @@
 {
-  "title": "Acerca de este proyecto"
+  "title": "Acerca de este proyecto",
+  "technology_stack": "🛠️ Stack Tecnológico",
+  "about_project_description": "Este proyecto fue realizado utilizando las tecnologías más modernas. Usé Vue.js con TypeScript, junto con Tailwind CSS para los estilos, y herramientas de pruebas como Vitest y Playwright. El estado global se maneja con Pinia.",
+  "stack_technologies": {
+    "vuejs": {
+      "name": "Vue.js",
+      "description": "Un framework progresivo para construir interfaces de usuario dinámicas."
+    },
+    "typescript": {
+      "name": "TypeScript",
+      "description": "JavaScript con tipado estático para mayor seguridad y claridad."
+    },
+    "tailwind": {
+      "name": "Tailwind CSS",
+      "description": "Un framework CSS para crear diseños personalizados de forma eficiente."
+    },
+    "vitest": {
+      "name": "Vitest",
+      "description": "Un framework de pruebas rápido y ligero para proyectos modernos."
+    },
+    "playwright": {
+      "name": "Playwright",
+      "description": "Una herramienta para pruebas automatizadas de aplicaciones web."
+    }
+  }
 }
