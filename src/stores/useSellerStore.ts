@@ -15,7 +15,7 @@ export interface SellerPayload {
   email?: string
 }
 
-const API_BASE_URL = '/src/fakeApi/sellers.json' // Ruta a tu JSON local
+const API_BASE_URL = '/src/fakeApi/sellers.json'
 
 export const useSellerStore = defineStore('seller', () => {
   const sellers = ref<Seller[]>([])
@@ -37,15 +37,18 @@ export const useSellerStore = defineStore('seller', () => {
   }
 
   async function fetchSeller(id: number): Promise<Seller | undefined> {
-    // Modificado para trabajar con JSON estático
+    const localSeller = sellers.value.find((seller) => seller.id === id)
+    if (localSeller) return localSeller
+
     try {
       const response = await fetch(API_BASE_URL)
       const allSellers = await response.json()
       return allSellers.find((seller: Seller) => seller.id === id)
-      //TODO: Manejar esto cuando realmente se implemente el api real
+
+      // TODO usar esto como corresponde cuando realmente tengamos el error
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
-      return sellers.value.find((seller) => seller.id === id)
+      return undefined
     }
   }
 
@@ -57,7 +60,7 @@ export const useSellerStore = defineStore('seller', () => {
       updatedAt: new Date().toISOString(),
       deleted: false,
     }
-    sellers.value = [...sellers.value, newSeller] // Reactividad garantizada
+    sellers.value = [...sellers.value, newSeller]
     return newSeller
   }
 
@@ -66,7 +69,6 @@ export const useSellerStore = defineStore('seller', () => {
     payload: Partial<SellerPayload>,
   ): Promise<Seller | undefined> {
     const index = sellers.value.findIndex((seller) => seller.id === id)
-
     if (index === -1) return undefined
 
     const updatedSeller = {

@@ -2,17 +2,18 @@
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
-
 import { PlusIcon, TrashIcon, PencilIcon, ArrowPathIcon } from '@heroicons/vue/24/solid'
-
-import type { Seller } from '@/interface/seller'
 
 import { useSellerStore } from '@/stores/useSellerStore'
 
 import BaseTable from '@/UI/components/BaseTable/BaseTable.vue'
 import BaseModal from '@/UI/components/BaseModal/BaseModal.vue'
 
+import type { Seller } from '@/interface/seller'
+
 const { t } = useI18n()
+const sellerStore = useSellerStore()
+const { sellers, isLoading } = storeToRefs(sellerStore)
 
 const columns = ref([
   { header: t('sellers.table.id'), key: 'id' },
@@ -20,43 +21,22 @@ const columns = ref([
   { header: t('sellers.table.actions'), key: 'actions', slot: 'actions' },
 ])
 
-const sellerStore = useSellerStore()
-const { sellers, isLoading } = storeToRefs(sellerStore)
-
 const newSeller = ref({ name: '' })
 const createModal = ref<InstanceType<typeof BaseModal> | null>(null)
-
-function openCreateModal() {
-  createModal.value?.openModal()
-}
-
-async function submitSeller() {
-  if (!newSeller.value.name.trim()) return
-  await sellerStore.createSeller(newSeller.value)
-  newSeller.value = { name: '' }
-  createModal.value?.closeModal()
-}
 
 const deleteModal = ref<InstanceType<typeof BaseModal> | null>(null)
 const selectedSellerId = ref<number | null>(null)
 
-function openDeleteModal(id: number) {
+const editModal = ref<InstanceType<typeof BaseModal> | null>(null)
+const selectedSeller = ref<Partial<Seller>>({ name: '' })
+
+const openCreateModal = () => createModal.value?.openModal()
+const openDeleteModal = (id: number) => {
   selectedSellerId.value = id
   deleteModal.value?.openModal()
 }
 
-async function confirmDelete() {
-  if (selectedSellerId.value !== null) {
-    await sellerStore.deleteSeller(selectedSellerId.value)
-    selectedSellerId.value = null
-    deleteModal.value?.closeModal()
-  }
-}
-
-const editModal = ref<InstanceType<typeof BaseModal> | null>(null)
-const selectedSeller = ref<Partial<Seller>>({ name: '' })
-
-async function openEditModal(id: number) {
+const openEditModal = async (id: number) => {
   const seller = await sellerStore.fetchSeller(id)
   if (seller) {
     selectedSeller.value = { ...seller }
@@ -64,7 +44,22 @@ async function openEditModal(id: number) {
   }
 }
 
-async function submitEdit() {
+const submitSeller = async () => {
+  if (newSeller.value.name.trim()) {
+    await sellerStore.createSeller(newSeller.value)
+    newSeller.value = { name: '' }
+    createModal.value?.closeModal()
+  }
+}
+
+const confirmDelete = async () => {
+  if (selectedSellerId.value !== null) {
+    await sellerStore.deleteSeller(selectedSellerId.value)
+    deleteModal.value?.closeModal()
+  }
+}
+
+const submitEdit = async () => {
   if (selectedSeller.value?.id) {
     await sellerStore.updateSeller(selectedSeller.value.id, {
       name: selectedSeller.value.name || '',
