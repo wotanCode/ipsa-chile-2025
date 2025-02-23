@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
 
-import { PlusIcon, TrashIcon, PencilIcon } from '@heroicons/vue/24/solid'
+import { PlusIcon, TrashIcon, PencilIcon, ArrowPathIcon } from '@heroicons/vue/24/solid'
 
 import type { Seller } from '@/interface/seller'
 
@@ -21,7 +21,7 @@ const columns = ref([
 ])
 
 const sellerStore = useSellerStore()
-const { sellers } = storeToRefs(sellerStore)
+const { sellers, isLoading } = storeToRefs(sellerStore)
 
 const newSeller = ref({ name: '' })
 const createModal = ref<InstanceType<typeof BaseModal> | null>(null)
@@ -30,9 +30,9 @@ function openCreateModal() {
   createModal.value?.openModal()
 }
 
-function submitSeller() {
+async function submitSeller() {
   if (!newSeller.value.name.trim()) return
-  sellerStore.addSeller(newSeller.value)
+  await sellerStore.createSeller(newSeller.value)
   newSeller.value = { name: '' }
   createModal.value?.closeModal()
 }
@@ -45,9 +45,9 @@ function openDeleteModal(id: number) {
   deleteModal.value?.openModal()
 }
 
-function confirmDelete() {
+async function confirmDelete() {
   if (selectedSellerId.value !== null) {
-    sellerStore.deleteSeller(selectedSellerId.value)
+    await sellerStore.deleteSeller(selectedSellerId.value)
     selectedSellerId.value = null
     deleteModal.value?.closeModal()
   }
@@ -56,17 +56,17 @@ function confirmDelete() {
 const editModal = ref<InstanceType<typeof BaseModal> | null>(null)
 const selectedSeller = ref<Partial<Seller>>({ name: '' })
 
-function openEditModal(id: number) {
-  const seller = sellerStore.getSeller(id)
+async function openEditModal(id: number) {
+  const seller = await sellerStore.fetchSeller(id)
   if (seller) {
     selectedSeller.value = { ...seller }
     editModal.value?.openModal()
   }
 }
 
-function submitEdit() {
+async function submitEdit() {
   if (selectedSeller.value?.id) {
-    sellerStore.updateSeller(selectedSeller.value.id, {
+    await sellerStore.updateSeller(selectedSeller.value.id, {
       name: selectedSeller.value.name || '',
     })
     editModal.value?.closeModal()
@@ -85,23 +85,30 @@ function submitEdit() {
       {{ t('sellers.createSeller') }}
     </button>
 
-    <BaseTable v-if="sellers.length > 0" :data="sellers" :columns="columns">
-      <template #actions="{ item }">
-        <button
-          class="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600"
-          @click="openDeleteModal(item.id)"
-        >
-          <TrashIcon class="h-5 w-5" />
-        </button>
-        <button
-          class="px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600"
-          @click="openEditModal(item.id)"
-        >
-          <PencilIcon class="h-5 w-5" />
-        </button>
-      </template>
-    </BaseTable>
-    <p v-else class="text-center text-gray-500">{{ t('sellers.noSellers') }}</p>
+    <div v-if="isLoading" class="flex flex-col items-center justify-center p-4">
+      <ArrowPathIcon class="h-16 w-16 animate-spin text-[var(--color-primary)]" />
+      <p class="mt-4 text-lg">{{ t('sellers.loading') || 'Cargando...' }}</p>
+    </div>
+
+    <div v-else>
+      <BaseTable v-if="sellers.length > 0" :data="sellers" :columns="columns">
+        <template #actions="{ item }">
+          <button
+            class="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+            @click="openDeleteModal(item.id)"
+          >
+            <TrashIcon class="h-5 w-5" />
+          </button>
+          <button
+            class="px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600"
+            @click="openEditModal(item.id)"
+          >
+            <PencilIcon class="h-5 w-5" />
+          </button>
+        </template>
+      </BaseTable>
+      <p v-else class="text-center text-gray-500">{{ t('sellers.noSellers') }}</p>
+    </div>
 
     <BaseModal
       ref="createModal"
@@ -130,7 +137,6 @@ function submitEdit() {
       @confirm="confirmDelete"
     />
 
-    <!-- Modal de edición -->
     <BaseModal
       ref="editModal"
       :title="t('sellers.editSeller')"

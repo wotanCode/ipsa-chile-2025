@@ -2,6 +2,7 @@
   "title": "Menú de vendedores",
   "welcome": "Bienvenido al Menú de Vendedores. En esta sección podrás administrar tus vendedores (Crear, Leer, Actualizar y Eliminar). Recuerda que para iniciar la carrera debes tener al menos 2 vendedores.",
   "createSeller": "Crear Vendedor",
+  "loading": "Cargando vendedores",
   "cancel": "Cancelar",
   "editSeller": "Editar Vendedor",
   "saveChanges": "Guardar Cambios",
