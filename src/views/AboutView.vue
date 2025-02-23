@@ -1,15 +1,14 @@
-<template>
-  <div class="about">
-    <h1>This is an about page</h1>
-  </div>
-</template>
+<script setup lang="ts">
+import LayoutTemplate from '@/UI/layout/LayoutTemplate.vue'
+import TheWelcome from '@/UI/components/TheWelcome/TheWelcome.vue'
 
-<style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-}
-</style>
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+</script>
+
+<template>
+  <LayoutTemplate :title="t('about.title')">
+    <TheWelcome />
+  </LayoutTemplate>
+</template>
