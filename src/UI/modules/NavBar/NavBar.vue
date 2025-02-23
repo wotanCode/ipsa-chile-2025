@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import NavButton from '@/UI/components/NavButton/NavButton.vue'
 import { IDS } from '@/const/ids'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const menuItems = [
-  { id: IDS.navBar.home, text: 'Bienvenido', url: '/' },
-  { id: IDS.navBar.seller, text: 'Vendedores', url: '/vendedores' },
-  { id: IDS.navBar.about, text: 'Acerca de este proyecto', url: '/about' },
+  { id: IDS.navBar.home, text: t('navbar.welcome'), url: '/' },
+  { id: IDS.navBar.seller, text: t('navbar.sellers'), url: '/vendedores' },
+  { id: IDS.navBar.about, text: t('navbar.about'), url: '/about' },
 ]
 </script>
 
