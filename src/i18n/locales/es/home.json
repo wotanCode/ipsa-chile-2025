@@ -1,4 +1,12 @@
 {
   "title": "Imágenes del mundo",
-  "primaryParagraph": "La empresa “Imágenes del mundo” ha realizado un concurso para sus vendedores, ¡una carrera para encontrar las imágenes más interesantes de la web!"
+  "primaryParagraph": "La empresa “Imágenes del mundo” ha realizado un concurso para sus vendedores, ¡una carrera para encontrar las imágenes más interesantes de la web!",
+  "introText": "¡Nos alegra que estés aquí! Esta es la plataforma donde los vendedores de \"Imágenes del Mundo\" compiten en una carrera para traer las imágenes más interesantes de la web. ¿Tienes lo que se necesita para ganar?",
+  "howItWorks": "¿Cómo funciona?",
+  "pointsList": {
+    "challenge": "El desafío: Ingresa una palabra clave y explora imágenes relacionadas con ella. Cada vendedor presentará una imagen, y será tu tarea elegir la que más te guste.",
+    "points": "Los puntos: Cada vez que elijas una imagen, el vendedor que la propuso ganará 3 puntos. El primer vendedor en alcanzar 20 puntos será el ganador.",
+    "prize": "El premio: El vendedor que gane la carrera podrá crear una factura en Alegra, ¡y los puntos acumulados durante la carrera serán su recompensa!"
+  },
+  "raceConclusion": "¡Corre por los puntos, selecciona las mejores imágenes y ayúdanos a coronar al mejor vendedor!"
 }
