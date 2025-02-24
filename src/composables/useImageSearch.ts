@@ -1,6 +1,4 @@
 import { ref } from 'vue'
-const VITE_UNSPLASH_ACCESS_KEY = import.meta.env.VITE_UNSPLASH_ACCESS_KEY || ''
-
 export interface UnsplashImage {
   id: string
   urls: {
@@ -15,6 +13,7 @@ export interface UnsplashImage {
 }
 
 export default function useImageSearch() {
+  const VITE_UNSPLASH_ACCESS_KEY = import.meta.env.VITE_UNSPLASH_ACCESS_KEY || ''
   const images = ref<UnsplashImage[]>([])
   const isLoading = ref(false)
   const error = ref<string | null>(null)

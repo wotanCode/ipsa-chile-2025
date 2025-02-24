@@ -5,7 +5,8 @@
     "searchButton": "Iniciar",
     "sarchButtonIsLoading": "Buscando...",
     "alertMessage": "🚨 Necesitas de 2 a 4 vendedores para comenzar",
-    "emptyErrorMessage": "Por favor ingresa un término de búsqueda"
+    "emptyErrorMessage": "Por favor ingresa un término de búsqueda",
+    "insufficientImages": "No hay suficientes imágenes para todos los vendedores"
   },
   "raceActive": {
     "title": "Carrera activa",

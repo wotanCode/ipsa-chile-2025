@@ -28,7 +28,7 @@ const handleSearch = async () => {
     const requiredImages = sellerStore.sellers.length * 7
     const images = await searchImages(searchTerm.value, requiredImages)
     if (images.length < requiredImages) {
-      throw new Error('No hay suficientes imágenes para todos los vendedores')
+      throw new Error(t('imageRace.inputStage.emptyErrorMessage'))
     }
     imageRaceStore.searchTerm = searchTerm.value
     imageRaceStore.assignImagesToSellers(sellerStore.sellers, images)
