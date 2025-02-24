@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useImageRaceStore } from '@/stores/useImageRaceStore'
@@ -17,20 +17,21 @@ const sellerDetail = computed(() => {
   )
 })
 
-const highlightedImages = ref<Set<number>>(new Set())
-
 const toggleImageHighlight = (index: number) => {
   if (!sellerDetail.value) return
 
-  if (highlightedImages.value.has(index)) {
-    highlightedImages.value.delete(index)
-    sellerDetail.value.score -= 3
-  } else {
-    highlightedImages.value.add(index)
-    sellerDetail.value.score += 3
+  const participant = sellerDetail.value
+  const isHighlighted = participant.highlightedIndices.includes(index)
 
-    if (sellerDetail.value.score > 20) {
-      console.log(`⚡ El vendedor ${sellerDetail.value.seller.name} superó los 20 puntos!`)
+  if (isHighlighted) {
+    participant.highlightedIndices = participant.highlightedIndices.filter((i) => i !== index)
+    participant.score -= 3
+  } else {
+    participant.highlightedIndices.push(index)
+    participant.score += 3
+
+    if (participant.score > 20) {
+      console.log(`⚡ ${participant.seller.name} superó los 20 puntos!`)
     }
   }
 }
@@ -58,7 +59,8 @@ const toggleImageHighlight = (index: number) => {
           :key="index"
           class="border rounded-md overflow-hidden cursor-pointer"
           :class="{
-            'ring-4 ring-yellow-400 scale-105 transition-transform': highlightedImages.has(index),
+            'ring-4 ring-yellow-400 scale-105 transition-transform':
+              sellerDetail.highlightedIndices.includes(index),
           }"
           @click="toggleImageHighlight(index)"
         >

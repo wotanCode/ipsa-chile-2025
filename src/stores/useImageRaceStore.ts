@@ -8,6 +8,7 @@ interface RaceParticipant {
   seller: Seller
   images: UnsplashImage[]
   score: number
+  highlightedIndices: number[]
 }
 
 export const useImageRaceStore = defineStore('imageRace', () => {
@@ -31,6 +32,7 @@ export const useImageRaceStore = defineStore('imageRace', () => {
       seller,
       images: images.slice(index * IMAGES_PER_SELLER, (index + 1) * IMAGES_PER_SELLER),
       score: 0,
+      highlightedIndices: [],
     }))
   }
 
