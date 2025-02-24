@@ -28,7 +28,7 @@ import alegraLogoWhite from '@/assets/logo-alegra-white.svg'
       <NavBar />
     </header>
 
-    <div class="p-4 lg:max-h-screen lg:overflow-y-auto flex-1">
+    <div class="p-4 lg:max-h-screen flex-1">
       <RouterView />
     </div>
   </div>
