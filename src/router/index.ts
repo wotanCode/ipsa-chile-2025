@@ -15,6 +15,11 @@ const router = createRouter({
       component: () => import('@/views/SellersView.vue'),
     },
     {
+      path: '/carrera-imagenes',
+      name: 'imageRace',
+      component: () => import('@/views/ImageRaceView.vue'),
+    },
+    {
       path: '/acerca-de',
       name: 'about',
       component: () => import('@/views/AboutView.vue'),
