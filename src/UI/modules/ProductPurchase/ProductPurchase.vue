@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { computed, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
+
 import { useProductStore } from '@/stores/useProductStore'
 import { useImageRaceStore } from '@/stores/useImageRaceStore'
 
+const { t } = useI18n()
 const productStore = useProductStore()
 const imageRaceStore = useImageRaceStore()
 
@@ -17,17 +20,16 @@ onMounted(async () => {
 
 const handlePurchase = () => {
   console.log('Compra realizada:', productStore.selectedProductIds)
-  // Lógica adicional para integración con Alegra
 }
 </script>
 
 <template>
   <div class="p-8">
     <div v-if="productStore.products.length">
-      <h2 class="text-2xl font-bold mb-4">Canjear Puntos</h2>
+      <h2 class="text-2xl font-bold mb-4">{{ t('invoice.productPurchase.title') }}</h2>
 
       <div class="mb-6 text-lg">
-        Puntos disponibles:
+        {{ t('invoice.productPurchase.availablePoints') }}
         <span
           :class="{
             'text-red-500': initialPoints - productStore.totalSpent < 0,
@@ -54,10 +56,10 @@ const handlePurchase = () => {
             :alt="product.name"
             class="w-full h-32 object-cover mb-2 rounded"
           />
-
           <h3 class="font-semibold text-md">{{ product.name }}</h3>
-
-          <p class="text-gray-600 dark:text-gray-200 text-sm">{{ product.points }} puntos</p>
+          <p class="text-gray-600 dark:text-gray-200 text-sm">
+            {{ product.points }} {{ t('invoice.productPurchase.productPoints') }}
+          </p>
         </div>
       </div>
 
@@ -66,10 +68,12 @@ const handlePurchase = () => {
         :disabled="productStore.isPurchaseDisabled"
         class="mt-6 px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
       >
-        Finalizar Compra
+        {{ t('invoice.productPurchase.purchaseButton') }}
       </button>
     </div>
 
-    <div v-else class="text-center py-8">Cargando productos...</div>
+    <div v-else class="text-center py-8">
+      {{ t('invoice.productPurchase.loadingMessage') }}
+    </div>
   </div>
 </template>

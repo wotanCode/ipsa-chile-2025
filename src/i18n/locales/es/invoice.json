@@ -4,5 +4,12 @@
   "winnerTitle": "Ganador de la Carrera",
   "winnerSubtitle": "Detalles de la facturación según los resultados",
   "winnerId": "ID del Vendedor",
-  "points": "puntos acumulados"
+  "points": "puntos acumulados",
+  "productPurchase": {
+    "title": "Canjear Puntos",
+    "availablePoints": "Puntos disponibles:",
+    "productPoints": "puntos",
+    "purchaseButton": "Finalizar Compra",
+    "loadingMessage": "Cargando productos..."
+  }
 }
