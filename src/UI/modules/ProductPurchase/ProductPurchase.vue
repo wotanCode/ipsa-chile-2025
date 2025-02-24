@@ -1,13 +1,18 @@
 <script setup lang="ts">
 import { computed, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 
 import { useProductStore } from '@/stores/useProductStore'
 import { useImageRaceStore } from '@/stores/useImageRaceStore'
+import { useInvoiceStore } from '@/stores/useInvoiceStore'
 
+const router = useRouter()
 const { t } = useI18n()
+
 const productStore = useProductStore()
 const imageRaceStore = useImageRaceStore()
+const invoiceStore = useInvoiceStore()
 
 const initialPoints = computed(() => {
   return imageRaceStore.totalScore || 0
@@ -18,8 +23,36 @@ onMounted(async () => {
   productStore.initializePoints(initialPoints.value)
 })
 
-const handlePurchase = () => {
-  console.log('Compra realizada:', productStore.selectedProductIds)
+const handlePurchase = async () => {
+  if (!imageRaceStore.winner?.seller.id) return
+
+  const invoiceItems = productStore.selectedProductIds.map((id) => {
+    const product = productStore.products.find((p) => p.id === id)
+    return {
+      id: product?.id,
+      price: product?.points || 0,
+      quantity: 1,
+    }
+  })
+
+  const invoiceData = {
+    date: new Date().toISOString().split('T')[0],
+    dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+    client: imageRaceStore.winner.seller.id,
+    items: invoiceItems,
+  }
+
+  try {
+    const invoice = await invoiceStore.createInvoice(invoiceData)
+
+    // 3. Redirigir a vista de detalle
+    router.push({
+      name: 'InvoiceDetail',
+      params: { invoiceId: invoice.id },
+    })
+  } catch (error) {
+    console.error('Error creating invoice:', error)
+  }
 }
 </script>
 

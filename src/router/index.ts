@@ -34,6 +34,12 @@ const router = createRouter({
       name: 'sellerDetail',
       component: () => import('@/views/SellerDetailView.vue'),
     },
+    {
+      path: '/invoice/:invoiceId',
+      name: 'InvoiceDetail',
+      component: () => import('@/views/InvoiceDetailView.vue'),
+      props: true,
+    },
   ],
 })
 

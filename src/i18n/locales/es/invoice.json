@@ -10,6 +10,14 @@
     "availablePoints": "Puntos disponibles:",
     "productPoints": "puntos",
     "purchaseButton": "Finalizar Compra",
-    "loadingMessage": "Cargando productos..."
+    "loadingMessage": "Cargando productos...",
+    "errorCreatingInvoice": "Error al generar la factura"
+  },
+  "invoiceDetail": {
+    "title": "Detalle de la Factura",
+    "id": "Número de Factura",
+    "total": "Total",
+    "viewInAlegra": "Ver en Alegra",
+    "notFound": "Factura no encontrada"
   }
 }
