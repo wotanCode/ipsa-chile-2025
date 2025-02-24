@@ -1,3 +1,19 @@
 {
-  "title": "Carrera de Imágenes"
+  "title": "Carrera de Imágenes",
+  "inputStage": {
+    "inputPlaceholder": "Ej: Autos, Tecnología...",
+    "searchButton": "Iniciar",
+    "sarchButtonIsLoading": "Buscando...",
+    "alertMessage": "🚨 Necesitas de 2 a 4 vendedores para comenzar",
+    "emptyErrorMessage": "Por favor ingresa un término de búsqueda"
+  },
+  "raceActive": {
+    "title": "Carrera activa",
+    "resetButton": "Reiniciar carrera"
+  },
+  "table": {
+    "id": "ID",
+    "seller": "Vendedor",
+    "points": "Puntos"
+  }
 }
