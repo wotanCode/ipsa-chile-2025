@@ -82,7 +82,7 @@ const submitEdit = async () => {
 
     <div v-if="isLoading" class="flex flex-col items-center justify-center p-4">
       <ArrowPathIcon class="h-16 w-16 animate-spin text-[var(--color-primary)]" />
-      <p class="mt-4 text-lg">{{ t('sellers.loading') || 'Cargando...' }}</p>
+      <p class="mt-4 text-lg">{{ t('sellers.loading') }}</p>
     </div>
 
     <div v-else>
