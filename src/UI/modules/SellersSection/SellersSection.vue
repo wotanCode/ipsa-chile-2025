@@ -5,15 +5,13 @@ import { useI18n } from 'vue-i18n'
 import { PlusIcon, TrashIcon, PencilIcon, ArrowPathIcon } from '@heroicons/vue/24/solid'
 
 import { useSellerStore } from '@/stores/useSellerStore'
-
 import BaseTable from '@/UI/components/BaseTable/BaseTable.vue'
 import BaseModal from '@/UI/components/BaseModal/BaseModal.vue'
-
-import type { Seller } from '@/interface/seller'
+import type { Seller } from '@/stores/useSellerStore'
 
 const { t } = useI18n()
 const sellerStore = useSellerStore()
-const { sellers, isLoading } = storeToRefs(sellerStore)
+const { sellers, isLoading, error } = storeToRefs(sellerStore) // Añadir error
 
 const columns = ref([
   { header: t('sellers.table.id'), key: 'id' },
@@ -21,15 +19,17 @@ const columns = ref([
   { header: t('sellers.table.actions'), key: 'actions', slot: 'actions' },
 ])
 
+// Solo campo name (obligatorio)
 const newSeller = ref({ name: '' })
-const createModal = ref<InstanceType<typeof BaseModal> | null>(null)
-
-const deleteModal = ref<InstanceType<typeof BaseModal> | null>(null)
-const selectedSellerId = ref<number | null>(null)
-
-const editModal = ref<InstanceType<typeof BaseModal> | null>(null)
 const selectedSeller = ref<Partial<Seller>>({ name: '' })
 
+// Modales (sin cambios)
+const createModal = ref<InstanceType<typeof BaseModal> | null>(null)
+const deleteModal = ref<InstanceType<typeof BaseModal> | null>(null)
+const editModal = ref<InstanceType<typeof BaseModal> | null>(null)
+const selectedSellerId = ref<number | null>(null)
+
+// Métodos (solo manejo de name)
 const openCreateModal = () => createModal.value?.openModal()
 const openDeleteModal = (id: number) => {
   selectedSellerId.value = id
@@ -46,31 +46,48 @@ const openEditModal = async (id: number) => {
 
 const submitSeller = async () => {
   if (newSeller.value.name.trim()) {
-    await sellerStore.createSeller(newSeller.value)
-    newSeller.value = { name: '' }
-    createModal.value?.closeModal()
+    try {
+      await sellerStore.createSeller(newSeller.value)
+      newSeller.value = { name: '' }
+      createModal.value?.closeModal()
+    } catch (err) {
+      console.error('Error creando vendedor:', err)
+    }
   }
 }
 
 const confirmDelete = async () => {
   if (selectedSellerId.value !== null) {
-    await sellerStore.deleteSeller(selectedSellerId.value)
-    deleteModal.value?.closeModal()
+    try {
+      await sellerStore.deleteSeller(selectedSellerId.value)
+      deleteModal.value?.closeModal()
+    } catch (err) {
+      console.error('Error eliminando vendedor:', err)
+    }
   }
 }
 
 const submitEdit = async () => {
   if (selectedSeller.value?.id) {
-    await sellerStore.updateSeller(selectedSeller.value.id, {
-      name: selectedSeller.value.name || '',
-    })
-    editModal.value?.closeModal()
+    try {
+      await sellerStore.updateSeller(selectedSeller.value.id, {
+        name: selectedSeller.value.name || '',
+      })
+      editModal.value?.closeModal()
+    } catch (err) {
+      console.error('Error actualizando vendedor:', err)
+    }
   }
 }
 </script>
 
 <template>
   <div class="p-4">
+    <!-- Mostrar errores del store -->
+    <div v-if="error" class="mb-4 p-4 bg-red-100 text-red-700 rounded-lg">
+      {{ error }}
+    </div>
+
     <p class="mb-4">{{ t('sellers.welcome') }}</p>
     <button
       class="mb-4 flex items-center px-4 py-2 font-bold bg-[var(--color-primary)] text-white rounded hover:bg-[var(--color-primary)]/90 cursor-pointer"
@@ -105,6 +122,7 @@ const submitEdit = async () => {
       <p v-else class="text-center text-gray-500">{{ t('sellers.noSellers') }}</p>
     </div>
 
+    <!-- Modal: para editar solo el name -->
     <BaseModal
       ref="createModal"
       :title="t('sellers.createSeller')"
@@ -119,18 +137,10 @@ const submitEdit = async () => {
           v-model="newSeller.name"
           class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
           :placeholder="t('sellers.table.name')"
+          required
         />
       </div>
     </BaseModal>
-
-    <BaseModal
-      ref="deleteModal"
-      :title="t('sellers.deleteConfirmTitle')"
-      :message="t('sellers.deleteConfirmMessage')"
-      :confirmText="t('sellers.deleteConfirmButton')"
-      :cancelText="t('sellers.cancel')"
-      @confirm="confirmDelete"
-    />
 
     <BaseModal
       ref="editModal"
@@ -146,8 +156,18 @@ const submitEdit = async () => {
           v-model="selectedSeller.name"
           class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
           :placeholder="t('sellers.table.name')"
+          required
         />
       </div>
     </BaseModal>
+
+    <BaseModal
+      ref="deleteModal"
+      :title="t('sellers.deleteConfirmTitle')"
+      :message="t('sellers.deleteConfirmMessage')"
+      :confirmText="t('sellers.deleteConfirmButton')"
+      :cancelText="t('sellers.cancel')"
+      @confirm="confirmDelete"
+    />
   </div>
 </template>

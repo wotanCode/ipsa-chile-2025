@@ -1,5 +1,6 @@
 import { ref, computed, onMounted } from 'vue'
 import { defineStore } from 'pinia'
+import { apiFetch } from '@/utils/apiFetch'
 
 export interface Seller {
   id: number
@@ -8,82 +9,114 @@ export interface Seller {
   createdAt: string
   updatedAt: string
   deleted?: boolean
+  identification?: string
+  phonePrimary?: string
+  observations?: string
 }
 
 export interface SellerPayload {
   name: string
   email?: string
+  identification?: string
+  phonePrimary?: string
+  observations?: string
 }
-
-const API_BASE_URL = '/src/fakeApi/sellers.json'
 
 export const useSellerStore = defineStore('seller', () => {
   const sellers = ref<Seller[]>([])
   const isLoading = ref(false)
+  const error = ref<string | null>(null)
 
   const totalSellers = computed(() => sellers.value.length)
 
   async function fetchSellers() {
     isLoading.value = true
+    error.value = null
     try {
-      const response = await fetch(API_BASE_URL)
-      if (!response.ok) throw new Error('Error al obtener vendedores')
-      sellers.value = await response.json()
-    } catch (error) {
-      console.error(error)
+      const response = await apiFetch('/sellers')
+      const sellersData = Array.isArray(response) ? response : response?.data || []
+
+      if (!Array.isArray(sellersData)) {
+        throw new Error('Formato de respuesta inválido de la API')
+      }
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      sellers.value = sellersData.map((seller: any) => formatSeller(seller))
+    } catch (err) {
+      error.value = err instanceof Error ? err.message : 'Error al obtener vendedores'
+      throw err
     } finally {
       isLoading.value = false
     }
   }
 
   async function fetchSeller(id: number): Promise<Seller | undefined> {
-    const localSeller = sellers.value.find((seller) => seller.id === id)
-    if (localSeller) return localSeller
-
     try {
-      const response = await fetch(API_BASE_URL)
-      const allSellers = await response.json()
-      return allSellers.find((seller: Seller) => seller.id === id)
-
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (error) {
+      const response = await apiFetch(`/sellers/${id}`)
+      return formatSeller(response)
+    } catch (err) {
+      error.value = err instanceof Error ? err.message : 'Error al obtener el vendedor'
       return undefined
     }
   }
 
   async function createSeller(payload: SellerPayload): Promise<Seller> {
-    const newSeller: Seller = {
-      id: Date.now(),
-      ...payload,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      deleted: false,
+    try {
+      const response = await apiFetch('/sellers', {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      })
+
+      const formattedSeller = formatSeller(response)
+      sellers.value = [formattedSeller, ...sellers.value]
+      return formattedSeller
+    } catch (err) {
+      error.value = err instanceof Error ? err.message : 'Error al crear vendedor'
+      throw err
     }
-    sellers.value = [...sellers.value, newSeller]
-    return newSeller
   }
 
-  async function updateSeller(
-    id: number,
-    payload: Partial<SellerPayload>,
-  ): Promise<Seller | undefined> {
-    const index = sellers.value.findIndex((seller) => seller.id === id)
-    if (index === -1) return undefined
+  async function updateSeller(id: number, payload: Partial<SellerPayload>): Promise<Seller> {
+    try {
+      const response = await apiFetch(`/sellers/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(payload),
+      })
 
-    const updatedSeller = {
-      ...sellers.value[index],
-      ...payload,
-      updatedAt: new Date().toISOString(),
+      const formattedSeller = formatSeller(response)
+      sellers.value = sellers.value.map((seller) => (seller.id === id ? formattedSeller : seller))
+      return formattedSeller
+    } catch (err) {
+      error.value = err instanceof Error ? err.message : 'Error al actualizar vendedor'
+      throw err
     }
-
-    sellers.value = sellers.value.map((seller, i) => (i === index ? updatedSeller : seller))
-
-    return updatedSeller
   }
 
-  async function deleteSeller(id: number): Promise<boolean> {
-    sellers.value = sellers.value.filter((seller) => seller.id !== id)
-    return true
+  async function deleteSeller(id: number): Promise<void> {
+    try {
+      await apiFetch(`/sellers/${id}`, {
+        method: 'DELETE',
+      })
+      sellers.value = sellers.value.filter((seller) => seller.id !== id)
+    } catch (err) {
+      error.value = err instanceof Error ? err.message : 'Error al eliminar vendedor'
+      throw err
+    }
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  function formatSeller(seller: any): Seller {
+    return {
+      id: Number(seller.id),
+      name: seller.name,
+      email: seller.email || null,
+      identification: seller.identification || null,
+      phonePrimary: seller.phonePrimary || null,
+      observations: seller.observations || null,
+      createdAt: seller.createdAt || new Date().toISOString(),
+      updatedAt: seller.updatedAt || new Date().toISOString(),
+      deleted: seller.status === 'deleted',
+    }
   }
 
   onMounted(fetchSellers)
@@ -91,6 +124,7 @@ export const useSellerStore = defineStore('seller', () => {
   return {
     sellers,
     isLoading,
+    error,
     totalSellers,
     fetchSellers,
     fetchSeller,

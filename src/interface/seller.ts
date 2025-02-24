@@ -2,9 +2,10 @@
 export interface SellerPayload {
   name: string
   email?: string
-  phone?: string
-  mobile?: string
-  address?: string
+  identification?: string
+  phonePrimary?: string
+  observations?: string
+  status?: 'active' | 'inactive' // Nuevo campo según docs
 }
 
 // Interfaz para el vendedor tal como la API la retorna
