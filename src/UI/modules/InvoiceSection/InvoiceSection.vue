@@ -2,6 +2,8 @@
 import { useImageRaceStore } from '@/stores/useImageRaceStore'
 import { useI18n } from 'vue-i18n'
 
+import ProductPurchase from '@/UI/modules/ProductPurchase/ProductPurchase.vue'
+
 const { t } = useI18n()
 
 const imageRaceStore = useImageRaceStore()
@@ -45,6 +47,8 @@ const imageRaceStore = useImageRaceStore()
           </div>
         </div>
       </div>
+
+      <ProductPurchase />
     </div>
   </div>
 </template>
