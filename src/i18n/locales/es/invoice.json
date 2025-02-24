@@ -1,3 +1,8 @@
 {
-  "title": "Generar Factura"
+  "title": "Facturación del Ganador",
+  "noWinnerAlert": "¡Debe existir un ganador de la carrera de imágenes para mostrar esta sección!",
+  "winnerTitle": "Ganador de la Carrera",
+  "winnerSubtitle": "Detalles de la facturación según los resultados",
+  "winnerId": "ID del Vendedor",
+  "points": "puntos"
 }
