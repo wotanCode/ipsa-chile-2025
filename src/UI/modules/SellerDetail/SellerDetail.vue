@@ -31,7 +31,7 @@ const toggleImageHighlight = (index: number) => {
     participant.score += 3
 
     if (participant.score > 20) {
-      console.log(`⚡ ${participant.seller.name} superó los 20 puntos!`)
+      router.back()
     }
   }
 }

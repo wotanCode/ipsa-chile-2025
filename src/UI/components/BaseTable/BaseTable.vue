@@ -10,7 +10,7 @@ interface BaseTableProps {
   data: any[]
   columns: Column[]
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  rowClick?: (item: any) => void
+  rowClick?: ((item: any) => void) | null
 }
 
 const props = defineProps<BaseTableProps>()

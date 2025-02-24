@@ -129,7 +129,12 @@ const tableData = computed(() => {
         }}
       </div>
 
-      <BaseTable :data="tableData" :columns="columns" :rowClick="handleRowClick" />
+      <BaseTable
+        :data="tableData"
+        :columns="columns"
+        :rowClick="imageRaceStore.winner ? null : handleRowClick"
+        :class="{ 'opacity-50 cursor-not-allowed': imageRaceStore.winner }"
+      />
     </div>
   </div>
 </template>
