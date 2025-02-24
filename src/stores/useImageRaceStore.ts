@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import type { Seller } from '@/stores/useSellerStore'
 import type { UnsplashImage } from '@/composables/useImageSearch'
@@ -34,6 +34,10 @@ export const useImageRaceStore = defineStore('imageRace', () => {
     }))
   }
 
+  const totalScore = computed(() => currentParticipants.value.reduce((sum, p) => sum + p.score, 0))
+
+  const winner = computed(() => currentParticipants.value.find((p) => p.score >= 20) || null)
+
   return {
     currentParticipants,
     searchTerm,
@@ -42,5 +46,7 @@ export const useImageRaceStore = defineStore('imageRace', () => {
     isRaceActive,
     startRace,
     resetRace,
+    totalScore,
+    winner,
   }
 })

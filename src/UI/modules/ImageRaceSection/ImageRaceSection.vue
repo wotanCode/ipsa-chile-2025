@@ -111,7 +111,24 @@ const tableData = computed(() => {
           {{ t('imageRace.raceActive.resetButton') }}
         </button>
       </div>
-      <!-- Se pasa la función rowClick para hacer cada fila clickeable -->
+
+      <div class="mb-4 text-lg font-semibold text-gray-500">
+        {{ t('imageRace.raceActive.totalScore') }}:
+        <span class="text-[var(--color-primary)] font-bold">{{ imageRaceStore.totalScore }}</span>
+      </div>
+
+      <div
+        v-if="imageRaceStore.winner"
+        class="p-4 bg-green-500/80 text-white font-bold rounded-lg mb-4"
+      >
+        {{
+          t('imageRace.raceActive.winnerMessage', {
+            name: imageRaceStore.winner.seller.name,
+            score: imageRaceStore.winner.score,
+          })
+        }}
+      </div>
+
       <BaseTable :data="tableData" :columns="columns" :rowClick="handleRowClick" />
     </div>
   </div>

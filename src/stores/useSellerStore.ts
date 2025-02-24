@@ -45,7 +45,6 @@ export const useSellerStore = defineStore('seller', () => {
       const allSellers = await response.json()
       return allSellers.find((seller: Seller) => seller.id === id)
 
-      // TODO usar esto como corresponde cuando realmente tengamos el error
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       return undefined

@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useImageRaceStore } from '@/stores/useImageRaceStore'
 
 const { t } = useI18n()
-
 const route = useRoute()
 const router = useRouter()
 const imageRaceStore = useImageRaceStore()
@@ -17,6 +16,24 @@ const sellerDetail = computed(() => {
     (participant) => participant.seller.id === sellerId,
   )
 })
+
+const highlightedImages = ref<Set<number>>(new Set())
+
+const toggleImageHighlight = (index: number) => {
+  if (!sellerDetail.value) return
+
+  if (highlightedImages.value.has(index)) {
+    highlightedImages.value.delete(index)
+    sellerDetail.value.score -= 3
+  } else {
+    highlightedImages.value.add(index)
+    sellerDetail.value.score += 3
+
+    if (sellerDetail.value.score > 20) {
+      console.log(`⚡ El vendedor ${sellerDetail.value.seller.name} superó los 20 puntos!`)
+    }
+  }
+}
 </script>
 
 <template>
@@ -39,7 +56,11 @@ const sellerDetail = computed(() => {
         <div
           v-for="(img, index) in sellerDetail.images"
           :key="index"
-          class="border rounded-md overflow-hidden"
+          class="border rounded-md overflow-hidden cursor-pointer"
+          :class="{
+            'ring-4 ring-yellow-400 scale-105 transition-transform': highlightedImages.has(index),
+          }"
+          @click="toggleImageHighlight(index)"
         >
           <img
             :src="img.urls.small"
@@ -50,7 +71,7 @@ const sellerDetail = computed(() => {
       </div>
     </div>
     <div v-else>
-      <p>Vendedor no encontrado.</p>
+      <p>{{ t('imageRace.sellerDetail.sellerNotFound') }}</p>
     </div>
   </div>
 </template>

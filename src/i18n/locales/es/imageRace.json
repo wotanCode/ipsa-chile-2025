@@ -10,7 +10,9 @@
   },
   "raceActive": {
     "title": "Carrera activa",
-    "resetButton": "Reiniciar carrera"
+    "resetButton": "Reiniciar carrera",
+    "totalScore": "Puntuación total",
+    "winnerMessage": "¡Ganador: {name} con {score} puntos!"
   },
   "table": {
     "id": "ID",
