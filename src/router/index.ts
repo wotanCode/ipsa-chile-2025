@@ -20,6 +20,11 @@ const router = createRouter({
       component: () => import('@/views/ImageRaceView.vue'),
     },
     {
+      path: '/factura',
+      name: 'invoice',
+      component: () => import('@/views/InvoiceView.vue'),
+    },
+    {
       path: '/acerca-de',
       name: 'about',
       component: () => import('@/views/AboutView.vue'),

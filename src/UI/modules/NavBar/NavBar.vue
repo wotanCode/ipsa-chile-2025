@@ -1,5 +1,11 @@
 <script setup lang="ts">
-import { HomeIcon, UserIcon, InformationCircleIcon, FlagIcon } from '@heroicons/vue/24/outline'
+import {
+  HomeIcon,
+  UserIcon,
+  InformationCircleIcon,
+  FlagIcon,
+  DocumentTextIcon,
+} from '@heroicons/vue/24/outline'
 import NavButton from '@/UI/components/NavButton/NavButton.vue'
 import { IDS } from '@/const/ids'
 import { useI18n } from 'vue-i18n'
@@ -14,6 +20,12 @@ const menuItems = [
     text: t('navbar.imageRace'),
     url: '/carrera-imagenes',
     icon: FlagIcon,
+  },
+  {
+    id: IDS.navBar.invoice,
+    text: t('navbar.invoice'),
+    url: '/factura',
+    icon: DocumentTextIcon,
   },
   { id: IDS.navBar.about, text: t('navbar.about'), url: '/acerca-de', icon: InformationCircleIcon },
 ]
