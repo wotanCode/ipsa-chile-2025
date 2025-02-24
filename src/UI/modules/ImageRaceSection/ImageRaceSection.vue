@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useSellerStore } from '@/stores/useSellerStore'
 import { useImageRaceStore } from '@/stores/useImageRaceStore'
@@ -7,6 +8,7 @@ import useImageSearch from '@/composables/useImageSearch'
 import BaseTable, { type Column } from '@/UI/components/BaseTable/BaseTable.vue'
 
 const { t } = useI18n()
+const router = useRouter()
 const sellerStore = useSellerStore()
 const imageRaceStore = useImageRaceStore()
 const { searchImages, isLoading: imagesLoading } = useImageSearch()
@@ -36,6 +38,10 @@ const handleSearch = async () => {
   } catch (err) {
     errorMessage.value = (err as Error).message
   }
+}
+
+const handleRowClick = (item: { id: string; name: string; points: number }) => {
+  router.push({ name: 'sellerDetail', params: { sellerId: item.id } })
 }
 
 const columns = ref<Column[]>([
@@ -105,7 +111,8 @@ const tableData = computed(() => {
           {{ t('imageRace.raceActive.resetButton') }}
         </button>
       </div>
-      <BaseTable :data="tableData" :columns="columns" />
+      <!-- Se pasa la función rowClick para hacer cada fila clickeable -->
+      <BaseTable :data="tableData" :columns="columns" :rowClick="handleRowClick" />
     </div>
   </div>
 </template>

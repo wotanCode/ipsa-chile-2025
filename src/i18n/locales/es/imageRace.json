@@ -16,5 +16,10 @@
     "id": "ID",
     "seller": "Vendedor",
     "points": "Puntos"
+  },
+  "sellerDetail": {
+    "backBtn": "Volver",
+    "sellerNotFound": "Vendedor no encontrado.",
+    "score": "Puntuación"
   }
 }

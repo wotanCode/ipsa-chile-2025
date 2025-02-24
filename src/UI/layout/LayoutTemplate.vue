@@ -1,6 +1,6 @@
 <script setup lang="ts">
 interface LayoutProps {
-  title: string
+  title?: string
 }
 
 defineProps<LayoutProps>()
@@ -8,7 +8,7 @@ defineProps<LayoutProps>()
 
 <template>
   <div>
-    <h1 class="text-4xl mb-4 border-b-2 border-gray-300/50 pb-2">{{ title }}</h1>
+    <h1 v-if="title" class="text-4xl mb-4 border-b-2 border-gray-300/50 pb-2">{{ title }}</h1>
     <main class="w-full h-full">
       <slot />
     </main>
