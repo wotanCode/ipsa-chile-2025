@@ -19,17 +19,14 @@ const columns = ref([
   { header: t('sellers.table.actions'), key: 'actions', slot: 'actions' },
 ])
 
-// Solo campo name (obligatorio)
 const newSeller = ref({ name: '' })
 const selectedSeller = ref<Partial<Seller>>({ name: '' })
 
-// Modales (sin cambios)
 const createModal = ref<InstanceType<typeof BaseModal> | null>(null)
 const deleteModal = ref<InstanceType<typeof BaseModal> | null>(null)
 const editModal = ref<InstanceType<typeof BaseModal> | null>(null)
 const selectedSellerId = ref<number | null>(null)
 
-// Métodos (solo manejo de name)
 const openCreateModal = () => createModal.value?.openModal()
 const openDeleteModal = (id: number) => {
   selectedSellerId.value = id
@@ -83,7 +80,6 @@ const submitEdit = async () => {
 
 <template>
   <div class="p-4">
-    <!-- Mostrar errores del store -->
     <div v-if="error" class="mb-4 p-4 bg-red-100 text-red-700 rounded-lg">
       {{ error }}
     </div>
@@ -122,7 +118,6 @@ const submitEdit = async () => {
       <p v-else class="text-center text-gray-500">{{ t('sellers.noSellers') }}</p>
     </div>
 
-    <!-- Modal: para editar solo el name -->
     <BaseModal
       ref="createModal"
       :title="t('sellers.createSeller')"
