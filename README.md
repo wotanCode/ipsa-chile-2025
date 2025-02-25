@@ -7,9 +7,10 @@ Este proyecto utiliza Vue 3 con Vite. La empresa “Imágenes del mundo” ha re
 Antes de ejecutar el proyecto, sigue estos pasos:
 
 1. Asegúrate de tener [Node.js](https://nodejs.org/) instalado.
-2. Copia el archivo `.env.template` y renómbralo a `.env`.
-3. Edita el archivo `.env` y reemplaza los valores de `VITE_ALEGRA_API_TOKEN` y `VITE_UNSPLASH_ACCESS_KEY` con tus credenciales reales.
-4. Instala las dependencias del proyecto.
+2. Crea una cuenta en [Unsplash](https://unsplash.com/) y obtén una **Access Key** desde el panel de desarrollador. Consulta la documentación oficial de la API aquí: [Unsplash API Documentation](https://unsplash.com/documentation).
+3. Copia el archivo `.env.template` y renómbralo a `.env`.
+4. Edita el archivo `.env` y reemplaza los valores de `VITE_ALEGRA_API_TOKEN` y `VITE_UNSPLASH_ACCESS_KEY` con tus credenciales reales.
+5. Instala las dependencias del proyecto.
 
 ```sh
 npm install
