@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
+import { apiFetch } from '@/utils/apiFetch'
 
 interface Product {
   id: number
@@ -12,6 +13,7 @@ export const useProductStore = defineStore('product', () => {
   const products = ref<Product[]>([])
   const selectedProductIds = ref<number[]>([])
   const initialPoints = ref(0)
+
   const totalSpent = computed(() =>
     selectedProductIds.value.reduce((sum, id) => {
       const product = products.value.find((p) => p.id === id)
@@ -20,8 +22,23 @@ export const useProductStore = defineStore('product', () => {
   )
 
   async function fetchProducts() {
-    const response = await fetch('/fakeProducts/products.json')
-    products.value = await response.json()
+    try {
+      const response = await apiFetch('/items')
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      let items: any[] = []
+
+      if (Array.isArray(response)) {
+        items = response
+      } else if (response?.data && Array.isArray(response.data)) {
+        items = response.data
+      } else {
+        console.warn('Formato de respuesta inesperado de /items:', response)
+      }
+
+      products.value = items.map(formatProduct)
+    } catch (error) {
+      console.error('Error al obtener los productos desde Alegra:', error)
+    }
   }
 
   function toggleProduct(productId: number) {
@@ -40,6 +57,21 @@ export const useProductStore = defineStore('product', () => {
   const isPurchaseDisabled = computed(() => {
     return totalSpent.value === 0 || totalSpent.value > initialPoints.value
   })
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  function formatProduct(item: any): Product {
+    const mainPrice = Array.isArray(item.price)
+      ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        item.price.find((p: any) => p.main) || item.price[0]
+      : { price: 0 }
+
+    return {
+      id: Number(item.id),
+      name: item.description,
+      imageUrl: `/${item.name}.jpg`,
+      points: mainPrice.price,
+    }
+  }
 
   return {
     products,

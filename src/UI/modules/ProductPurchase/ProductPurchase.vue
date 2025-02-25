@@ -5,7 +5,7 @@ import { useI18n } from 'vue-i18n'
 
 import { useProductStore } from '@/stores/useProductStore'
 import { useImageRaceStore } from '@/stores/useImageRaceStore'
-import { useInvoiceStore } from '@/stores/useInvoiceStore'
+import { useInvoiceStore, type InvoicePayload } from '@/stores/useInvoiceStore'
 
 const router = useRouter()
 const { t } = useI18n()
@@ -14,9 +14,7 @@ const productStore = useProductStore()
 const imageRaceStore = useImageRaceStore()
 const invoiceStore = useInvoiceStore()
 
-const initialPoints = computed(() => {
-  return imageRaceStore.totalScore || 0
-})
+const initialPoints = computed(() => imageRaceStore.totalScore || 0)
 
 onMounted(async () => {
   await productStore.fetchProducts()
@@ -26,32 +24,48 @@ onMounted(async () => {
 const handlePurchase = async () => {
   if (!imageRaceStore.winner?.seller.id) return
 
-  const invoiceItems = productStore.selectedProductIds.map((id) => {
-    const product = productStore.products.find((p) => p.id === id)
-    return {
-      id: product?.id,
-      price: product?.points || 0,
-      quantity: 1,
-    }
-  })
+  const CONTACT_ID = 9 // ID del contacto
+  const DEFAULT_TAX_ID = 1
 
-  const invoiceData = {
+  const invoiceItems = productStore.selectedProductIds
+    .map((productId) => {
+      const product = productStore.products.find((p) => p.id === productId)
+      if (!product) return null
+      return {
+        id: product.id,
+        price: product.points,
+        quantity: 1,
+        description: product.name,
+        tax: [{ id: DEFAULT_TAX_ID, quantity: 1 }],
+      }
+    })
+    .filter((item) => item !== null) as Array<{
+    id: number
+    price: number
+    quantity: number
+    description: string
+    tax: Array<{ id: number; quantity: number }>
+  }>
+
+  const invoiceData: InvoicePayload = {
     date: new Date().toISOString().split('T')[0],
     dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-    client: imageRaceStore.winner.seller.id,
+    client: CONTACT_ID,
     items: invoiceItems,
   }
 
   try {
     const invoice = await invoiceStore.createInvoice(invoiceData)
-
-    // 3. Redirigir a vista de detalle
-    router.push({
-      name: 'InvoiceDetail',
-      params: { invoiceId: invoice.id },
-    })
+    if (invoice?.id) {
+      router.push({ name: 'InvoiceDetail', params: { invoiceId: invoice.id } })
+    } else {
+      throw new Error('La factura no fue creada correctamente')
+    }
   } catch (error) {
-    console.error('Error creating invoice:', error)
+    console.error('Error creando factura:', error)
+    if (error instanceof Error && 'response' in error) {
+      console.log('Detalles del error:', error.response)
+    }
   }
 }
 </script>

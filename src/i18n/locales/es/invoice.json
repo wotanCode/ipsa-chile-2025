@@ -16,8 +16,9 @@
   "invoiceDetail": {
     "title": "Detalle de la Factura",
     "id": "Número de Factura",
-    "total": "Total",
-    "viewInAlegra": "Ver en Alegra",
+    "total": "Total puntos canjeados",
+    "sellerName": "Nombre",
+    "items": "Productos",
     "notFound": "Factura no encontrada"
   }
 }

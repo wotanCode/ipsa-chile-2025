@@ -21,7 +21,8 @@ export async function apiFetch(endpoint: string, options: RequestInit = {}) {
 
   const response = await fetch(`${API_URL}${endpoint}`, config)
   if (!response.ok) {
-    throw new Error(`Error ${response.status}: ${response.statusText}`)
+    const errorData = await response.json()
+    throw new Error(`Error ${response.status}: ${JSON.stringify(errorData)}`)
   }
   return response.json()
 }
