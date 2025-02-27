@@ -4,10 +4,15 @@ import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
 import { PlusIcon, TrashIcon, PencilIcon, ArrowPathIcon } from '@heroicons/vue/24/solid'
 
-import { useSellerStore } from '@/stores/useSellerStore'
+import { MIN_SELLERS_POSSIBLE, MAX_SELLERS_POSSIBLE } from '@/const/consts'
+
+import { useSellerStore, type Seller } from '@/stores/useSellerStore'
+
 import BaseTable from '@/UI/components/BaseTable/BaseTable.vue'
 import BaseModal from '@/UI/components/BaseModal/BaseModal.vue'
-import type { Seller } from '@/stores/useSellerStore'
+import BaseButton from '@/UI/components/BaseButton/BaseButton.vue'
+import LoadingState from '@/UI/components/LoadingState/LoadingState.vue'
+import AlertBox from '@/UI/components/AlertBox/AlertBox.vue'
 
 const { t } = useI18n()
 const sellerStore = useSellerStore()
@@ -15,6 +20,7 @@ const { sellers, isLoading, error } = storeToRefs(sellerStore) // Añadir error
 
 const columns = ref([
   { header: t('sellers.table.id'), key: 'id' },
+  // TODO: De verdad vale la pena poner el ID? darle una vuelta
   { header: t('sellers.table.name'), key: 'name' },
   { header: t('sellers.table.actions'), key: 'actions', slot: 'actions' },
 ])
@@ -80,23 +86,22 @@ const submitEdit = async () => {
 
 <template>
   <div class="p-4">
-    <div v-if="error" class="mb-4 p-4 bg-red-100 text-red-700 rounded-lg">
-      {{ error }}
+    <AlertBox v-if="error" type="error" :message="error" />
+
+    <p class="mb-4">
+      {{
+        t('sellers.welcome', {
+          minSellers: MIN_SELLERS_POSSIBLE.toString(),
+          maxSellers: MAX_SELLERS_POSSIBLE.toString(),
+        })
+      }}
+    </p>
+
+    <div class="mb-4">
+      <BaseButton :onClick="openCreateModal" :icon="PlusIcon" :label="t('sellers.createSeller')" />
     </div>
 
-    <p class="mb-4">{{ t('sellers.welcome') }}</p>
-    <button
-      class="mb-4 flex items-center px-4 py-2 font-bold bg-[var(--color-primary)] text-white rounded hover:bg-[var(--color-primary)]/90 cursor-pointer"
-      @click="openCreateModal"
-    >
-      <PlusIcon class="h-5 w-5 mr-2" />
-      {{ t('sellers.createSeller') }}
-    </button>
-
-    <div v-if="isLoading" class="flex flex-col items-center justify-center p-4">
-      <ArrowPathIcon class="h-16 w-16 animate-spin text-[var(--color-primary)]" />
-      <p class="mt-4 text-lg">{{ t('sellers.loading') }}</p>
-    </div>
+    <LoadingState v-if="isLoading" :icon="ArrowPathIcon" :message="t('sellers.loading')" />
 
     <div v-else>
       <BaseTable v-if="sellers.length > 0" :data="sellers" :columns="columns">
