@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import LayoutTemplate from '@/UI/layout/LayoutTemplate.vue'
-import SellerDetail from '@/UI/modules/SellerDetail/SellerDetail.vue'
+import SellerCompetition from '@/UI/modules/SellerDetail/SellerCompetition.vue'
 </script>
 
 <template>
   <LayoutTemplate>
-    <SellerDetail />
+    <SellerCompetition />
   </LayoutTemplate>
 </template>

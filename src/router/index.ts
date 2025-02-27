@@ -7,7 +7,7 @@ export const routes = {
   imageRace: '/carrera-imagenes',
   invoice: '/factura',
   about: '/acerca-de',
-  sellerDetail: '/vendedor/:sellerId',
+  sellerCompetition: '/competencia-vendedores',
   invoiceDetail: '/invoice/:invoiceId',
 }
 
@@ -40,9 +40,9 @@ const router = createRouter({
       component: () => import('@/views/AboutView.vue'),
     },
     {
-      path: routes.sellerDetail,
-      name: 'sellerDetail',
-      component: () => import('@/views/SellerDetailView.vue'),
+      path: routes.sellerCompetition,
+      name: 'sellerCompetition',
+      component: () => import('@/views/SellerCompetitionView.vue'),
     },
     {
       path: routes.invoiceDetail,

@@ -5,7 +5,7 @@ import type { UnsplashImage } from '@/composables/useImageSearch'
 
 interface RaceParticipant {
   seller: Seller
-  images: UnsplashImage[]
+  image: UnsplashImage | null
   score: number
 }
 
@@ -33,8 +33,15 @@ export const useImageRaceStore = defineStore('imageRace', () => {
     if (sellers.length === 0) return
     currentParticipants.value = sellers.map((seller) => ({
       seller,
-      images: [],
+      image: null,
       score: 0,
+    }))
+  }
+
+  function assignImagesToSellers(sellers: Seller[], images: UnsplashImage[]) {
+    currentParticipants.value = currentParticipants.value.map((participant, index) => ({
+      ...participant,
+      image: images[index] || null,
     }))
   }
 
@@ -69,5 +76,6 @@ export const useImageRaceStore = defineStore('imageRace', () => {
     tableData,
     totalScore,
     winner,
+    assignImagesToSellers,
   }
 })

@@ -1,23 +1,24 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-
-import { ArrowPathIcon } from '@heroicons/vue/24/solid'
+import { useRouter } from 'vue-router'
 
 import { useSellerStore } from '@/stores/useSellerStore'
 import { useImageRaceStore } from '@/stores/useImageRaceStore'
+import useImageSearch from '@/composables/useImageSearch'
 
 import BaseTable, { type Column } from '@/UI/components/BaseTable/BaseTable.vue'
 import BaseButton from '@/UI/components/BaseButton/BaseButton.vue'
-import AlertBox from '@/UI/components/AlertBox/AlertBox.vue'
 import BaseInput from '@/UI/components/BaseInput/BaseInput.vue'
-import LoadingState from '@/UI/components/LoadingState/LoadingState.vue'
+import AlertBox from '@/UI/components/AlertBox/AlertBox.vue'
 
-import { MIN_SELLERS_POSSIBLE, MAX_SELLERS_POSSIBLE } from '@/const/consts'
+import { MAX_SELLERS_POSSIBLE, MIN_SELLERS_POSSIBLE } from '@/const/consts'
 
+const router = useRouter()
 const { t } = useI18n()
 const sellerStore = useSellerStore()
 const imageRaceStore = useImageRaceStore()
+const { searchImages, isLoading: imagesLoading } = useImageSearch()
 
 const searchTerm = ref('')
 const errorMessage = ref('')
@@ -29,15 +30,6 @@ const enoughSellers = computed(() => {
   )
 })
 
-const handleSearch = () => {
-  if (!searchTerm.value.trim()) {
-    errorMessage.value = t('imageRace.inputStage.emptyErrorMessage')
-    return
-  }
-  imageRaceStore.searchTerm = searchTerm.value
-  imageRaceStore.startRace()
-}
-
 const columns = ref<Column[]>([
   { header: t('imageRace.table.id'), key: 'id' },
   { header: t('imageRace.table.seller'), key: 'name' },
@@ -45,6 +37,30 @@ const columns = ref<Column[]>([
 ])
 
 const tableData = computed(() => imageRaceStore.tableData)
+
+const handleSearch = async () => {
+  if (!searchTerm.value.trim()) {
+    errorMessage.value = t('imageRace.inputStage.emptyErrorMessage')
+    return
+  }
+
+  try {
+    const requiredImages = sellerStore.sellers.length
+    const loadedImages = await searchImages(searchTerm.value, requiredImages)
+    if (loadedImages.length < requiredImages) {
+      throw new Error(t('imageRace.inputStage.emptyErrorMessage'))
+    }
+    imageRaceStore.searchTerm = searchTerm.value
+    imageRaceStore.assignImagesToSellers(sellerStore.sellers, loadedImages)
+    imageRaceStore.startRace()
+
+    router.push({
+      path: '/competencia-vendedores',
+    })
+  } catch (err) {
+    errorMessage.value = (err as Error).message
+  }
+}
 </script>
 
 <template>
@@ -53,14 +69,14 @@ const tableData = computed(() => imageRaceStore.tableData)
       <div class="flex gap-2">
         <BaseInput
           v-model:modelValue="searchTerm"
-          :disabled="!enoughSellers || imageRaceStore.isLoading"
+          :disabled="!enoughSellers || imagesLoading"
           :placeholder="t('imageRace.inputStage.inputPlaceholder')"
           @keyup.enter="handleSearch"
         />
 
         <BaseButton
           :onClick="handleSearch"
-          :disabled="!enoughSellers || imageRaceStore.isLoading"
+          :disabled="!enoughSellers || imagesLoading"
           :label="t('imageRace.inputStage.searchButton')"
         />
       </div>
@@ -70,28 +86,9 @@ const tableData = computed(() => imageRaceStore.tableData)
         type="alert"
         :message="t('imageRace.inputStage.alertMessage')"
       />
-      <AlertBox v-if="imageRaceStore.error" type="error" :message="imageRaceStore.error" />
+      <AlertBox v-if="errorMessage" type="error" :message="errorMessage" />
     </div>
 
-    <LoadingState
-      v-if="imageRaceStore.isLoading"
-      :icon="ArrowPathIcon"
-      :message="t('sellers.loading')"
-    />
-
-    <div v-else class="w-full bg-[rgb(36,46,52)] dark:bg-neutral-50 rounded-2xl shadow-xl p-8">
-      <div class="flex justify-between items-center mb-6">
-        <!-- <h2 class="font-bold dark:text-teal-900 text-gray-200">
-          {{ t('imageRace.raceActive.title') }}: {{ imageRaceStore.searchTerm }}
-        </h2> -->
-
-        <BaseButton
-          :onClick="imageRaceStore.resetRace"
-          :label="t('imageRace.raceActive.resetButton')"
-        />
-      </div>
-
-      <BaseTable :columns="columns" :data="tableData" />
-    </div>
+    <BaseTable :columns="columns" :data="tableData" />
   </div>
 </template>
