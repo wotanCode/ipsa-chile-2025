@@ -13,6 +13,7 @@ import BaseModal from '@/UI/components/BaseModal/BaseModal.vue'
 import BaseButton from '@/UI/components/BaseButton/BaseButton.vue'
 import LoadingState from '@/UI/components/LoadingState/LoadingState.vue'
 import AlertBox from '@/UI/components/AlertBox/AlertBox.vue'
+import BaseInput from '@/UI/components/BaseInput/BaseInput.vue'
 
 const { t } = useI18n()
 const sellerStore = useSellerStore()
@@ -132,12 +133,11 @@ const submitEdit = async () => {
     >
       <div>
         <label class="block text-sm font-medium text-gray-700">{{ t('sellers.table.name') }}</label>
-        <input
-          type="text"
-          v-model="newSeller.name"
-          class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+        <BaseInput
+          v-model:modelValue="newSeller.name"
           :placeholder="t('sellers.table.name')"
           required
+          class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
         />
       </div>
     </BaseModal>
@@ -151,12 +151,11 @@ const submitEdit = async () => {
     >
       <div>
         <label class="block text-sm font-medium text-gray-700">{{ t('sellers.table.name') }}</label>
-        <input
-          type="text"
-          v-model="selectedSeller.name"
-          class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+        <BaseInput
+          v-model:modelValue="selectedSeller.name"
           :placeholder="t('sellers.table.name')"
           required
+          class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
         />
       </div>
     </BaseModal>
