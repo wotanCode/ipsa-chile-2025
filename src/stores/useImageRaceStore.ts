@@ -1,21 +1,43 @@
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { defineStore } from 'pinia'
 import type { Seller } from '@/stores/useSellerStore'
 import type { UnsplashImage } from '@/composables/useImageSearch'
-import { IMAGES_PER_SELLER } from '@/const/consts'
+import { useSellerStore } from '@/stores/useSellerStore'
 
 interface RaceParticipant {
   seller: Seller
   images: UnsplashImage[]
   score: number
-  highlightedIndices: number[]
 }
 
 export const useImageRaceStore = defineStore('imageRace', () => {
+  const sellerStore = useSellerStore()
+
   const currentParticipants = ref<RaceParticipant[]>([])
   const searchTerm = ref('')
-  const error = ref<string | null>(null)
   const isRaceActive = ref(false)
+
+  const isLoading = computed(() => sellerStore.isLoading)
+  const error = computed(() => sellerStore.error)
+
+  watch(
+    () => sellerStore.sellers,
+    (newSellers) => {
+      if (newSellers.length > 0 && !isRaceActive.value) {
+        initializeParticipants(newSellers)
+      }
+    },
+    { immediate: true },
+  )
+
+  function initializeParticipants(sellers: Seller[]) {
+    if (sellers.length === 0) return
+    currentParticipants.value = sellers.map((seller) => ({
+      seller,
+      images: [],
+      score: 0,
+    }))
+  }
 
   function startRace() {
     isRaceActive.value = true
@@ -23,31 +45,29 @@ export const useImageRaceStore = defineStore('imageRace', () => {
 
   function resetRace() {
     isRaceActive.value = false
-    currentParticipants.value = []
     searchTerm.value = ''
-  }
-
-  function assignImagesToSellers(sellers: Seller[], images: UnsplashImage[]) {
-    currentParticipants.value = sellers.map((seller, index) => ({
-      seller,
-      images: images.slice(index * IMAGES_PER_SELLER, (index + 1) * IMAGES_PER_SELLER),
-      score: 0,
-      highlightedIndices: [],
-    }))
+    initializeParticipants(sellerStore.sellers)
   }
 
   const totalScore = computed(() => currentParticipants.value.reduce((sum, p) => sum + p.score, 0))
-
   const winner = computed(() => currentParticipants.value.find((p) => p.score >= 20) || null)
+  const tableData = computed(() =>
+    currentParticipants.value.map((participant) => ({
+      id: participant.seller.id,
+      name: participant.seller.name,
+      score: participant.score.toString(),
+    })),
+  )
 
   return {
     currentParticipants,
     searchTerm,
-    error,
-    assignImagesToSellers,
     isRaceActive,
+    isLoading,
+    error,
     startRace,
     resetRace,
+    tableData,
     totalScore,
     winner,
   }
