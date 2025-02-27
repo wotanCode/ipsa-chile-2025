@@ -1,92 +1,67 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+
+import { ArrowPathIcon } from '@heroicons/vue/24/solid'
 
 import { useSellerStore } from '@/stores/useSellerStore'
 import { useImageRaceStore } from '@/stores/useImageRaceStore'
-
-import useImageSearch from '@/composables/useImageSearch'
 
 import BaseTable, { type Column } from '@/UI/components/BaseTable/BaseTable.vue'
 import BaseButton from '@/UI/components/BaseButton/BaseButton.vue'
 import AlertBox from '@/UI/components/AlertBox/AlertBox.vue'
 import BaseInput from '@/UI/components/BaseInput/BaseInput.vue'
+import LoadingState from '@/UI/components/LoadingState/LoadingState.vue'
+
+import { MIN_SELLERS_POSSIBLE, MAX_SELLERS_POSSIBLE } from '@/const/consts'
 
 const { t } = useI18n()
-const router = useRouter()
 const sellerStore = useSellerStore()
 const imageRaceStore = useImageRaceStore()
-const { searchImages, isLoading: imagesLoading } = useImageSearch()
 
 const searchTerm = ref('')
 const errorMessage = ref('')
 
 const enoughSellers = computed(() => {
-  return sellerStore.sellers.length >= 2 && sellerStore.sellers.length <= 4
+  return (
+    sellerStore.sellers.length >= MIN_SELLERS_POSSIBLE &&
+    sellerStore.sellers.length <= MAX_SELLERS_POSSIBLE
+  )
 })
 
-const handleSearch = async () => {
+const handleSearch = () => {
   if (!searchTerm.value.trim()) {
     errorMessage.value = t('imageRace.inputStage.emptyErrorMessage')
     return
   }
-
-  try {
-    const requiredImages = sellerStore.sellers.length * 7
-    const images = await searchImages(searchTerm.value, requiredImages)
-    if (images.length < requiredImages) {
-      throw new Error(t('imageRace.inputStage.emptyErrorMessage'))
-    }
-    imageRaceStore.searchTerm = searchTerm.value
-    imageRaceStore.assignImagesToSellers(sellerStore.sellers, images)
-    imageRaceStore.startRace()
-  } catch (err) {
-    errorMessage.value = (err as Error).message
-  }
-}
-
-const handleRowClick = (item: { id: string; name: string; points: number }) => {
-  router.push({ name: 'sellerDetail', params: { sellerId: item.id } })
+  imageRaceStore.searchTerm = searchTerm.value
+  imageRaceStore.startRace()
 }
 
 const columns = ref<Column[]>([
   { header: t('imageRace.table.id'), key: 'id' },
   { header: t('imageRace.table.seller'), key: 'name' },
-  { header: t('imageRace.table.points'), key: 'points' },
+  { header: t('imageRace.table.points'), key: 'score' },
 ])
 
-const tableData = computed(() => {
-  return imageRaceStore.currentParticipants.map((participant) => ({
-    id: participant.seller.id,
-    name: participant.seller.name,
-    points: participant.score,
-  }))
-})
+const tableData = computed(() => imageRaceStore.tableData)
 </script>
 
 <template>
-  <div class="flex items-center justify-center px-4">
-    <div
-      v-if="!imageRaceStore.isRaceActive"
-      class="max-w-md w-full bg-[rgb(36,46,52)] dark:bg-neutral-50 rounded-2xl shadow-xl p-8"
-    >
+  <div class="flex items-center justify-center flex-col px-4 gap-4">
+    <div class="max-w-md w-full bg-[rgb(36,46,52)] dark:bg-neutral-50 rounded-2xl shadow-xl p-8">
       <div class="flex gap-2">
         <BaseInput
           v-model:modelValue="searchTerm"
-          :disabled="!enoughSellers"
+          :disabled="!enoughSellers || imageRaceStore.isLoading"
           :placeholder="t('imageRace.inputStage.inputPlaceholder')"
           @keyup.enter="handleSearch"
         />
 
         <BaseButton
           :onClick="handleSearch"
-          :disabled="!enoughSellers || imagesLoading"
-          :label="
-            imagesLoading
-              ? t('imageRace.inputStage.sarchButtonIsLoading')
-              : t('imageRace.inputStage.searchButton')
-          "
+          :disabled="!enoughSellers || imageRaceStore.isLoading"
+          :label="t('imageRace.inputStage.searchButton')"
         />
       </div>
 
@@ -95,46 +70,28 @@ const tableData = computed(() => {
         type="alert"
         :message="t('imageRace.inputStage.alertMessage')"
       />
-
-      <AlertBox v-if="errorMessage" type="error" :message="errorMessage" />
+      <AlertBox v-if="imageRaceStore.error" type="error" :message="imageRaceStore.error" />
     </div>
+
+    <LoadingState
+      v-if="imageRaceStore.isLoading"
+      :icon="ArrowPathIcon"
+      :message="t('sellers.loading')"
+    />
 
     <div v-else class="w-full bg-[rgb(36,46,52)] dark:bg-neutral-50 rounded-2xl shadow-xl p-8">
       <div class="flex justify-between items-center mb-6">
-        <h2 class="font-bold dark:text-teal-900 text-gray-200">
+        <!-- <h2 class="font-bold dark:text-teal-900 text-gray-200">
           {{ t('imageRace.raceActive.title') }}: {{ imageRaceStore.searchTerm }}
-        </h2>
-        <button
-          class="px-6 py-2.5 bg-[var(--color-primary)] text-white rounded-lg hover:bg-[var(--color-primary)]/90 active:bg-[var(--color-primary)]/90 disabled:opacity-70 disabled:cursor-not-allowed transition-colors"
-          @click="imageRaceStore.resetRace()"
-        >
-          {{ t('imageRace.raceActive.resetButton') }}
-        </button>
+        </h2> -->
+
+        <BaseButton
+          :onClick="imageRaceStore.resetRace"
+          :label="t('imageRace.raceActive.resetButton')"
+        />
       </div>
 
-      <div class="mb-4 text-lg font-semibold text-gray-500">
-        {{ t('imageRace.raceActive.totalScore') }}:
-        <span class="text-[var(--color-primary)] font-bold">{{ imageRaceStore.totalScore }}</span>
-      </div>
-
-      <div
-        v-if="imageRaceStore.winner"
-        class="p-4 bg-green-500/80 text-white font-bold rounded-lg mb-4"
-      >
-        {{
-          t('imageRace.raceActive.winnerMessage', {
-            name: imageRaceStore.winner.seller.name,
-            score: imageRaceStore.winner.score,
-          })
-        }}
-      </div>
-
-      <BaseTable
-        :data="tableData"
-        :columns="columns"
-        :rowClick="imageRaceStore.winner ? null : handleRowClick"
-        :class="{ 'opacity-50 cursor-not-allowed': imageRaceStore.winner }"
-      />
+      <BaseTable :columns="columns" :data="tableData" />
     </div>
   </div>
 </template>
