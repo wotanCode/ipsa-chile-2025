@@ -89,6 +89,14 @@ const handleSearch = async () => {
       <AlertBox v-if="errorMessage" type="error" :message="errorMessage" />
     </div>
 
-    <BaseTable :columns="columns" :data="tableData" />
+    <div class="flex flex-col w-full gap-4">
+      <BaseButton
+        class="self-start"
+        :onClick="imageRaceStore.resetRace"
+        :label="t('imageRace.raceActive.resetButton')"
+      />
+
+      <BaseTable :columns="columns" :data="tableData" />
+    </div>
   </div>
 </template>
