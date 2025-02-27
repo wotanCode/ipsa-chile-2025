@@ -9,8 +9,6 @@ interface BaseTableProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any[]
   columns: Column[]
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  rowClick?: ((item: any) => void) | null
 }
 
 const props = defineProps<BaseTableProps>()
@@ -33,13 +31,7 @@ const props = defineProps<BaseTableProps>()
       <tr
         v-for="(item, index) in props.data"
         :key="item.id || index"
-        :class="[
-          'odd:bg-gray-100',
-          'even:bg-gray-200',
-          'text-gray-900',
-          props.rowClick ? 'cursor-pointer' : '',
-        ]"
-        @click="props.rowClick && props.rowClick(item)"
+        class="odd:bg-gray-100 even:bg-gray-200 text-gray-900"
       >
         <td v-for="column in props.columns" :key="column.key" class="px-6 py-4 whitespace-nowrap">
           <template v-if="column.slot">
