@@ -2,10 +2,16 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+
 import { useSellerStore } from '@/stores/useSellerStore'
 import { useImageRaceStore } from '@/stores/useImageRaceStore'
+
 import useImageSearch from '@/composables/useImageSearch'
+
 import BaseTable, { type Column } from '@/UI/components/BaseTable/BaseTable.vue'
+import BaseButton from '@/UI/components/BaseButton/BaseButton.vue'
+import AlertBox from '@/UI/components/AlertBox/AlertBox.vue'
+import BaseInput from '@/UI/components/BaseInput/BaseInput.vue'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -66,37 +72,31 @@ const tableData = computed(() => {
       class="max-w-md w-full bg-[rgb(36,46,52)] dark:bg-neutral-50 rounded-2xl shadow-xl p-8"
     >
       <div class="flex gap-2">
-        <input
-          v-model="searchTerm"
+        <BaseInput
+          v-model:modelValue="searchTerm"
           :disabled="!enoughSellers"
           :placeholder="t('imageRace.inputStage.inputPlaceholder')"
           @keyup.enter="handleSearch"
-          class="w-full px-4 py-2.5 text-white font-bold rounded-lg border-2 focus:ring-2 focus:ring-blue-200 transition-all outline-none disabled:opacity-70 disabled:cursor-not-allowed bg-[rgb(36,46,52)]"
         />
-        <button
-          class="px-6 py-2.5 bg-[var(--color-primary)] text-white rounded-lg hover:bg-[var(--color-primary)]/90 active:bg-[var(--color-primary)]/90 disabled:opacity-70 disabled:cursor-not-allowed transition-colors"
-          @click="handleSearch"
+
+        <BaseButton
+          :onClick="handleSearch"
           :disabled="!enoughSellers || imagesLoading"
-        >
-          {{
+          :label="
             imagesLoading
               ? t('imageRace.inputStage.sarchButtonIsLoading')
               : t('imageRace.inputStage.searchButton')
-          }}
-        </button>
+          "
+        />
       </div>
-      <div
-        class="p-3 bg-yellow-50 border-l-4 border-yellow-400 text-yellow-700 rounded-lg"
+
+      <AlertBox
         v-if="!enoughSellers"
-      >
-        {{ t('imageRace.inputStage.alertMessage') }}
-      </div>
-      <div
-        class="p-3 bg-red-50 border-l-4 border-red-400 text-red-700 rounded-lg"
-        v-if="errorMessage"
-      >
-        {{ errorMessage }}
-      </div>
+        type="alert"
+        :message="t('imageRace.inputStage.alertMessage')"
+      />
+
+      <AlertBox v-if="errorMessage" type="error" :message="errorMessage" />
     </div>
 
     <div v-else class="w-full bg-[rgb(36,46,52)] dark:bg-neutral-50 rounded-2xl shadow-xl p-8">
