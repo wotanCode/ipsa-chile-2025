@@ -4,8 +4,8 @@
     "inputPlaceholder": "Ej: Autos, Tecnología...",
     "searchButton": "Iniciar",
     "sarchButtonIsLoading": "Buscando...",
-    "alertMessage": "🚨 Necesitas de 2 a 4 vendedores para comenzar",
-    "emptyErrorMessage": "Por favor ingresa un término de búsqueda",
+    "alertMessage": "🚨 Necesitas de 2 a 30 vendedores para comenzar",
+    "emptyErrorMessage": "⚠️ Por favor ingresa un término de búsqueda",
     "insufficientImages": "No hay suficientes imágenes para todos los vendedores"
   },
   "raceActive": {
