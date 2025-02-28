@@ -1,29 +1,29 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { apiFetch } from '@/utils/apiFetch'
+import { type InvoiceResponse } from '@/interface/alegra_invoice_api'
 
 export interface InvoiceItem {
-  id: number
+  id: string | number
   price: number
   quantity: number
   description?: string
   discount?: number
   tax?: Array<{
-    id: number
+    id: string | number
     quantity: number
   }>
 }
 
 export interface InvoicePayload {
-  client: number | string
+  client: string | number
   date: string
   dueDate: string
   items: InvoiceItem[]
 }
 
 export const useInvoiceStore = defineStore('invoice', () => {
-  const createdInvoice = ref<any>(null)
+  const createdInvoice = ref<InvoiceResponse | null>(null)
   const error = ref<string | null>(null)
   const isLoading = ref(false)
 
@@ -43,9 +43,10 @@ export const useInvoiceStore = defineStore('invoice', () => {
         throw new Error('Respuesta inválida de la API')
       }
 
-      createdInvoice.value = response
+      createdInvoice.value = response as InvoiceResponse
       error.value = null
       return response
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       const errorMessage = err.response?.data?.message || err.message
       error.value = `Error ${err.response?.status || 500}: ${errorMessage}`
