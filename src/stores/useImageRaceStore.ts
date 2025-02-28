@@ -1,10 +1,11 @@
 import { ref, computed, watch } from 'vue'
 import { defineStore } from 'pinia'
 
-import { useSellerStore, type Seller } from '@/stores/useSellerStore'
+import { useSellerStore } from '@/stores/useSellerStore'
 import type { UnsplashImage } from '@/composables/useImageSearch'
 
 import { SCORE_TO_WIN } from '@/const/consts'
+import type { Seller } from '@/interface/seller'
 
 interface RaceParticipant {
   seller: Seller

@@ -6,7 +6,7 @@ import { PlusIcon, TrashIcon, PencilIcon, ArrowPathIcon } from '@heroicons/vue/2
 
 import { MIN_SELLERS_POSSIBLE, MAX_SELLERS_POSSIBLE } from '@/const/consts'
 
-import { useSellerStore, type Seller } from '@/stores/useSellerStore'
+import { useSellerStore } from '@/stores/useSellerStore'
 
 import BaseTable from '@/UI/components/BaseTable/BaseTable.vue'
 import BaseModal from '@/UI/components/BaseModal/BaseModal.vue'
@@ -14,6 +14,7 @@ import BaseButton from '@/UI/components/BaseButton/BaseButton.vue'
 import LoadingState from '@/UI/components/LoadingState/LoadingState.vue'
 import AlertBox from '@/UI/components/AlertBox/AlertBox.vue'
 import BaseInput from '@/UI/components/BaseInput/BaseInput.vue'
+import type { Seller } from '@/interface/seller'
 
 const { t } = useI18n()
 const sellerStore = useSellerStore()
@@ -41,7 +42,7 @@ const openDeleteModal = (id: number) => {
 }
 
 const openEditModal = async (id: number) => {
-  const seller = await sellerStore.fetchSeller(id)
+  const seller = await sellerStore.fetchSeller(id.toString())
   if (seller) {
     selectedSeller.value = { ...seller }
     editModal.value?.openModal()
@@ -63,7 +64,7 @@ const submitSeller = async () => {
 const confirmDelete = async () => {
   if (selectedSellerId.value !== null) {
     try {
-      await sellerStore.deleteSeller(selectedSellerId.value)
+      await sellerStore.deleteSeller(selectedSellerId.value.toString())
       deleteModal.value?.closeModal()
     } catch (err) {
       console.error('Error eliminando vendedor:', err)
