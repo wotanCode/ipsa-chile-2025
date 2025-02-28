@@ -48,7 +48,7 @@ const handleSearch = async () => {
     const requiredImages = sellerStore.sellers.length
     const loadedImages = await searchImages(searchTerm.value, requiredImages)
     if (loadedImages.length < requiredImages) {
-      throw new Error(t('imageRace.inputStage.emptyErrorMessage'))
+      throw new Error(t('imageRace.inputStage.errorMessage'))
     }
     imageRaceStore.searchTerm = searchTerm.value
     imageRaceStore.assignImagesToSellers(sellerStore.sellers, loadedImages)
@@ -65,11 +65,13 @@ const handleSearch = async () => {
 
 <template>
   <div class="flex items-center justify-center flex-col px-4 gap-4">
-    <div class="max-w-md w-full bg-[rgb(36,46,52)] dark:bg-neutral-50 rounded-2xl shadow-xl p-8">
+    <div
+      class="flex flex-col max-w-md w-full bg-[rgb(36,46,52)] dark:bg-neutral-50 rounded-2xl shadow-xl p-8 gap-2"
+    >
       <div class="flex gap-2">
         <BaseInput
           v-model:modelValue="searchTerm"
-          :disabled="!enoughSellers || imagesLoading"
+          :disabled="!enoughSellers || imagesLoading || !!imageRaceStore.winner"
           :placeholder="t('imageRace.inputStage.inputPlaceholder')"
           @keyup.enter="handleSearch"
         />
@@ -87,13 +89,24 @@ const handleSearch = async () => {
         :message="t('imageRace.inputStage.alertMessage')"
       />
       <AlertBox v-if="errorMessage" type="error" :message="errorMessage" />
+
+      <AlertBox
+        v-if="imageRaceStore.winner"
+        type="success"
+        :message="
+          $t('imageRace.winnerMessage', {
+            name: imageRaceStore.winner.seller.name,
+            score: imageRaceStore.totalScore,
+          })
+        "
+      />
     </div>
 
     <div class="flex flex-col w-full gap-4">
       <BaseButton
         class="self-start"
         :onClick="imageRaceStore.resetRace"
-        :label="t('imageRace.raceActive.resetButton')"
+        :label="t('imageRace.restartButton')"
       />
 
       <BaseTable :columns="columns" :data="tableData" />

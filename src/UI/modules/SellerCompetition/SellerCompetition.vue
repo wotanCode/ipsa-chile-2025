@@ -34,7 +34,7 @@ const toggleImageHighlight = (participantIndex: number) => {
 }
 
 const handleConfirm = () => {
-  if (selectedParticipantIndex.value !== null) {
+  if (selectedParticipantIndex.value !== null && !imageRaceStore.winner) {
     const participant = currentParticipants[selectedParticipantIndex.value]
     participant.score += 3
     router.back()
@@ -50,7 +50,7 @@ const handleCancel = () => {
   <LoadingState v-if="imagesLoading" :icon="ArrowPathIcon" :message="t('sellers.loading')" />
 
   <div v-else-if="!currentParticipants.some((participant) => participant.image)">
-    <AlertBox type="alert" message="No hay carreras activas en este momento." />
+    <AlertBox type="alert" :message="t('imageRace.notRaceAlert')" />
   </div>
 
   <div v-else class="w-full bg-[rgb(36,46,52)]/10 dark:bg-neutral-50/10 rounded-2xl shadow-xl p-8">

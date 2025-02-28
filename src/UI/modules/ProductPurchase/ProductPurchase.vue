@@ -59,7 +59,7 @@ const handlePurchase = async () => {
     if (invoice?.id) {
       router.push({ name: 'InvoiceDetail', params: { invoiceId: invoice.id } })
     } else {
-      throw new Error('La factura no fue creada correctamente')
+      throw new Error(t('invoice.productPurchase.errorCreatingInvoice'))
     }
   } catch (error) {
     console.error('Error creando factura:', error)

@@ -3,17 +3,13 @@
   "inputStage": {
     "inputPlaceholder": "Ej: Autos, Tecnología...",
     "searchButton": "Iniciar",
-    "sarchButtonIsLoading": "Buscando...",
     "alertMessage": "🚨 Necesitas de 2 a 30 vendedores para comenzar",
     "emptyErrorMessage": "⚠️ Por favor ingresa un término de búsqueda",
-    "insufficientImages": "No hay suficientes imágenes para todos los vendedores"
+    "errorMessage": "⚠️ Ocurrio un error en la Api de Unsplash"
   },
-  "raceActive": {
-    "title": "Carrera activa",
-    "resetButton": "Reiniciar carrera",
-    "totalScore": "Puntuación total",
-    "winnerMessage": "¡Ganador: {name} con {score} puntos!"
-  },
+  "restartButton": "Reiniciar carrera",
+  "totalScore": "Puntuación total",
+  "winnerMessage": "🎉 ¡Ganador: {name}, se lleva {score} puntos!",
   "table": {
     "id": "ID",
     "seller": "Vendedor",
@@ -23,5 +19,11 @@
     "backBtn": "Volver",
     "sellerNotFound": "Vendedor no encontrado.",
     "score": "Puntuación"
+  },
+  "notRaceAlert": "No hay carreras activas en este momento.",
+  "confirmationModal": {
+    "information": "¿Desea seleccionar esta imagen?",
+    "accept": "Aceptar",
+    "cancel": "Cancelar"
   }
 }
