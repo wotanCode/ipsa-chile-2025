@@ -14,6 +14,7 @@ import BaseInput from '@/UI/components/BaseInput/BaseInput.vue'
 import AlertBox from '@/UI/components/AlertBox/AlertBox.vue'
 
 import { MAX_SELLERS_POSSIBLE, MIN_SELLERS_POSSIBLE } from '@/const/consts'
+import { routes } from '@/router'
 
 const router = useRouter()
 const { t } = useI18n()
@@ -55,7 +56,7 @@ const handleSearch = async () => {
     imageRaceStore.startRace()
 
     router.push({
-      path: '/competencia-vendedores',
+      path: routes.sellerCompetition,
     })
   } catch (err) {
     errorMessage.value = (err as Error).message

@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+import { routes } from '@/router'
+
 import {
   HomeIcon,
   UserIcon,
@@ -6,28 +9,29 @@ import {
   FlagIcon,
   DocumentTextIcon,
 } from '@heroicons/vue/24/outline'
+
 import NavButton from '@/UI/components/NavButton/NavButton.vue'
+
 import { IDS } from '@/const/ids'
-import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
 
 const menuItems = [
-  { id: IDS.navBar.home, text: t('navbar.welcome'), url: '/', icon: HomeIcon },
-  { id: IDS.navBar.seller, text: t('navbar.sellers'), url: '/vendedores', icon: UserIcon },
+  { id: IDS.navBar.home, text: t('navbar.welcome'), url: routes.home, icon: HomeIcon },
+  { id: IDS.navBar.seller, text: t('navbar.sellers'), url: routes.sellers, icon: UserIcon },
   {
     id: IDS.navBar.imageRace,
     text: t('navbar.imageRace'),
-    url: '/carrera-imagenes',
+    url: routes.imageRace,
     icon: FlagIcon,
   },
   {
     id: IDS.navBar.invoice,
     text: t('navbar.invoice'),
-    url: '/factura',
+    url: routes.invoice,
     icon: DocumentTextIcon,
   },
-  { id: IDS.navBar.about, text: t('navbar.about'), url: '/acerca-de', icon: InformationCircleIcon },
+  { id: IDS.navBar.about, text: t('navbar.about'), url: routes.about, icon: InformationCircleIcon },
 ]
 </script>
 
