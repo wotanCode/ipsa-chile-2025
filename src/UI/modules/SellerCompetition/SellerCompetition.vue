@@ -3,8 +3,6 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 
-import { ArrowPathIcon } from '@heroicons/vue/24/solid'
-
 import { useImageRaceStore } from '@/stores/useImageRaceStore'
 
 import useImageSearch from '@/composables/useImageSearch'
@@ -48,7 +46,7 @@ const handleCancel = () => {
 </script>
 
 <template>
-  <LoadingState v-if="imagesLoading" :icon="ArrowPathIcon" :message="t('sellers.loading')" />
+  <LoadingState v-if="imagesLoading" :message="t('sellers.loading')" />
 
   <div v-else-if="!currentParticipants.some((participant) => participant.image)">
     <AlertBox type="alert" :message="t('imageRace.notRaceAlert')" />

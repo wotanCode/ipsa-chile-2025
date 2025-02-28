@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
-import { PlusIcon, TrashIcon, PencilIcon, ArrowPathIcon } from '@heroicons/vue/24/solid'
+import { PlusIcon, TrashIcon, PencilIcon } from '@heroicons/vue/24/solid'
 
 import { MIN_SELLERS_POSSIBLE, MAX_SELLERS_POSSIBLE } from '@/const/consts'
 
@@ -103,7 +103,7 @@ const submitEdit = async () => {
       <BaseButton :onClick="openCreateModal" :icon="PlusIcon" :label="t('sellers.createSeller')" />
     </div>
 
-    <LoadingState v-if="isLoading" :icon="ArrowPathIcon" :message="t('sellers.loading')" />
+    <LoadingState v-if="isLoading" :message="t('sellers.loading')" />
 
     <div v-else>
       <BaseTable v-if="sellers.length > 0" :data="sellers" :columns="columns">

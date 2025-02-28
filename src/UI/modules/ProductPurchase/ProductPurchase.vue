@@ -3,8 +3,6 @@ import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 
-import { ArrowPathIcon } from '@heroicons/vue/24/solid'
-
 import { useProductStore } from '@/stores/useProductStore'
 import { useImageRaceStore } from '@/stores/useImageRaceStore'
 import { useInvoiceStore, type InvoicePayload } from '@/stores/useInvoiceStore'
@@ -123,11 +121,7 @@ const handlePurchase = async () => {
       </div>
 
       <div class="mt-6">
-        <LoadingState
-          v-if="isLoading"
-          :icon="ArrowPathIcon"
-          :message="t('invoice.productPurchase.loadingInvoice')"
-        />
+        <LoadingState v-if="isLoading" :message="t('invoice.productPurchase.loadingInvoice')" />
         <BaseButton
           v-else
           :onClick="handlePurchase"
