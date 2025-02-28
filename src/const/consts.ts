@@ -1,5 +1,3 @@
-export const IMAGES_PER_SELLER = 1
-
 export const SCORE_TO_WIN = 20
 
 export const MIN_SELLERS_POSSIBLE = 2

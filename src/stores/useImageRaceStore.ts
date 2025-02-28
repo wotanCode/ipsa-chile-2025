@@ -1,7 +1,10 @@
 import { ref, computed, watch } from 'vue'
 import { defineStore } from 'pinia'
+
 import { useSellerStore, type Seller } from '@/stores/useSellerStore'
 import type { UnsplashImage } from '@/composables/useImageSearch'
+
+import { SCORE_TO_WIN } from '@/const/consts'
 
 interface RaceParticipant {
   seller: Seller
@@ -56,7 +59,9 @@ export const useImageRaceStore = defineStore('imageRace', () => {
   }
 
   const totalScore = computed(() => currentParticipants.value.reduce((sum, p) => sum + p.score, 0))
-  const winner = computed(() => currentParticipants.value.find((p) => p.score >= 20) || null)
+  const winner = computed(
+    () => currentParticipants.value.find((p) => p.score >= SCORE_TO_WIN) || null,
+  )
   const tableData = computed(() =>
     currentParticipants.value.map((participant) => ({
       id: participant.seller.id,

@@ -12,6 +12,7 @@ import useImageSearch from '@/composables/useImageSearch'
 import LoadingState from '@/UI/components/LoadingState/LoadingState.vue'
 import BaseModal from '@/UI/components/BaseModal/BaseModal.vue'
 import AlertBox from '@/UI/components/AlertBox/AlertBox.vue'
+import { WINNER_IMAGE_POINTS } from '@/const/consts'
 
 const { isLoading: imagesLoading } = useImageSearch()
 const { t } = useI18n()
@@ -36,7 +37,7 @@ const toggleImageHighlight = (participantIndex: number) => {
 const handleConfirm = () => {
   if (selectedParticipantIndex.value !== null && !imageRaceStore.winner) {
     const participant = currentParticipants[selectedParticipantIndex.value]
-    participant.score += 3
+    participant.score += WINNER_IMAGE_POINTS
     router.back()
   }
 }
