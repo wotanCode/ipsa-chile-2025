@@ -1,17 +1,13 @@
-// Interfaz para los datos que se envían al crear o editar un vendedor
-export interface SellerPayload {
+export interface Seller {
+  id: string
   name: string
-  email?: string
-  identification?: string
-  phonePrimary?: string
-  observations?: string
-  status?: 'active' | 'inactive'
+  identification: null | string
+  observations: null | string
+  status: string
 }
 
-// Interfaz para el vendedor tal como la API la retorna
-export interface Seller extends SellerPayload {
-  id: number
-  deleted?: boolean
-  createdAt?: string
-  updatedAt?: string
+export interface SellerPayload {
+  name: string
+  identification?: string
+  observations?: string
 }

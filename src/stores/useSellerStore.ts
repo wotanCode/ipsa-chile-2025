@@ -1,26 +1,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { defineStore } from 'pinia'
 import { apiFetch } from '@/utils/apiFetch'
-
-export interface Seller {
-  id: number
-  name: string
-  email?: string
-  createdAt: string
-  updatedAt: string
-  deleted?: boolean
-  identification?: string
-  phonePrimary?: string
-  observations?: string
-}
-
-export interface SellerPayload {
-  name: string
-  email?: string
-  identification?: string
-  phonePrimary?: string
-  observations?: string
-}
+import type { Seller, SellerPayload } from '@/interface/seller'
 
 export const useSellerStore = defineStore('seller', () => {
   const sellers = ref<Seller[]>([])
@@ -50,7 +31,7 @@ export const useSellerStore = defineStore('seller', () => {
     }
   }
 
-  async function fetchSeller(id: number): Promise<Seller | undefined> {
+  async function fetchSeller(id: string): Promise<Seller | undefined> {
     try {
       const response = await apiFetch(`/sellers/${id}`)
       return formatSeller(response)
@@ -76,7 +57,7 @@ export const useSellerStore = defineStore('seller', () => {
     }
   }
 
-  async function updateSeller(id: number, payload: Partial<SellerPayload>): Promise<Seller> {
+  async function updateSeller(id: string, payload: Partial<SellerPayload>): Promise<Seller> {
     try {
       const response = await apiFetch(`/sellers/${id}`, {
         method: 'PUT',
@@ -92,7 +73,7 @@ export const useSellerStore = defineStore('seller', () => {
     }
   }
 
-  async function deleteSeller(id: number): Promise<void> {
+  async function deleteSeller(id: string): Promise<void> {
     try {
       await apiFetch(`/sellers/${id}`, {
         method: 'DELETE',
@@ -107,15 +88,11 @@ export const useSellerStore = defineStore('seller', () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function formatSeller(seller: any): Seller {
     return {
-      id: Number(seller.id),
+      id: String(seller.id),
       name: seller.name,
-      email: seller.email || null,
       identification: seller.identification || null,
-      phonePrimary: seller.phonePrimary || null,
       observations: seller.observations || null,
-      createdAt: seller.createdAt || new Date().toISOString(),
-      updatedAt: seller.updatedAt || new Date().toISOString(),
-      deleted: seller.status === 'deleted',
+      status: seller.status || 'active',
     }
   }
 
