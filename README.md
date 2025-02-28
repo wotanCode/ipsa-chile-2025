@@ -47,7 +47,7 @@ npm run lint
 
 ## 📌 Limitaciones de Unsplash
 
-Debido a las restricciones del uso gratuito de Unsplash, solo se pueden consultar un máximo de 30 imágenes por búsqueda. Esto limita la cantidad de vendedores en la carrera a un máximo de 4 participantes simultáneamente.
+Debido a las restricciones del uso gratuito de Unsplash, solo se pueden consultar un máximo de 30 imágenes por búsqueda. Esto limita la cantidad de vendedores en la carrera a un máximo de 30 participantes simultáneamente.
 
 ## 🛠️ Stack Tecnológico
 
