@@ -37,7 +37,7 @@ const handlePurchase = async () => {
 
   const invoiceItems = productStore.selectedProductIds
     .map((productId) => {
-      const product = productStore.products.find((p) => p.id === productId)
+      const product = productStore.products.find((p) => p.id === Number(productId))
       if (!product) return null
       return {
         id: product.id,
@@ -104,9 +104,11 @@ const handlePurchase = async () => {
           :key="product.id"
           class="border rounded-lg p-2 cursor-pointer transition-all"
           :class="{
-            'ring-4 ring-green-400 scale-105': productStore.selectedProductIds.includes(product.id),
+            'ring-4 ring-green-400 scale-105': productStore.selectedProductIds.includes(
+              product.id.toString(),
+            ),
           }"
-          @click="productStore.toggleProduct(product.id)"
+          @click="productStore.toggleProduct(product.id.toString())"
         >
           <img
             :src="`/fakeProducts/${product.imageUrl}`"

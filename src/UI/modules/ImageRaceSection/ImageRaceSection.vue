@@ -5,6 +5,7 @@ import { useRouter } from 'vue-router'
 
 import { useSellerStore } from '@/stores/useSellerStore'
 import { useImageRaceStore } from '@/stores/useImageRaceStore'
+
 import useImageSearch from '@/composables/useImageSearch'
 
 import BaseTable, { type Column } from '@/UI/components/BaseTable/BaseTable.vue'
