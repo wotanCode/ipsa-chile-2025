@@ -80,9 +80,9 @@ const handleCancel = () => {
 
   <BaseModal
     ref="modalRef"
-    title="¿Desea seleccionar esta imagen?"
-    confirmText="Aceptar"
-    cancelText="Cancelar"
+    :title="t('imageRace.confirmationModal.information')"
+    :confirmText="t('imageRace.confirmationModal.accept')"
+    :cancelText="t('imageRace.confirmationModal.cancel')"
     @confirm="handleConfirm"
     @cancel="handleCancel"
   />
