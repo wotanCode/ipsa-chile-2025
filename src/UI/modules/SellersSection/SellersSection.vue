@@ -21,8 +21,6 @@ const sellerStore = useSellerStore()
 const { sellers, isLoading, error } = storeToRefs(sellerStore) // Añadir error
 
 const columns = ref([
-  { header: t('sellers.table.id'), key: 'id' },
-  // TODO: De verdad vale la pena poner el ID? darle una vuelta
   { header: t('sellers.table.name'), key: 'name' },
   { header: t('sellers.table.actions'), key: 'actions', slot: 'actions' },
 ])

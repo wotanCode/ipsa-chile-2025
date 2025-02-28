@@ -32,7 +32,6 @@ const enoughSellers = computed(() => {
 })
 
 const columns = ref<Column[]>([
-  { header: t('imageRace.table.id'), key: 'id' },
   { header: t('imageRace.table.seller'), key: 'name' },
   { header: t('imageRace.table.points'), key: 'score' },
 ])

@@ -7,7 +7,6 @@
   "editSeller": "Editar Vendedor",
   "saveChanges": "Guardar Cambios",
   "table": {
-    "id": "ID",
     "name": "Nombre",
     "actions": "Acciones"
   },
