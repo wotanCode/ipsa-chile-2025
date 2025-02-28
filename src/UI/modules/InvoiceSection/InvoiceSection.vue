@@ -3,6 +3,7 @@ import { useImageRaceStore } from '@/stores/useImageRaceStore'
 import { useI18n } from 'vue-i18n'
 
 import ProductPurchase from '@/UI/modules/ProductPurchase/ProductPurchase.vue'
+import AlertBox from '@/UI/components/AlertBox/AlertBox.vue'
 
 const { t } = useI18n()
 
@@ -11,12 +12,7 @@ const imageRaceStore = useImageRaceStore()
 
 <template>
   <div class="max-w-4xl mx-auto">
-    <div
-      v-if="!imageRaceStore.winner"
-      class="p-4 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700"
-    >
-      <p class="font-semibold">{{ t('invoice.noWinnerAlert') }}</p>
-    </div>
+    <AlertBox v-if="!imageRaceStore.winner" type="alert" :message="t('invoice.noWinnerAlert')" />
 
     <div v-else class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
       <div class="flex items-center gap-4 mb-4">
