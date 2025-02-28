@@ -62,7 +62,7 @@ export const useProductStore = defineStore('product', () => {
   function formatProduct(item: ProductsResponse): Product {
     const mainPrice = Array.isArray(item.price)
       ? item.price.find((p) => p.main) || item.price[0]
-      : { price: 0 }
+      : item.price?.[0] || { price: 0 }
 
     return {
       id: Number(item.id),
