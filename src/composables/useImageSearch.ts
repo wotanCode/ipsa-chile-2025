@@ -1,24 +1,13 @@
 import { ref } from 'vue'
-export interface UnsplashImage {
-  id: string
-  urls: {
-    regular: string
-    small: string
-  }
-  description: string | null
-  alt_description: string | null
-  user: {
-    name: string
-  }
-}
+import type { UnsplashImageResponse, Result } from '@/interface/unsplash_image_response'
 
 export default function useImageSearch() {
   const VITE_UNSPLASH_ACCESS_KEY = import.meta.env.VITE_UNSPLASH_ACCESS_KEY || ''
-  const images = ref<UnsplashImage[]>([])
+  const images = ref<Result[]>([])
   const isLoading = ref(false)
   const error = ref<string | null>(null)
 
-  const searchImages = async (keyword: string, count: number) => {
+  const searchImages = async (keyword: string, count: number): Promise<Result[]> => {
     isLoading.value = true
     try {
       const response = await fetch(
@@ -31,11 +20,12 @@ export default function useImageSearch() {
       )
 
       if (!response.ok) throw new Error('Error al obtener imágenes')
-      const data = await response.json()
-      return data.results as UnsplashImage[]
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const data: UnsplashImageResponse = await response.json()
+      images.value = data.results
+      return data.results
     } catch (err) {
-      error.value = 'Error cargando imágenes. Intenta con otro término.'
+      error.value = `Error cargando imágenes. Intenta con otro término. Detalles: ${(err as Error).message}`
+      images.value = []
       return []
     } finally {
       isLoading.value = false

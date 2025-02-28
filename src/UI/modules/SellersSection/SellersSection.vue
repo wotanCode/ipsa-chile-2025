@@ -14,7 +14,7 @@ import BaseButton from '@/UI/components/BaseButton/BaseButton.vue'
 import LoadingState from '@/UI/components/LoadingState/LoadingState.vue'
 import AlertBox from '@/UI/components/AlertBox/AlertBox.vue'
 import BaseInput from '@/UI/components/BaseInput/BaseInput.vue'
-import type { Seller } from '@/interface/seller'
+import type { Seller } from '@/interface/alegra_seller_api'
 
 const { t } = useI18n()
 const sellerStore = useSellerStore()

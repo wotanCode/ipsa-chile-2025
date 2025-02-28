@@ -2,14 +2,15 @@ import { ref, computed, watch } from 'vue'
 import { defineStore } from 'pinia'
 
 import { useSellerStore } from '@/stores/useSellerStore'
-import type { UnsplashImage } from '@/composables/useImageSearch'
 
 import { SCORE_TO_WIN } from '@/const/consts'
-import type { Seller } from '@/interface/seller'
+
+import type { Result } from '@/interface/unsplash_image_response'
+import type { Seller } from '@/interface/alegra_seller_api'
 
 interface RaceParticipant {
   seller: Seller
-  image: UnsplashImage | null
+  image: Result | null
   score: number
 }
 
@@ -42,7 +43,7 @@ export const useImageRaceStore = defineStore('imageRace', () => {
     }))
   }
 
-  function assignImagesToSellers(sellers: Seller[], images: UnsplashImage[]) {
+  function assignImagesToSellers(sellers: Seller[], images: Result[]) {
     currentParticipants.value = currentParticipants.value.map((participant, index) => ({
       ...participant,
       image: images[index] || null,

@@ -1,7 +1,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { defineStore } from 'pinia'
 import { apiFetch } from '@/utils/apiFetch'
-import type { Seller, SellerPayload } from '@/interface/seller'
+import type { Seller, SellerPayload } from '@/interface/alegra_seller_api'
 
 export const useSellerStore = defineStore('seller', () => {
   const sellers = ref<Seller[]>([])
