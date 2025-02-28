@@ -1,11 +1,16 @@
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+
+import { ArrowPathIcon } from '@heroicons/vue/24/solid'
 
 import { useProductStore } from '@/stores/useProductStore'
 import { useImageRaceStore } from '@/stores/useImageRaceStore'
 import { useInvoiceStore, type InvoicePayload } from '@/stores/useInvoiceStore'
+
+import BaseButton from '@/UI/components/BaseButton/BaseButton.vue'
+import LoadingState from '@/UI/components/LoadingState/LoadingState.vue'
 
 const router = useRouter()
 const { t } = useI18n()
@@ -14,6 +19,7 @@ const productStore = useProductStore()
 const imageRaceStore = useImageRaceStore()
 const invoiceStore = useInvoiceStore()
 
+const isLoading = ref(false) // Estado de carga
 const initialPoints = computed(() => imageRaceStore.totalScore || 0)
 
 onMounted(async () => {
@@ -23,6 +29,8 @@ onMounted(async () => {
 
 const handlePurchase = async () => {
   if (!imageRaceStore.winner?.seller.id) return
+
+  isLoading.value = true
 
   const CONTACT_ID = 9 // ID del contacto
   const DEFAULT_TAX_ID = 1
@@ -66,6 +74,8 @@ const handlePurchase = async () => {
     if (error instanceof Error && 'response' in error) {
       console.log('Detalles del error:', error.response)
     }
+  } finally {
+    isLoading.value = false
   }
 }
 </script>
@@ -110,13 +120,19 @@ const handlePurchase = async () => {
         </div>
       </div>
 
-      <button
-        @click="handlePurchase"
-        :disabled="productStore.isPurchaseDisabled"
-        class="mt-6 px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
-      >
-        {{ t('invoice.productPurchase.purchaseButton') }}
-      </button>
+      <div class="mt-6">
+        <LoadingState
+          v-if="isLoading"
+          :icon="ArrowPathIcon"
+          :message="t('invoice.productPurchase.loadingInvoice')"
+        />
+        <BaseButton
+          v-else
+          :onClick="handlePurchase"
+          :disabled="productStore.isPurchaseDisabled || isLoading"
+          :label="t('invoice.productPurchase.purchaseButton')"
+        />
+      </div>
     </div>
 
     <div v-else class="text-center py-8">

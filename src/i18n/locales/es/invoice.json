@@ -11,7 +11,8 @@
     "productPoints": "puntos",
     "purchaseButton": "Finalizar Compra",
     "loadingMessage": "Cargando productos...",
-    "errorCreatingInvoice": "Error al generar la factura"
+    "errorCreatingInvoice": "Error al generar la factura",
+    "loadingInvoice": "Generando factura"
   },
   "invoiceDetail": {
     "title": "Detalle de la Factura",
