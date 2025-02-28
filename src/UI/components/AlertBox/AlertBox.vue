@@ -17,6 +17,6 @@ const props = defineProps<AlertMessageProps>()
       'bg-green-50 border-green-400 text-green-700': props.type === 'success',
     }"
   >
-    {{ props.message }}
+    <p class="font-semibold">{{ props.message }}</p>
   </div>
 </template>
