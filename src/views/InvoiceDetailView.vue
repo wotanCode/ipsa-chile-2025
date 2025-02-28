@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { onMounted } from 'vue'
+import JSConfetti from 'js-confetti'
 import { useInvoiceStore } from '@/stores/useInvoiceStore'
 import { useI18n } from 'vue-i18n'
 import { useImageRaceStore } from '@/stores/useImageRaceStore'
@@ -6,6 +8,13 @@ import { useImageRaceStore } from '@/stores/useImageRaceStore'
 const { t } = useI18n()
 const invoiceStore = useInvoiceStore()
 const imageRaceStore = useImageRaceStore()
+
+onMounted(() => {
+  if (invoiceStore.createdInvoice) {
+    const jsConfetti = new JSConfetti()
+    jsConfetti.addConfetti()
+  }
+})
 </script>
 
 <template>
